@@ -1,138 +1,112 @@
 ﻿#pragma once 
 #include <format>
 #include <filesystem>
-#include <semaphore> // Add this include for std::counting_semaphore
-#include <fstream>
-#include <ostream>
-#include <source_location>
+#include "spdlog/async.h"           // 异步日志支持
+#include "spdlog/async_logger.h"    // 异步 logger
+#include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include <memory>
+#include <vector>
+#include <string>
 
-enum class LogLevel : uint8_t {
-    Trace,      // 追踪级（新增）
-    Debug,
-    Info,
-    Warning,
-    Error,
-    Critical    // 致命错误级（新增）
-};
-
-
-class Logger {
-    // 单例控制 
-    Logger() = default;
-    ~Logger();
-
-    // 异步写入器 
-    std::jthread worker_;
-    std::atomic_bool running_{ false };
-
-    // 文件管理 
-    std::ofstream file_;
-    std::filesystem::path dir_;
-    std::string prefix_;
-
-    // 线程安全 
-    std::mutex mutex_;
-    std::atomic<LogLevel> level_{ LogLevel::Info };
-
+class Logger2 {
 public:
-    static Logger& instance() {
-        static Logger logger;
-        return logger;
+    // 获取单例对象
+    static Logger2& instance() {
+        static Logger2 instance;
+        return instance;
     }
 
-    // 核心接口 
-    bool init(std::string_view prefix,
-        const std::filesystem::path& dir = "logs");
-    void flush();
-    void shutdown() noexcept;
+    // 初始化 logger，配置控制台和文件两个 sink，使用异步模式
+    void init(const std::string& logFile = "logs.txt") {
+        // 初始化异步日志线程池：队列大小为8192，后台线程1个
+        spdlog::init_thread_pool(8192, 1);
 
-    // 日志级别控制 
-    void set_level(LogLevel lv) noexcept { level_.store(lv); }
-    [[nodiscard]] LogLevel level() const noexcept { return level_.load(); }
+        // 创建两个 sink
+        auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFile, true);
+        std::vector<spdlog::sink_ptr> sinks{ consoleSink, fileSink };
 
-    // 格式化日志接口（模板实现需在头文件）
-    template <typename... Args>
-    void log_impl(LogLevel lv, std::format_string<Args...> fmt, Args&&... args,
-        std::source_location loc) {
-        if (lv < level_.load(std::memory_order_acquire)) return;
+        // 创建异步 logger，使用 spdlog 内部的线程池和阻塞策略
+        logger_ = std::make_shared<spdlog::async_logger>("async_logger",
+            sinks.begin(),
+            sinks.end(),
+            spdlog::thread_pool(),
+            spdlog::async_overflow_policy::block);
+        spdlog::register_logger(logger_);
 
-        const auto now = std::chrono::system_clock::now();
-        const auto msg = std::format("[{:%F %T.%3ms}][{:<7}][{}:{}] {}\n",
-            now,
-            to_string(lv),
-            loc.file_name(),
-            loc.line(),
-            std::vformat(fmt.get(), std::make_format_args(args...)));
-
-        {
-            std::lock_guard lock(mutex_);
-            file_ << msg;
-            std::println("{}", msg.substr(0, msg.find_last_of('\n')));
-        }
+        // 设置日志格式和日志级别
+        logger_->set_pattern("[%Y-%m-%d %H:%M:%S] [%l] %v");
+        logger_->set_level(spdlog::level::debug);
     }
-    template <typename... Args>
-    void log(LogLevel lv, auto&&... args) {
-        log_impl(lv, std::forward<decltype(args)>(args)...,
-            std::source_location::current());
+
+    void trace(const std::string& message) {
+        logger_->trace(message);
     }
+    void debug(const std::string& message) {
+        logger_->debug(message);
+    }
+
+    void info(const std::string& message) {
+        logger_->info(message);
+    }
+
+    void warn(const std::string& message) {
+        logger_->warn(message);
+    }
+
+    void error(const std::string& message) {
+        logger_->error(message);
+    }
+    void critical(const std::string& message) {
+        logger_->error(message);
+    }
+
+    template<typename... Args>
+    void trace(const char* fmt, const Args&... args) {
+        logger_->trace(fmt, args...);
+    }
+    template<typename... Args>
+    void debug(const char* fmt, const Args&... args) {
+        logger_->debug(fmt, args...);
+    }
+    template<typename... Args>
+    void info(const char* fmt, const Args&... args) {
+        logger_->info(fmt, args...);
+    }
+    template<typename... Args>
+    void warn(const char* fmt, const Args&... args) {
+        logger_->warn(fmt, args...);
+    }
+    template<typename... Args>
+    void error(const char* fmt, const Args&... args) {
+        logger_->error(fmt, args...);
+    }
+
+    template<typename... Args>
+    void critical(const char* fmt, const Args&... args) {
+        logger_->critical(fmt, args...);
+    }
+    // 禁止拷贝和赋值
+    Logger2(const Logger2&) = delete;
+    Logger2& operator=(const Logger2&) = delete;
+
 private:
-    void rotate_file_();
-    static std::string_view to_string(LogLevel lv) noexcept;
-};
+    Logger2() {
+        init();
+    }
+    ~Logger2() {
+        spdlog::drop_all();
+    }
 
-#define LOG_TRACE(...)    Logger::instance().log(LogLevel::Trace, __VA_ARGS__)
-#define LOG_DEBUG(...)    Logger::instance().log(LogLevel::Debug, __VA_ARGS__)
-#define LOG_INFO(...)     Logger::instance().log(LogLevel::Info, __VA_ARGS__)
-#define LOG_WARN(...)     Logger::instance().log(LogLevel::Warning, __VA_ARGS__)
-#define LOG_ERROR(...)    Logger::instance().log(LogLevel::Error, __VA_ARGS__)
-#define LOG_CRITICAL(...) Logger::instance().log(LogLevel::Critical, __VA_ARGS__)
-
-//#define AAAAAAAAAAAAA
-#ifdef AAAAAAAAAAAAA
-class CLog
-{
-private:
-    CLog(void);
-    ~CLog(void);
-
-public:
-    static CLog* GetInstancePtr();
-
-    BOOL Start(std::string strPrefix, std::string strLogDir = "log");
-
-    BOOL Close();
-
-    void LogHiInfo(char* lpszFormat, ...);
-
-    void LogWarn(char* lpszFormat, ...);
-
-    void LogError(char* lpszFormat, ...);
-
-    void LogInfo(char* lpszFormat, ...);
-
-    void SetLogLevel(int Level);
-
-    void SetTitle(char* lpszFormat, ...);
-
-    void CheckAndCreate();
-
-protected:
-    std::mutex          m_WriteMutex;
-
-    INT32               m_LogCount;
-
-    FILE*               m_pLogFile;
-
-    INT32               m_LogLevel;
-
-    std::string         m_strPrefix;
-    std::string         m_strLogDir;
+    std::shared_ptr<spdlog::logger> logger_;
 };
 
 #define ERROR_RETURN_TRUE(P) \
     if((P) == FALSE)\
     {\
-        LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+        sLogger.error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
         return TRUE;    \
     }
 
@@ -178,14 +152,3 @@ protected:
     LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
     continue; \
 }
-
-#else
-
-#define ERROR_RETURN_TRUE(P)
-#define ERROR_RETURN_FALSE(P) 
-#define ERROR_RETURN_NULL(P) 
-#define ERROR_RETURN_NONE(P) 
-#define ERROR_RETURN_VALUE(P, V)
-#define ERROR_CONTINUE_EX(P)
-#define ERROR_TO_CONTINUE(P)
-#endif
