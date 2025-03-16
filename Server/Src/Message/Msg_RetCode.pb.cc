@@ -5,91 +5,84 @@
 
 #include <algorithm>
 
-#include <google/protobuf/stubs/common.h>
-#include <google/protobuf/stubs/port.h>
-#include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/wire_format_lite_inl.h>
+#include <google/protobuf/extension_set.h>
+#include <google/protobuf/wire_format_lite.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/generated_message_reflection.h>
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
-namespace protobuf_Msg_5fRetCode_2eproto {
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
-const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
-static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
-static const ::google::protobuf::Message* const* file_default_instances = NULL;
+#include <google/protobuf/port_def.inc>
+static constexpr ::PROTOBUF_NAMESPACE_ID::Metadata* file_level_metadata_Msg_5fRetCode_2eproto = nullptr;
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Msg_5fRetCode_2eproto[1];
+static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Msg_5fRetCode_2eproto = nullptr;
+const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Msg_5fRetCode_2eproto::offsets[1] = {};
+static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = nullptr;
+static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
-void protobuf_AssignDescriptors() {
-  AddDescriptors();
-  ::google::protobuf::MessageFactory* factory = NULL;
-  AssignDescriptors(
-      "Msg_RetCode.proto", schemas, file_default_instances, TableStruct::offsets, factory,
-      NULL, file_level_enum_descriptors, NULL);
-}
+const char descriptor_table_protodef_Msg_5fRetCode_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
+  "\n\021Msg_RetCode.proto*\234\013\n\016MessageRetCode\022\021"
+  "\n\rMRC_SUCCESSED\020\000\022\024\n\020MRC_UNKNOW_ERROR\020\001\022"
+  "\022\n\016MRC_DISCONNECT\020\002\022\027\n\023MRC_INVALID_ACCNA"
+  "ME\020d\022\025\n\021MRC_INVALID_ACCID\020e\022\030\n\024MRC_INVAL"
+  "ID_PASSWORD\020f\022\024\n\020MRC_INVALID_NAME\020g\022\026\n\022M"
+  "RC_INVALID_ROLEID\020h\022\026\n\022MRC_INVALID_ITEMI"
+  "D\020i\022\026\n\022MRC_INVALID_COPYID\020j\022\025\n\021MRC_INVAL"
+  "ID_PETID\020k\022\031\n\025MRC_INVALID_PARTNERID\020l\022\030\n"
+  "\024MRC_INVALID_EQUIP_ID\020m\022\030\n\024MRC_INVALID_C"
+  "ARRERID\020n\022\030\n\024MRC_INVALID_SKILL_ID\020o\022\031\n\025M"
+  "RC_INVALID_TARGET_ID\020p\022\031\n\025MRC_INVALID_SE"
+  "RVER_ID\020q\022\031\n\025MRC_INVALID_GIFT_CODE\020r\022\032\n\025"
+  "MRC_NOT_ENOUGH_ACTOIN\020\310\001\022\031\n\024MRC_NOT_ENOU"
+  "GH_MONEY\020\311\001\022\030\n\023MRC_NOT_ENOUGH_ITEM\020\312\001\022\031\n"
+  "\024MRC_NOT_ENOUGH_TIMES\020\313\001\022\031\n\024MRC_NOT_ENOU"
+  "GH_LEVEL\020\314\001\022\031\n\024MRC_NOT_ENOUGH_VIPLV\020\315\001\022\030"
+  "\n\023MRC_ERROR_SEAL_ROLE\020\316\001\022\027\n\022MRC_NAME_ERR"
+  "OR_FMT\020\317\001\022\025\n\020MRC_REPEAT_LOGIN\020\320\001\022\033\n\026MRC_"
+  "ACCOUNT_NAME_EXIST\020\254\002\022\037\n\032MRC_ACCOUNT_NAM"
+  "E_NOT_EXIST\020\255\002\022\035\n\030MRC_ACCOUNT_NAME_ERR_F"
+  "MT\020\256\002\022\030\n\023MRC_ROLE_NAME_EXIST\020\257\002\022\027\n\022MRC_A"
+  "CCOUNT_SEALED\020\260\002\022\036\n\031MRC_ACCOUNT_WRONG_VE"
+  "RSION\020\261\002\022\037\n\032MRC_ACCOUNT_WRONG_PASSWORD\020\262"
+  "\002\022\034\n\027MRC_ROLE_NAME_MUST_UTF8\020\264\002\022\024\n\017MRC_R"
+  "OLE_SEALED\020\265\002\022\025\n\020MRC_ROLE_DELETED\020\266\002\022\032\n\025"
+  "MRC_ILLEGAL_LOGIN_REQ\020\267\002\022\031\n\024MRC_KICKOUT_"
+  "BY_OTHER\020\270\002\022\034\n\027MRC_SERVER_NOT_OPENTIME\020\271"
+  "\002\022\035\n\030MRC_SERVER_NOT_AVAILABLE\020\272\002\022\030\n\023MRC_"
+  "SERVER_MAINTAIN\020\273\002\022\033\n\026MRC_SERVER_NO_NEW_"
+  "ROLE\020\274\002\022\031\n\024MRC_CANNOT_RECONNECT\020\275\002\022\027\n\022MR"
+  "C_SKILL_CD_ERROR\020\221\003\022\027\n\022MRC_SKILL_DEAD_OB"
+  "J\020\222\003\022\034\n\027MRC_DUPLICATED_ORDER_ID\020\223\003\022\035\n\030MR"
+  "C_GIFTCODE_AREADY_USED\020\364\003\022\037\n\032MRC_GIFTCOD"
+  "E_INVALIDE_CODE\020\365\003\022\034\n\027MRC_GIFTCODE_UNASS"
+  "IGNED\020\366\003\022\037\n\032MRC_GIFTCODE_WRONG_CHANNEL\020\367"
+  "\003\022\034\n\027MRC_GIFTCODE_WRONG_AREA\020\370\003\022\031\n\024MRC_G"
+  "IFTCODE_NO_MORE\020\371\003b\006proto3"
+  ;
+static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Msg_5fRetCode_2eproto_deps[1] = {
+};
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Msg_5fRetCode_2eproto_sccs[1] = {
+};
+static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Msg_5fRetCode_2eproto_once;
+const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Msg_5fRetCode_2eproto = {
+  false, false, descriptor_table_protodef_Msg_5fRetCode_2eproto, "Msg_RetCode.proto", 1466,
+  &descriptor_table_Msg_5fRetCode_2eproto_once, descriptor_table_Msg_5fRetCode_2eproto_sccs, descriptor_table_Msg_5fRetCode_2eproto_deps, 0, 0,
+  schemas, file_default_instances, TableStruct_Msg_5fRetCode_2eproto::offsets,
+  file_level_metadata_Msg_5fRetCode_2eproto, 0, file_level_enum_descriptors_Msg_5fRetCode_2eproto, file_level_service_descriptors_Msg_5fRetCode_2eproto,
+};
 
-void protobuf_AssignDescriptorsOnce() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
-}
-
-void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
-void protobuf_RegisterTypes(const ::std::string&) {
-  protobuf_AssignDescriptorsOnce();
-}
-
-void AddDescriptorsImpl() {
-  InitDefaults();
-  static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\021Msg_RetCode.proto*\211\005\n\016MessageRetCode\022\021"
-      "\n\rMRC_SUCCESSED\020\000\022\024\n\020MRC_UNKNOW_ERROR\020\001\022"
-      "\022\n\016MRC_DISCONNECT\020\002\022\025\n\021MRC_ACCOUNT_EXIST"
-      "\020\003\022\022\n\016MRC_NAME_EXIST\020\004\022\026\n\022MRC_ACCOUNT_SE"
-      "ALED\020\005\022\026\n\022MRC_BAD_CLIENT_VER\020\006\022\027\n\023MRC_IN"
-      "VALID_ACCNAME\020d\022\025\n\021MRC_INVALID_ACCID\020e\022\030"
-      "\n\024MRC_INVALID_PASSWORD\020f\022\024\n\020MRC_INVALID_"
-      "NAME\020g\022\026\n\022MRC_INVALID_ROLEID\020h\022\026\n\022MRC_IN"
-      "VALID_ITEMID\020i\022\026\n\022MRC_INVALID_COPYID\020j\022\025"
-      "\n\021MRC_INVALID_PETID\020k\022\031\n\025MRC_INVALID_PAR"
-      "TNERID\020l\022\030\n\024MRC_INVALID_EQUIP_ID\020m\022\030\n\024MR"
-      "C_INVALID_CARRERID\020n\022\030\n\024MRC_INVALID_SKIL"
-      "L_ID\020o\022\031\n\025MRC_INVALID_TARGET_ID\020p\022\032\n\025MRC"
-      "_NOT_ENOUGH_ACTOIN\020\310\001\022\031\n\024MRC_NOT_ENOUGH_"
-      "MONEY\020\311\001\022\030\n\023MRC_NOT_ENOUGH_ITEM\020\312\001\022\031\n\024MR"
-      "C_NOT_ENOUGH_TIMES\020\313\001\022\027\n\022MRC_SKILL_CD_ER"
-      "ROR\020\254\002\022\027\n\022MRC_SKILL_DEAD_OBJ\020\255\002b\006proto3"
-  };
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 679);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "Msg_RetCode.proto", &protobuf_RegisterTypes);
-}
-
-void AddDescriptors() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
-}
-// Force AddDescriptors() to be called at dynamic initialization time.
-struct StaticDescriptorInitializer {
-  StaticDescriptorInitializer() {
-    AddDescriptors();
-  }
-} static_descriptor_initializer;
-}  // namespace protobuf_Msg_5fRetCode_2eproto
-const ::google::protobuf::EnumDescriptor* MessageRetCode_descriptor() {
-  protobuf_Msg_5fRetCode_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_Msg_5fRetCode_2eproto::file_level_enum_descriptors[0];
+// Force running AddDescriptors() at dynamic initialization time.
+static bool dynamic_init_dummy_Msg_5fRetCode_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_Msg_5fRetCode_2eproto)), true);
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageRetCode_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Msg_5fRetCode_2eproto);
+  return file_level_enum_descriptors_Msg_5fRetCode_2eproto[0];
 }
 bool MessageRetCode_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
     case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
     case 100:
     case 101:
     case 102:
@@ -103,12 +96,43 @@ bool MessageRetCode_IsValid(int value) {
     case 110:
     case 111:
     case 112:
+    case 113:
+    case 114:
     case 200:
     case 201:
     case 202:
     case 203:
+    case 204:
+    case 205:
+    case 206:
+    case 207:
+    case 208:
     case 300:
     case 301:
+    case 302:
+    case 303:
+    case 304:
+    case 305:
+    case 306:
+    case 308:
+    case 309:
+    case 310:
+    case 311:
+    case 312:
+    case 313:
+    case 314:
+    case 315:
+    case 316:
+    case 317:
+    case 401:
+    case 402:
+    case 403:
+    case 500:
+    case 501:
+    case 502:
+    case 503:
+    case 504:
+    case 505:
       return true;
     default:
       return false;
@@ -117,5 +141,8 @@ bool MessageRetCode_IsValid(int value) {
 
 
 // @@protoc_insertion_point(namespace_scope)
+PROTOBUF_NAMESPACE_OPEN
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
+#include <google/protobuf/port_undef.inc>

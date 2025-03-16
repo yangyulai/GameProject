@@ -419,11 +419,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="Lua_Pkg\Lua_Player.pkg">
-      <Filter>Pkg</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="LuaScript.pkg" />
   </ItemGroup>
 </Project>

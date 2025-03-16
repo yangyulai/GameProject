@@ -277,3 +277,11 @@ proto/proto-gen-lua
 *.unsuccessfulbuild
 *.asset
 *.exp
+/Proto
+/Server/Src/.vs
+/Server/Src/Message
+/Server/Src/Message
+/.vs
+/Client
+/Proto
+/Server/Src/Message

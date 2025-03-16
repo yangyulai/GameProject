@@ -195,7 +195,7 @@ BOOL ServiceBase::Update()
     std::swap(m_pRecvDataQueue, m_pDispathQueue);
     m_QueueLock.Unlock();
 
-    if (m_pDispathQueue->size() > 0)
+    if (m_pDispathQueue && m_pDispathQueue->size() > 0)
     {
         for (std::deque<NetPacket>::iterator itor = m_pDispathQueue->begin(); itor != m_pDispathQueue->end(); ++itor)
         {

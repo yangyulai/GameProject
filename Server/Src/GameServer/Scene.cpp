@@ -1728,7 +1728,7 @@ BOOL CScene::ReadSceneXml()
     auto pCreatorNode = pXmlRoot->first_node("MapWaves");
     ERROR_RETURN_FALSE(pCreatorNode != NULL);
     ERROR_RETURN_FALSE(m_pMonsterCreator != NULL);
-    ERROR_RETURN_FALSE(m_pMonsterCreator->ReadFromXml(pCreatorNode));
+    //ERROR_RETURN_FALSE(m_pMonsterCreator->ReadFromXml(pCreatorNode));
 
     return TRUE;
 }
