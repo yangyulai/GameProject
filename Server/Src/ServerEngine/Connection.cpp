@@ -84,7 +84,7 @@ BOOL CConnection::DoReceive()
         int nError = CommonSocket::GetSocketLastError();
         if(nError != ERROR_IO_PENDING )
         {
-            CLog::GetInstancePtr()->LogWarn("关闭连接，因为接收数据发生错误:%s!", CommonFunc::GetLastErrorStr(nError).c_str());
+            LOG_WARN("关闭连接，因为接收数据发生错误:{}!", CommonFunc::GetLastErrorStr(nError).c_str());
 
             return FALSE;
         }
@@ -110,7 +110,7 @@ BOOL CConnection::DoReceive()
                 return TRUE;
             }
 
-            CLog::GetInstancePtr()->LogWarn("读失败， 可能连接己断开 原因:%s!!", CommonFunc::GetLastErrorStr(nErr).c_str());
+            LOG_WARN("读失败， 可能连接己断开 原因:{}!!", CommonFunc::GetLastErrorStr(nErr).c_str());
             return FALSE;
         }
 
@@ -211,7 +211,7 @@ BOOL CConnection::ExtractBuffer()
         {
             if (m_nDataLen >= 1 && *(BYTE*)m_pBufPos != 0x88)
             {
-                CLog::GetInstancePtr()->LogInfo("验证首字节失改!, m_nDataLen:%d--ConnID:%d", m_nDataLen, m_nConnID);
+                LOG_INFO("验证首字节失改!, m_nDataLen:%d--ConnID:%d", m_nDataLen, m_nConnID);
                 return FALSE;
             }
 
@@ -409,19 +409,19 @@ BOOL CConnection::CheckHeader(CHAR* pNetPacket)
     PacketHeader* pHeader = (PacketHeader*)pNetPacket;
     if (pHeader->CheckCode != CODE_VALUE)
     {
-        CLog::GetInstancePtr()->LogInfo("验证-失败 pHeader->CheckCode error");
+        LOG_INFO("验证-失败 pHeader->CheckCode error");
         return FALSE;
     }
 
     if ((pHeader->nSize > 1024 * 1024) || (pHeader->nSize <= 0))
     {
-        CLog::GetInstancePtr()->LogInfo("验证-失败 packetsize < 0, pHeader->nMsgID:%d, roleid:%lld", pHeader->nMsgID, pHeader->u64TargetID);
+        LOG_INFO("验证-失败 packetsize < 0, pHeader->nMsgID:%d, roleid:%lld", pHeader->nMsgID, pHeader->u64TargetID);
         return FALSE;
     }
 
     if (pHeader->nMsgID > 399999 || pHeader->nMsgID <= 0)
     {
-        CLog::GetInstancePtr()->LogInfo("验证-失败 Invalid MessageID roleid:%lld", pHeader->u64TargetID);
+        LOG_INFO("验证-失败 Invalid MessageID roleid:%lld", pHeader->u64TargetID);
         return FALSE;
     }
 
@@ -434,7 +434,7 @@ BOOL CConnection::CheckHeader(CHAR* pNetPacket)
 
     if (nPktChkNo <= 0)
     {
-        CLog::GetInstancePtr()->LogInfo("nPktChkNo <= 0");
+        LOG_INFO("nPktChkNo <= 0");
         return FALSE;
     }
 
@@ -448,7 +448,7 @@ BOOL CConnection::CheckHeader(CHAR* pNetPacket)
         return TRUE;
     }
 
-    CLog::GetInstancePtr()->LogInfo("验证-失败 m_nCheckNo:%d, nPktChkNo:%ld", m_nCheckNo, nPktChkNo);
+    LOG_INFO("验证-失败 m_nCheckNo:%d, nPktChkNo:%ld", m_nCheckNo, nPktChkNo);
 
     return FALSE;
 }
@@ -485,7 +485,6 @@ VOID CConnection::EnableCheck(BOOL bCheck)
     m_bPacketNoCheck = bCheck;
 }
 
-#ifdef WIN32
 BOOL CConnection::DoSend()
 {
     IDataBuffer* pFirstBuff = NULL;
@@ -561,10 +560,7 @@ BOOL CConnection::DoSend()
     int nRet = WSASend(m_hSocket, &DataBuf, 1, &nSendBytes, 0, (LPOVERLAPPED)&m_IoOverlapSend, NULL);
     if(nRet == 0) //发送成功
     {
-        //if(nSendBytes < DataBuf.len)
-        //{
-        //  CLog::GetInstancePtr()->LogError("发送线程:直接发送数据成功send:%d--Len:%d!", nSendBytes, DataBuf.len);
-        //}
+
     }
     else if( nRet == -1 ) //发送出错
     {
@@ -574,99 +570,12 @@ BOOL CConnection::DoSend()
             pSendingBuffer->Release();
             pSendingBuffer = NULL;
             Close();
-            CLog::GetInstancePtr()->LogError("发送线程:发送失败, 连接关闭原因:%s!", CommonFunc::GetLastErrorStr(errCode).c_str());
+            LOG_ERROR("发送线程:发送失败, 连接关闭原因:{}!", CommonFunc::GetLastErrorStr(errCode).c_str());
         }
     }
 
     return TRUE;
 }
-
-#else
-BOOL CConnection::DoSend()
-{
-    //返回值为正数， 分为完全发送，和部分发送，部分发送，用另一个缓冲区装着继续发送
-    //返回值为负数   错误码：
-    //
-    //if (errno != EAGAIN)
-    //{
-    //  //ERROR("TcpConnection sendInLoop");
-    //  if (errno == EPIPE || errno == ECONNRESET)
-    //  {
-    //      faultError = true;//这就是真实的错误了
-    //  }
-    //}
-    // #define E_SEND_SUCCESS               1
-    // #define E_SEND_UNDONE                2
-    // #define E_SEND_ERROR                 3
-
-    if (m_pSendingBuffer != NULL)
-    {
-        INT32 nDataLen = m_pSendingBuffer->GetTotalLenth() - m_nSendingPos;
-        INT32 nRet = send(m_hSocket, m_pSendingBuffer->GetBuffer() + m_nSendingPos, nDataLen, 0);
-        if (nRet < 0)
-        {
-            if (errno != EAGAIN)
-            {
-                m_pSendingBuffer->Release();
-                m_pSendingBuffer = NULL;
-                m_nSendingPos = 0;
-                CLog::GetInstancePtr()->LogWarn("发送线程:发送失败, 连接关闭原因:%s!", CommonFunc::GetLastErrorStr(errno).c_str());
-                return E_SEND_ERROR;
-            }
-
-            return E_SEND_SUCCESS;
-        }
-
-        if (nRet < nDataLen)
-        {
-            //这就表示发送了一半的数据
-            m_nSendingPos += nRet;
-            return E_SEND_UNDONE;
-        }
-
-        m_pSendingBuffer->Release();
-        m_pSendingBuffer = NULL;
-        m_nSendingPos = 0;
-    }
-
-    IDataBuffer* pBuffer = NULL;
-    while(m_SendBuffList.try_dequeue(pBuffer))
-    {
-        if (pBuffer == NULL)
-        {
-            continue;
-        }
-
-        INT32 nRet = send(m_hSocket, pBuffer->GetBuffer(), pBuffer->GetTotalLenth(), 0);
-        if (nRet < 0)
-        {
-            if (errno != EAGAIN)
-            {
-                m_pSendingBuffer->Release();
-                m_pSendingBuffer = NULL;
-                m_nSendingPos = 0;
-                CLog::GetInstancePtr()->LogWarn("发送线程:发送失败, 连接关闭原因2:%s!", CommonFunc::GetLastErrorStr(errno).c_str());
-                return E_SEND_ERROR;
-            }
-
-            return E_SEND_SUCCESS;
-        }
-
-        if (nRet < pBuffer->GetTotalLenth())
-        {
-            //这就表示发送了一半的数据
-            m_pSendingBuffer = pBuffer;
-            m_nSendingPos = nRet;
-            return E_SEND_UNDONE;
-        }
-
-        pBuffer->Release();
-        pBuffer = NULL;
-    }
-
-    return E_SEND_SUCCESS;
-}
-#endif
 
 CConnectionMgr::CConnectionMgr()
 {
@@ -852,7 +761,7 @@ BOOL CConnectionMgr::CheckConntionAvalible(INT32 nInterval)
         {
             if (uCurTick > (pConnection->m_uLastRecvTick + 10 * 1000))
             {
-                CLog::GetInstancePtr()->LogError("CConnectionMgr::CheckConntionAvalible WAIT超时主动断开连接 ConnID:%d", pConnection->GetConnectionID());
+                LOG_ERROR("CConnectionMgr::CheckConntionAvalible WAIT超时主动断开连接 ConnID:%d", pConnection->GetConnectionID());
                 pConnection->Close();
             }
 

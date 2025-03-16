@@ -219,7 +219,7 @@ void CDBStoredProcedure::set_string(int idx_, char const* str_, size_t size)
 	memset(pBind->buffer, 0, 2048);
 
 	pBind->buffer_length = 2048;
-	pBind->length_value = size;
+	pBind->length_value = static_cast<unsigned long>(size);
 	pBind->length = &pBind->length_value;
 	memcpy((char*)pBind->buffer, str_, size);
 	pBind->buffer_type = MYSQL_TYPE_STRING;
@@ -238,7 +238,7 @@ void CDBStoredProcedure::set_tinyblob(int idx_, void const* ptr_, size_t size)
 
 	memset(pBind->buffer, 0, 255);
 	pBind->buffer_length = 255;
-	pBind->length_value = size;
+	pBind->length_value = static_cast<unsigned long>(size);
 	pBind->length = &pBind->length_value;
 	memcpy((char*)pBind->buffer, ptr_, size);
 	pBind->buffer_type = MYSQL_TYPE_TINY_BLOB;
@@ -258,7 +258,7 @@ void CDBStoredProcedure::set_blob(int idx_, void const* ptr_, size_t size)
 
 	memset(pBind->buffer, 0, (int)65 * 1024);
 	pBind->buffer_length = 65 * 1024;
-	pBind->length_value = size;
+	pBind->length_value = static_cast<unsigned long>(size);
 	pBind->length = &pBind->length_value;
 	memcpy((char*)pBind->buffer, ptr_, size);
 	pBind->buffer_type = MYSQL_TYPE_BLOB;
@@ -277,7 +277,7 @@ void CDBStoredProcedure::set_medium_blob(int idx_, void const* ptr_, size_t size
 
 	memset(pBind->buffer, 0, 1024 * 1024);
 	pBind->buffer_length = 1024 * 1024;
-	pBind->length_value = size;
+	pBind->length_value = static_cast<unsigned long>(size);
 	pBind->length = &pBind->length_value;
 	memcpy((char*)pBind->buffer, ptr_, size);
 	pBind->buffer_type = MYSQL_TYPE_MEDIUM_BLOB;

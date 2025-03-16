@@ -287,14 +287,14 @@ public:
             T* pdata = m_MemoryPool->GetObjectByRawindex(r);
             if (pdata == NULL)
             {
-                CLog::GetInstancePtr()->LogError("SaveModifyToDB Error pData is NULL, ModuleID:[%d]--RawIndex:[%d]", m_nModuleID, r);
+                LOG_ERROR("SaveModifyToDB Error pData is NULL, ModuleID:[%d]--RawIndex:[%d]", m_nModuleID, r);
                 m_nErrorCount++;
                 continue;
             }
 
             if (pdata->GetCheckCode() != BLOCK_CHECK_CODE)
             {
-                CLog::GetInstancePtr()->LogError("SaveModifyToDB Error Memory Crash, ModuleID:[%d]--RawIndex:[%d]", m_nModuleID, r);
+                LOG_ERROR("SaveModifyToDB Error Memory Crash, ModuleID:[%d]--RawIndex:[%d]", m_nModuleID, r);
                 m_nErrorCount++;
                 continue;
             }
@@ -393,7 +393,7 @@ public:
         UINT64 uTickEnd = CommonFunc::GetTickCount();
         if(nCreateCount > 0 || nCreateCount > 0 || nUpdateCount > 0 || nDeleteCount > 0 || nRealseCount > 0 || m_nErrorCount > 0)
         {
-            CLog::GetInstancePtr()->LogInfo("ModuleID:[%02d]--Create:[%d]--Update:[%d]--Delete:[%d]--Release:[%d]--Error:[%d]--Time:[%d]", m_nModuleID, nCreateCount, nUpdateCount, nDeleteCount, nRealseCount, m_nErrorCount, uTickEnd - uTickStart);
+            LOG_INFO("ModuleID:[%02d]--Create:[%d]--Update:[%d]--Delete:[%d]--Release:[%d]--Error:[%d]--Time:[%d]", m_nModuleID, nCreateCount, nUpdateCount, nDeleteCount, nRealseCount, m_nErrorCount, uTickEnd - uTickStart);
         }
 
         return hasOprate;

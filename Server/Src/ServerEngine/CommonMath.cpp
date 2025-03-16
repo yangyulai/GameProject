@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "CommonConvert.h"
 #include "CommonMath.h"
-
+#include <cmath>
 Vector2D::Vector2D(float _x /*= 0.0f*/, float _y /*= 0.0f */)
 {
     m_x = _x;
@@ -58,14 +58,14 @@ FLOAT Vector2D::DistanceToSegment(Vector2D pt1, Vector2D pt2)
     return sqrtf((m_x - px) * (m_x - px) + (py - pt1.m_y) * (py - pt1.m_y));
 }
 
-float Vector2D::AngleBetween(const Vector2D dest)
+float Vector2D::AngleBetween(const Vector2D dest) const
 {
-    return acos((m_x * dest.m_x + m_y * dest.m_y) / Length() / dest.Length());
+    return std::acos((m_x * dest.m_x + m_y * dest.m_y) / Length() / dest.Length());
 }
 
-float Vector2D::ToRadiansAngle()
+float Vector2D::ToRadiansAngle() const
 {
-    float fAngle = acos(m_x / Length());
+    float fAngle = std::acos(m_x / Length());
 
     if (m_y < 0.0f)
     {
@@ -81,14 +81,14 @@ float Vector2D::ToRadiansAngle()
     return fAngle;
 }
 
-float Vector2D::ToDegreesAngle()
+float Vector2D::ToDegreesAngle() const
 {
     return ToRadiansAngle() * RAD_TO_DEG;
 }
 
 Vector2D Vector2D::Rotate(Vector2D A, FLOAT radianAngle)
 {
-    return Vector2D(A.m_x * cos(radianAngle) - A.m_y * sin(radianAngle), A.m_x * sin(radianAngle) + A.m_y * cos(radianAngle));
+    return Vector2D(A.m_x * std::cos(radianAngle) - A.m_y * sin(radianAngle), A.m_x * sin(radianAngle) + A.m_y * std::cos(radianAngle));
 }
 
 void Vector2D::Rotate(FLOAT radianAngle)

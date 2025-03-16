@@ -90,9 +90,6 @@
     <ClCompile Include="CommonMath.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Md5.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="CommonTime.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="CommonMath.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Md5.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="CommonTime.h">
