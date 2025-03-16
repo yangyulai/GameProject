@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "CommonFunc.h"
 
 INT32 CommonFunc::GetProcessorNum()
@@ -628,7 +628,7 @@ INT32 CommonFunc::GetProcessID(const char* pszProcName)
     char buf[100];
     char cmd[200] = { '\0' };
     pid_t pid = 0;
-    sprintf(cmd, "pidof %s", pszProcName);
+    sprintf(cmd, "pidof {}", pszProcName);
 
     if ((fp = popen(cmd, "r")) != NULL)
     {
@@ -764,17 +764,17 @@ BOOL CommonFunc::PrintColorText(CHAR* pSzText, INT32 nColor)
     {
         case 1:
         {
-            printf("\033[1;31;40m%s\033[0m", pSzText);
+            printf("\033[1;31;40m{}\033[0m", pSzText);
         }
         break;
         case 2:
         {
-            printf("\033[1;33;40m%s\033[0m", pSzText);
+            printf("\033[1;33;40m{}\033[0m", pSzText);
         }
         break;
         case 3:
         {
-            printf("\033[1;32;40m%s\033[0m", pSzText);
+            printf("\033[1;32;40m{}\033[0m", pSzText);
         }
         break;
         default:

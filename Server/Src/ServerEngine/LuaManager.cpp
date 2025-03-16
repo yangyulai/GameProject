@@ -32,11 +32,13 @@ BOOL CLuaHelper::Deattch()
 BOOL CLuaHelper::LoadAllLua(const char* pszDir)
 {
 	std::vector<std::string> vtFiles;
+	char szPattern[] = "*.lua"; // Create a modifiable copy of the pattern
 
-	CommonFunc::GetDirFiles(pszDir, "*.lua", vtFiles, TRUE);
+	CommonFunc::GetDirFiles(pszDir, szPattern, vtFiles, TRUE);
 
 	return LoadScriptFile(vtFiles);
 }
+
 
 BOOL CLuaHelper::LoadAllLua(std::string strDir)
 {

@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "CommonTime.h"
+#include <chrono>
 
 INT64 g_TimeAdd = 0;
 
@@ -272,7 +273,6 @@ INT32 CommonFunc::DiffWeeks(UINT64 uTimeSrc, UINT64 uTimeDest)
 
     return uTimeSrc > uTimeDest ? (INT32)((SrcWeekBegin - SrcWeekDest) / (86400 * 7)) : (INT32)((SrcWeekDest - SrcWeekBegin) / (86400 * 7));
 }
-
 INT32 CommonFunc::DiffDays(UINT64 uTimeSrc, UINT64 uTimeDest)
 {
     if (uTimeSrc > uTimeDest)
@@ -280,8 +280,11 @@ INT32 CommonFunc::DiffDays(UINT64 uTimeSrc, UINT64 uTimeDest)
         std::swap(uTimeSrc, uTimeDest);
     }
 
-    tm tm1 = *localtime(&(time_t)uTimeSrc);
-    tm tm2 = *localtime(&(time_t)uTimeDest);
+    time_t tempTimeSrc = static_cast<time_t>(uTimeSrc);
+    tm tm1 = *localtime(&tempTimeSrc);
+
+    time_t tempTimeDest = static_cast<time_t>(uTimeDest);
+    tm tm2 = *localtime(&tempTimeDest);
 
     uTimeSrc = tm1.tm_isdst > 0 ? uTimeSrc = uTimeSrc - 3600 : uTimeSrc;
     uTimeDest = tm2.tm_isdst > 0 ? uTimeDest = uTimeDest + 3600 : uTimeDest;
@@ -292,3 +295,4 @@ INT32 CommonFunc::DiffDays(UINT64 uTimeSrc, UINT64 uTimeDest)
     return (INT32)((uTimeDest - timezone) / 86400 - (uTimeSrc - timezone) / 86400);
 #endif
 }
+

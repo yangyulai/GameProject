@@ -1,5 +1,76 @@
 ﻿#include "stdafx.h"
 #include "Log.h"
+#include <iostream>
+
+
+using namespace std::chrono_literals;
+
+Logger::~Logger() {
+    shutdown();
+}
+
+bool Logger::init(std::string_view prefix, const std::filesystem::path& dir) {
+    prefix_ = prefix;
+    dir_ = dir;
+
+    try {
+        std::filesystem::create_directories(dir_);
+        rotate_file_();
+
+        running_ = true;
+        worker_ = std::jthread([this](std::stop_token st) {
+            while (!st.stop_requested()) {
+                std::this_thread::sleep_for(250ms);
+                flush();
+            }
+            });
+        return true;
+    }
+    catch (const std::filesystem::filesystem_error& e) {
+        std::println(std::cerr, "[FATAL] Failed to initialize logger: {}", e.what());
+        return false;
+    }
+}
+
+void Logger::flush() {
+    std::lock_guard lock(mutex_);
+    file_.flush();
+}
+
+void Logger::shutdown() noexcept {
+    if (running_.exchange(false)) {
+        worker_.request_stop();
+        flush();
+        file_.close();
+    }
+}
+
+void Logger::rotate_file_() {
+    const auto now = std::chrono::system_clock::now();
+    const auto filename = std::format("{}-{:%Y%m%d-%H%M%S}.log",
+        prefix_, now);
+
+    file_.close();
+    file_.open(dir_ / filename, std::ios::app | std::ios::ate);
+
+    if (!file_) {
+        throw std::runtime_error(std::format(
+            "Cannot open log file: {}", (dir_ / filename).string()));
+    }
+}
+
+std::string_view Logger::to_string(LogLevel lv) noexcept {
+    switch (lv) {
+    case LogLevel::Trace:    return "TRACE";
+    case LogLevel::Debug:    return "DEBUG";
+    case LogLevel::Info:     return "INFO";
+    case LogLevel::Warning:  return "WARNING";
+    case LogLevel::Error:    return "ERROR";
+    case LogLevel::Critical: return "CRITICAL";
+    default:              return "UNKNOWN";
+    }
+}
+#ifdef AAAAAAAA
 CLog::CLog(void)
 {
     m_LogLevel = 4;
@@ -34,7 +105,7 @@ BOOL CLog::Start(std::string strPrefix, std::string strLogDir)
 
     CHAR szFileName[512];
 
-    snprintf(szFileName, 512, "%s/%s-%02d%02d%02d-%02d%02d%02d.log",  strLogDir.c_str(), strPrefix.c_str(), CurTime.tm_year % 100, CurTime.tm_mon + 1, CurTime.tm_mday, CurTime.tm_hour, CurTime.tm_min, CurTime.tm_sec);
+    snprintf(szFileName, 512, "{}/{}-%02d%02d%02d-%02d%02d%02d.log",  strLogDir.c_str(), strPrefix.c_str(), CurTime.tm_year % 100, CurTime.tm_mon + 1, CurTime.tm_mday, CurTime.tm_hour, CurTime.tm_min, CurTime.tm_sec);
 
     m_pLogFile = fopen(szFileName, "w+");
 
@@ -214,7 +285,7 @@ void CLog::SetTitle(char* lpszFormat, ...)
 {
 #ifdef WIN32
     CHAR szLog[512] = {0};
-    snprintf(szLog, 512, "%s: ", m_strPrefix.c_str());
+    snprintf(szLog, 512, "{}: ", m_strPrefix.c_str());
 
     INT32 nSize = (INT32)strlen(szLog);
 
@@ -244,7 +315,7 @@ void CLog::CheckAndCreate()
 
     CHAR szFileName[512];
 
-    snprintf(szFileName, 512, "%s/%s-%02d%02d%02d-%02d%02d%02d.log", m_strLogDir.c_str(), m_strPrefix.c_str(), CurTime.tm_year % 100, CurTime.tm_mon + 1, CurTime.tm_mday, CurTime.tm_hour, CurTime.tm_min, CurTime.tm_sec);
+    snprintf(szFileName, 512, "{}/{}-%02d%02d%02d-%02d%02d%02d.log", m_strLogDir.c_str(), m_strPrefix.c_str(), CurTime.tm_year % 100, CurTime.tm_mon + 1, CurTime.tm_mday, CurTime.tm_hour, CurTime.tm_min, CurTime.tm_sec);
 
     m_pLogFile = fopen(szFileName, "w+");
 
@@ -258,3 +329,4 @@ void CLog::CheckAndCreate()
     return;
 }
 
+#endif

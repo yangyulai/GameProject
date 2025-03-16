@@ -58,7 +58,7 @@ BOOL ServiceBase::StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatche
 
     if (!CNetManager::GetInstancePtr()->Start(nPortNum, nMaxConn, this, strListenIp))
     {
-        CLog::GetInstancePtr()->LogError("启动网络层失败!");
+        LOG_ERROR("启动网络层失败!");
         return FALSE;
     }
 
@@ -94,7 +94,7 @@ BOOL ServiceBase::SendMsgProtoBuf(INT32 nConnID, INT32 nMsgID, UINT64 u64TargetI
 {
     if (nConnID <= 0)
     {
-        CLog::GetInstancePtr()->LogWarn("SendMsgProtoBuf Error nConnID is Zero MessageID:%d", nMsgID);
+        LOG_WARN("SendMsgProtoBuf Error nConnID is Zero MessageID:%d", nMsgID);
         return FALSE;
     }
 
@@ -230,7 +230,7 @@ BOOL ServiceBase::Update()
     {
         m_pPacketDispatcher->OnSecondTimer();
 
-        CLog::GetInstancePtr()->SetTitle("[AreaID:%d]-[FPS:%d]-[RecvPack:%d]--[SendPack:%d]", CConfigFile::GetInstancePtr()->GetIntValue("areaid"), m_nFps, m_nRecvNum, m_nSendNum);
+        //CLog::GetInstancePtr()->SetTitle("[AreaID:%d]-[FPS:%d]-[RecvPack:%d]--[SendPack:%d]", CConfigFile::GetInstancePtr()->GetIntValue("areaid"), m_nFps, m_nRecvNum, m_nSendNum);
         m_nFps = 0;
         m_nRecvNum = 0;
         m_nSendNum = 0;
@@ -260,7 +260,7 @@ BOOL ServiceBase::FixFrameNum(INT32 nFrames)
 
     if (uNextTick > uCurTick)
     {
-        CommonFunc::Sleep(uNextTick - uCurTick);
+        CommonFunc::Sleep(static_cast<INT32>(uNextTick - uCurTick));
     }
 
     uNextTick = uNextTick + 1000 / nFrames;

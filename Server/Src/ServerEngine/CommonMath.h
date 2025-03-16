@@ -56,13 +56,13 @@ public:
     FLOAT DistanceToSegment(Vector2D pt1, Vector2D pt2);
 
     //求弧度范围: 0-π
-    FLOAT AngleBetween(const Vector2D dest);
+    FLOAT AngleBetween(const Vector2D dest) const;
 
     //向量转弧度范围: 0-2π
-    FLOAT ToRadiansAngle();
+    FLOAT ToRadiansAngle() const;
 
     //向量转角度范围: 0-360
-    FLOAT ToDegreesAngle();
+    FLOAT ToDegreesAngle() const;
 
     Vector2D Rotate(Vector2D A, FLOAT radianAngle);
 

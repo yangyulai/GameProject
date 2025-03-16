@@ -69,7 +69,7 @@ std::string CConfigFile::GetStringValue( std::string strName )
         return itor->second;
     }
 
-    CLog::GetInstancePtr()->LogError("无效的配制选项: [%s]", strName.c_str());
+    LOG_ERROR("无效的配制选项: [{}]", strName);
 
     return "";
 }

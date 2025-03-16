@@ -754,7 +754,7 @@ int CppMySQL3DB::createDB(const char* name)
 {
     m_nErrNo = 0;
     char temp[1024] = {};
-    snprintf(temp, 1024, "CREATE DATABASE %s", name);
+    snprintf(temp, 1024, "CREATE DATABASE {}", name);
     if(!mysql_real_query( m_pMySqlDB, temp, (unsigned long)strlen(temp)) )
     {
         return 0;
@@ -771,7 +771,7 @@ int CppMySQL3DB::dropDB(const char*  name)
 {
     m_nErrNo = 0;
     char temp[1024];
-    snprintf(temp, 1024, "DROP DATABASE %s", name);
+    snprintf(temp, 1024, "DROP DATABASE {}", name);
     if(!mysql_real_query( m_pMySqlDB, temp, (unsigned long)strlen(temp)) )
     {
         return 0;
@@ -807,7 +807,7 @@ INT64 CppMySQL3DB::GetAutoIncrementID(const char* szTableName, const char* szDBN
 
     m_nErrNo = 0;
     char strSql[1024];
-    snprintf(strSql, 1024, "SELECT auto_increment FROM information_schema.tables where table_schema=\"%s\" and table_name=\"%s\"", szDBName, szTableName);
+    snprintf(strSql, 1024, "SELECT auto_increment FROM information_schema.tables where table_schema=\"{}\" and table_name=\"{}\"", szDBName, szTableName);
 
     CppMySQLQuery tQuery;
     int nRet = mysql_real_query(m_pMySqlDB, strSql, (unsigned long)strlen(strSql));
@@ -832,7 +832,7 @@ bool CppMySQL3DB::SetAutoIncrementID(INT64 nId, const char* szTableName, const c
 
     m_nErrNo = 0;
     char strSql[1024];
-    snprintf(strSql, 1024, "alter table %s.%s AUTO_INCREMENT=%lld;", szDBName, szTableName, nId);
+    snprintf(strSql, 1024, "alter table {}.{} AUTO_INCREMENT=%lld;", szDBName, szTableName, nId);
 
     if (!mysql_real_query(m_pMySqlDB, strSql, (unsigned long)strlen(strSql)))
     {
