@@ -277,3 +277,5 @@ proto/proto-gen-lua
 *.unsuccessfulbuild
 *.asset
 *.exp
+/Server/Src/.vs
+/Proto
