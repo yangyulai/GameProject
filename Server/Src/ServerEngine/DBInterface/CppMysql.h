@@ -1,5 +1,4 @@
-﻿#ifndef __MYSQL_HELPER_H__
-#define __MYSQL_HELPER_H__
+﻿#pragma once
 
 #include "mysql.h"
 
@@ -165,5 +164,3 @@ private:
     std::string  m_strCharSet; //字符集
     int          m_nPort;
 };
-
-#endif //__MYSQL_HELPER_H__

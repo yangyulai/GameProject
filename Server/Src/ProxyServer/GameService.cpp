@@ -33,17 +33,17 @@ BOOL CGameService::Init()
         return FALSE;
     }
 
-    CLog::GetInstancePtr()->LogInfo("---------服务器开始启动-----------");
+    spdlog::info("---------服务器开始启动-----------");
 
     if(!CConfigFile::GetInstancePtr()->Load("servercfg.ini"))
     {
-        CLog::GetInstancePtr()->LogError("配制文件加载失败!");
+        spdlog::error("配制文件加载失败!");
         return FALSE;
     }
 
     if (CommonFunc::IsAlreadyRun("ProxyServer" + CConfigFile::GetInstancePtr()->GetStringValue("areaid")))
     {
-        CLog::GetInstancePtr()->LogError("ProxyServer己经在运行!");
+        spdlog::error("ProxyServer己经在运行!");
         return FALSE;
     }
 
@@ -52,21 +52,21 @@ BOOL CGameService::Init()
     UINT16 nPort = CConfigFile::GetInstancePtr()->GetRealNetPort("proxy_svr_port");
     if (nPort <= 0)
     {
-        CLog::GetInstancePtr()->LogError("配制文件proxy_svr_port配制错误!");
+        spdlog::error("配制文件proxy_svr_port配制错误!");
         return FALSE;
     }
 
     INT32  nMaxConn = CConfigFile::GetInstancePtr()->GetIntValue("proxy_svr_max_con");
     if(!ServiceBase::GetInstancePtr()->StartNetwork(nPort, nMaxConn, this))
     {
-        CLog::GetInstancePtr()->LogError("启动服务失败!");
+        spdlog::error("启动服务失败!");
         return FALSE;
     }
 
     //开启包序号检查
     ERROR_RETURN_FALSE(m_ProxyMsgHandler.Init(0));
 
-    CLog::GetInstancePtr()->LogHiInfo("---------服务器启动成功!--------");
+    spdlog::info("---------服务器启动成功!--------");
 
     return TRUE;
 }
@@ -90,7 +90,7 @@ BOOL CGameService::OnCloseConnect(INT32 nConnID)
     if(nConnID == m_nLogicConnID)
     {
         m_nLogicConnID = 0;
-        CLog::GetInstancePtr()->LogError("CGameService::OnCloseConnect Disconnect From Logic Server.");
+        spdlog::error("CGameService::OnCloseConnect Disconnect From Logic Server.");
         return TRUE;
     }
 
@@ -146,7 +146,7 @@ BOOL CGameService::ConnectToLogicSvr()
 
 BOOL CGameService::Uninit()
 {
-    CLog::GetInstancePtr()->LogError("==========服务器开始关闭=======================");
+    spdlog::error("==========服务器开始关闭=======================");
 
     ServiceBase::GetInstancePtr()->StopNetwork();
 
@@ -154,7 +154,7 @@ BOOL CGameService::Uninit()
 
     google::protobuf::ShutdownProtobufLibrary();
 
-    CLog::GetInstancePtr()->LogError("==========服务器关闭完成=======================");
+    spdlog::error("==========服务器关闭完成=======================");
 
     return TRUE;
 }

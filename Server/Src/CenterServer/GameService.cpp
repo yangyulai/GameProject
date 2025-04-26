@@ -31,16 +31,16 @@ BOOL CGameService::Init()
     {
         return FALSE;
     }
-    CLog::GetInstancePtr()->LogInfo("---------服务器开始启动--------");
+    spdlog::info("---------服务器开始启动--------");
     if(!CConfigFile::GetInstancePtr()->Load("servercfg.ini"))
     {
-        CLog::GetInstancePtr()->LogError("配制文件加载失败!");
+        spdlog::error("配制文件加载失败!");
         return FALSE;
     }
 
     if (CommonFunc::IsAlreadyRun("CenterServer"))
     {
-        CLog::GetInstancePtr()->LogError("CenterServer己经在运行!");
+        spdlog::error("CenterServer己经在运行!");
         return FALSE;
     }
 
@@ -50,14 +50,14 @@ BOOL CGameService::Init()
     UINT16 nPort = CConfigFile::GetInstancePtr()->GetIntValue("center_svr_port");
     if (nPort <= 0)
     {
-        CLog::GetInstancePtr()->LogError("配制文件center_svr_port配制错误!");
+        spdlog::error("配制文件center_svr_port配制错误!");
         return FALSE;
     }
     INT32 nMaxConn = CConfigFile::GetInstancePtr()->GetIntValue("center_svr_max_con");
     std::string strListenIp = CConfigFile::GetInstancePtr()->GetStringValue("center_svr_ip");
     if(!ServiceBase::GetInstancePtr()->StartNetwork(nPort, nMaxConn, this, strListenIp))
     {
-        CLog::GetInstancePtr()->LogError("启动服务失败!");
+        spdlog::error("启动服务失败!");
         return FALSE;
     }
 
@@ -65,7 +65,7 @@ BOOL CGameService::Init()
 
     //AsyncMySQLDB::GetInstancePtr()->Init();
 
-    CLog::GetInstancePtr()->LogHiInfo("---------服务器启动成功!--------");
+    spdlog::info("---------服务器启动成功!--------");
     return TRUE;
 }
 
@@ -103,7 +103,7 @@ BOOL CGameService::DispatchPacket(NetPacket* pNetPacket)
 
 BOOL CGameService::Uninit()
 {
-    CLog::GetInstancePtr()->LogHiInfo("==========服务器开始关闭=======================");
+    spdlog::info("==========服务器开始关闭=======================");
 
     ServiceBase::GetInstancePtr()->StopNetwork();
 
@@ -112,7 +112,7 @@ BOOL CGameService::Uninit()
 
     google::protobuf::ShutdownProtobufLibrary();
 
-    CLog::GetInstancePtr()->LogHiInfo("==========服务器关闭完成=======================");
+    spdlog::info("==========服务器关闭完成=======================");
 
     return TRUE;
 }

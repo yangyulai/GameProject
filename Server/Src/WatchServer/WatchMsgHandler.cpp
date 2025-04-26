@@ -63,7 +63,7 @@ BOOL CWatchMsgHandler::Init(INT32 nReserved)
 {
     if (!RegExitSignal())
     {
-        CLog::GetInstancePtr()->LogError("Cannot Register Exit Signal!");
+        spdlog::error("Cannot Register Exit Signal!");
         return FALSE;
     }
 
@@ -142,7 +142,7 @@ BOOL CWatchMsgHandler::OnMsgWebCommandReq(NetPacket* pNetPacket)
     HttpParameter Params;
     Params.ParseStringToMap(szMsgBuf);
     std::string strAction = Params.GetStrValue("Action");
-    CLog::GetInstancePtr()->LogHiInfo("Web Action :%s", strAction.c_str());
+    spdlog::info("Web Action :%s", strAction.c_str());
 
     EWebAction eWebAction = (EWebAction)CommonConvert::StringToInt(strAction.c_str());
     switch (eWebAction)
@@ -174,7 +174,7 @@ void CWatchMsgHandler::OnGmServerStart(HttpParameter& hParams, INT32 nConnID)
     INT32 nAreaID = hParams.GetIntValue("areaid");
     ERROR_RETURN_NONE(nAreaID != 0);
 
-    CLog::GetInstancePtr()->LogHiInfo("OnGmServerStart Server:%d!", nAreaID);
+    spdlog::info("OnGmServerStart Server:%d!", nAreaID);
 
     ServerInfo* pSvrInfo = GetServerInfo(nAreaID);
     if (pSvrInfo == NULL)
@@ -205,7 +205,7 @@ void CWatchMsgHandler::OnGmServerStop(HttpParameter& hParams, INT32 nConnID)
     INT32 nAreaID = hParams.GetIntValue("areaid");
     ERROR_RETURN_NONE(nAreaID != 0);
 
-    CLog::GetInstancePtr()->LogHiInfo("OnGmServerStop Server:%d!", nAreaID);
+    spdlog::info("OnGmServerStop Server:%d!", nAreaID);
 
     ServerInfo* pSvrInfo = GetServerInfo(nAreaID);
     if (pSvrInfo == NULL)
@@ -236,7 +236,7 @@ void CWatchMsgHandler::OnGmServerUpdate(HttpParameter& hParams, INT32 nConnID)
     INT32 nAreaID = hParams.GetIntValue("areaid");
     ERROR_RETURN_NONE(nAreaID != 0);
 
-    CLog::GetInstancePtr()->LogHiInfo("OnGmServerUpdate Server:%d!", nAreaID);
+    spdlog::info("OnGmServerUpdate Server:%d!", nAreaID);
 
     ServerInfo* pSvrInfo = GetServerInfo(nAreaID);
     if (pSvrInfo == NULL)
@@ -282,7 +282,7 @@ BOOL CWatchMsgHandler::InitServerList()
 
     for (int i = 0; i < vtDirNames.size(); i++)
     {
-        CLog::GetInstancePtr()->LogHiInfo("Server Directory[%d]：%s", i, vtDirNames.at(i).c_str());
+        spdlog::info("Server Directory[%d]：%s", i, vtDirNames.at(i).c_str());
     }
 
     for (INT32 i = 0; i < vtDirNames.size(); i++)

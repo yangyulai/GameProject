@@ -124,7 +124,7 @@ BOOL CSimpleManager::SetName( UINT64 u64ID, std::string strName )
 	auto ret = m_mapName2ID.insert(std::make_pair(strName, pInfo->m_uRoleID));
 	if (!ret.second)
 	{
-		CLog::GetInstancePtr()->LogError("CSimpleManager::SetPlayerName Error Role Name :%s already exist!", pInfo->m_strName.c_str());
+		spdlog::error("CSimpleManager::SetPlayerName Error Role Name :%s already exist!", pInfo->m_strName.c_str());
 		return FALSE;
 	}
 
@@ -279,7 +279,7 @@ BOOL CSimpleManager::AddSimpleInfo(CSimpleInfo* pInfo)
 
 	if (!ret.second)
 	{
-		CLog::GetInstancePtr()->LogError("CSimpleManager::AddSimpleInfo Error Role Name :%s already exist!", pInfo->m_strName.c_str());
+		spdlog::error("CSimpleManager::AddSimpleInfo Error Role Name :%s already exist!", pInfo->m_strName.c_str());
 	}
 
 	return TRUE;

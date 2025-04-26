@@ -16,6 +16,7 @@ public:
 	BOOL		Uninit();
 
 	BOOL		Run();
+	void Test();
 
 	BOOL		OnNewConnect(INT32 nConnID);
 

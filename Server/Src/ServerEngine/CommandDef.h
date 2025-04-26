@@ -11,7 +11,7 @@ BOOL ClassName##::DispatchPacket(NetPacket *pNetPacket) \
 
 #define PROCESS_MESSAGE_ITEM(dwMsgID, Func) \
 		case dwMsgID:{\
-		CLog::GetInstancePtr()->LogInfo("---Receive Message:[%s]----", #dwMsgID);\
+		spdlog::info("---Receive Message:[%s]----", #dwMsgID);\
 		if(Func(pNetPacket)){return TRUE;}}break;
 
 #define PROCESS_MESSAGE_ITEMEX(dwMsgID, Func) \

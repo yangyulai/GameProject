@@ -1,6 +1,6 @@
-﻿#include "DBInterface/CppMysql.h"
-#ifndef _LOG_MSG_HANDLER_H_
-#define _LOG_MSG_HANDLER_H_
+﻿#pragma once
+
+#include "DBInterface/CppMysql.h"
 
 class CLogMsgHandler
 {
@@ -16,6 +16,7 @@ public:
 	BOOL		OnUpdate(UINT64 uTick);
 
 	BOOL		DispatchPacket(NetPacket* pNetPacket);
+	bool Test();
 
 public:
 	//*********************消息处理定义开始******************************
@@ -29,5 +30,3 @@ public:
 	UINT64          m_nLastWriteTime;
 
 };
-
-#endif //_STAT_MSG_HANDLER_H_

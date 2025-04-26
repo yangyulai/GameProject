@@ -41,7 +41,7 @@ BOOL CSceneObject::SendMsgProtoBuf(INT32 nMsgID, const google::protobuf::Message
 {
 	if (m_dwProxyConnID == 0)
 	{
-		CLog::GetInstancePtr()->LogError("Error SendMsgProtoBuf MessageID:%d", nMsgID);
+		spdlog::error("Error SendMsgProtoBuf MessageID:%d", nMsgID);
 		return FALSE;
 	}
 
@@ -52,7 +52,7 @@ BOOL CSceneObject::SendMsgRawData(INT32 nMsgID, const char* pdata, UINT32 dwLen)
 {
 	if (m_dwProxyConnID == 0)
 	{
-		CLog::GetInstancePtr()->LogError("Error SendMsgRawData MessageID:%d", nMsgID);
+		spdlog::error("Error SendMsgRawData MessageID:%d", nMsgID);
 		return FALSE;
 	}
 

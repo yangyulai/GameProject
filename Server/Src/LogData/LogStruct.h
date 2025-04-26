@@ -16,7 +16,35 @@ enum ELogType
     ELT_ROLE_LEVEL,
     ELT_ROLE_CHAT, //聊天
 };
+template<>
+struct fmt::formatter<ELogType> {
+    // 默认解析，无需额外格式
+    constexpr auto parse(fmt::format_parse_context& ctx) {
+        return ctx.begin();
+    }
 
+    // 根据枚举值返回对应名称
+    template <typename FormatContext>
+    auto format(ELogType e, FormatContext& ctx) const  {
+        const char* name = nullptr;
+        switch (e) {
+        case ELT_LOG_TYPE_NONE:      name = "NONE";        break;
+        case ELT_ACCOUNT_CREATE:     name = "ACCOUNT_CREATE"; break;
+        case ELT_ACCOUNT_LOGIN:      name = "ACCOUNT_LOGIN";  break;
+        case ELT_ROLE_CREATE:        name = "ROLE_CREATE";    break;
+        case ELT_ROLE_LOGIN:         name = "ROLE_LOGIN";     break;
+        case ELT_ROLE_LOGOUT:        name = "ROLE_LOGOUT";    break;
+        case ELT_ROLE_EXP:           name = "ROLE_EXP";       break;
+        case ELT_ROLE_DIAMOND:       name = "ROLE_DIAMOND";   break;
+        case ELT_ROLE_GOLD:          name = "ROLE_GOLD";      break;
+        case ELT_ROLE_LEVEL:         name = "ROLE_LEVEL";     break;
+        case ELT_ROLE_CHAT:          name = "ROLE_CHAT";      break;
+        default:                     name = "UNKNOWN";        break;
+        }
+        // 输出名字到 fmt 的缓冲区
+        return fmt::format_to(ctx.out(), "{}", name);
+    }
+};
 //角色日志
 struct Log_BaseData
 {

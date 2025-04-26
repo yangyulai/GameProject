@@ -458,7 +458,7 @@ BOOL CLogicMsgHandler::OnMsgChatMessageReq(NetPacket* pNetPacket)
         std::vector<std::string> vtParam;
         CommonConvert::SpliteString(Req.content(), " ", vtParam);
 
-        CLog::GetInstancePtr()->LogInfo("GM Command : %s", Req.content().c_str());
+        spdlog::info("GM Command : %s", Req.content().c_str());
 
         ProcessGMCommand(pHeader->u64TargetID, vtParam);
         return TRUE;
@@ -526,7 +526,7 @@ BOOL CLogicMsgHandler::OnMsgReconnectReq( NetPacket* pNetPacket )
         //如果此时这两个值为空，那么，还会有其它的情况发生。
         //此时应该直接选设置这两个值
         //由于副本己经被退出， 所以此时应该将玩家放到主城
-        CLog::GetInstancePtr()->LogError("OnMsgReconnectReq 断开消都还没有收到， 重连的消息就到了");
+        spdlog::error("OnMsgReconnectReq 断开消都还没有收到， 重连的消息就到了");
     }
 
     pPlayer->SetOnline(TRUE);

@@ -213,7 +213,7 @@ BOOL CLoginMsgHandler::OnMsgSelectServerReq(NetPacket* pPacket)
     ERROR_RETURN_TRUE(Req.accountid() > 0);
     if (!CLoginClientMgr::GetInstancePtr()->CheckClientMessage(nConnID, pPacket->m_nMsgID))
     {
-        CLog::GetInstancePtr()->LogError("非法的消息请求SelectServer!!!");
+        spdlog::error("非法的消息请求SelectServer!!!");
         return TRUE;
     }
 
@@ -222,7 +222,7 @@ BOOL CLoginMsgHandler::OnMsgSelectServerReq(NetPacket* pPacket)
     LogicServerNode* pServerNode = m_LogicSvrMgr.GetLogicServerInfo(Req.serverid());
     if (pServerNode == NULL)
     {
-        CLog::GetInstancePtr()->LogError("选择服务器错误 无效的服务器ID:%d", Req.serverid());
+        spdlog::error("选择服务器错误 无效的服务器ID:%d", Req.serverid());
         SelectServerAck Ack;
         Ack.set_serveraddr("0.0.0.0");
         Ack.set_serverport(0);
@@ -233,7 +233,7 @@ BOOL CLoginMsgHandler::OnMsgSelectServerReq(NetPacket* pPacket)
 
     if (pServerNode->m_ServerFlag == ESF_MAINTAIN || pServerNode->m_ServerStatus != ESS_SVR_ONLINE)
     {
-        CLog::GetInstancePtr()->LogError("服务器:%d 维护中 ServerFlag:%d", Req.serverid(), pServerNode->m_ServerFlag);
+        spdlog::error("服务器:%d 维护中 ServerFlag:%d", Req.serverid(), pServerNode->m_ServerFlag);
         SelectServerAck Ack;
         Ack.set_serveraddr("0.0.0.0");
         Ack.set_serverport(0);
@@ -244,7 +244,7 @@ BOOL CLoginMsgHandler::OnMsgSelectServerReq(NetPacket* pPacket)
 
     if (pServerNode->m_ServerStatus != ESS_SVR_ONLINE)
     {
-        CLog::GetInstancePtr()->LogError("选择服务器错误 服务器:%d 不在线", Req.serverid());
+        spdlog::error("选择服务器错误 服务器:%d 不在线", Req.serverid());
         SelectServerAck Ack;
         Ack.set_serveraddr("0.0.0.0");
         Ack.set_serverport(0);

@@ -28,8 +28,8 @@ BOOL CLogMsgHandler::Init(INT32 nReserved)
     BOOL bRet = m_DBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort);
     if(!bRet)
     {
-        CLog::GetInstancePtr()->LogError("CLogMsgHandler::Init Error: Can not open mysql database! Reason:%s", m_DBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("CLogMsgHandler::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+        spdlog::error("CLogMsgHandler::Init Error: Can not open mysql database! Reason:%s", m_DBConnection.GetErrorMsg());
+        spdlog::error("CLogMsgHandler::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
         return FALSE;
     }
 
@@ -61,14 +61,14 @@ BOOL CLogMsgHandler::OnUpdate(UINT64 uTick)
     {
         if (!m_DBConnection.commit())
         {
-            CLog::GetInstancePtr()->LogError("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
+            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
         }
 
         m_DBConnection.ping();
 
         if (!m_DBConnection.startTransaction())
         {
-            CLog::GetInstancePtr()->LogError("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
+            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
         }
 
         m_nLastWriteTime = uTick;
@@ -87,7 +87,28 @@ BOOL CLogMsgHandler::DispatchPacket(NetPacket* pNetPacket)
 
     return FALSE;
 }
+bool CLogMsgHandler::Test()
+{
+    Log_RoleCreate log;
+    CHAR szSql[4096] = { 0 };
+    log.GetLogSql(szSql);
+    if (m_DBConnection.execSQL(szSql) <= 0)
+    {
+        spdlog::error(szSql);
+    }
+    if (!m_DBConnection.commit())
+    {
+        spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
+    }
 
+    m_DBConnection.ping();
+
+    if (!m_DBConnection.startTransaction())
+    {
+        spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
+    }
+    return true;
+}
 BOOL CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
 {
     Log_BaseData* pData = (Log_BaseData*)pNetPacket->m_pDataBuffer->GetData();
@@ -139,8 +160,8 @@ BOOL CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
 
     if (m_DBConnection.execSQL(szSql) <= 0)
     {
-        CLog::GetInstancePtr()->LogError("CLogMsgHandler::OnLogDataNtf m_LogType :%d, Error :%s", pData->m_LogType,  m_DBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError(szSql);
+        spdlog::error("CLogMsgHandler::OnLogDataNtf m_LogType :%d, Error :%s", pData->m_LogType,  m_DBConnection.GetErrorMsg());
+        spdlog::error(szSql);
     }
 
     m_nWriteCount += 1;
@@ -149,14 +170,14 @@ BOOL CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
     {
         if (!m_DBConnection.commit())
         {
-            CLog::GetInstancePtr()->LogError("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
+            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
         }
 
         m_DBConnection.ping();
 
         if (!m_DBConnection.startTransaction())
         {
-            CLog::GetInstancePtr()->LogError("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
+            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
         }
 
         m_nWriteCount = 0;

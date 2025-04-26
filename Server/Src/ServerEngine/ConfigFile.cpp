@@ -69,7 +69,7 @@ std::string CConfigFile::GetStringValue( std::string strName )
         return itor->second;
     }
 
-    LOG_ERROR("无效的配制选项: [{}]", strName);
+    spdlog::error("无效的配制选项: [{}]", strName);
 
     return "";
 }

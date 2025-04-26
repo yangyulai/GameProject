@@ -51,7 +51,7 @@ BOOL CSceneManager::CreateScene(UINT32 dwCopyID, UINT32 dwCopyGuid, UINT32 dwCop
 
 	if(!pScene->Init(dwCopyID, dwCopyGuid, dwCopyType, dwPlayerNum, uCreateKey))
 	{
-		CLog::GetInstancePtr()->LogError("Error Create Scene Failed, CopyID:%d; CopyType:%d, PlayerNum:%d", dwCopyID, dwCopyType, dwPlayerNum);
+		spdlog::error("Error Create Scene Failed, CopyID:%d; CopyType:%d, PlayerNum:%d", dwCopyID, dwCopyType, dwPlayerNum);
 
 		delete pScene;
 
@@ -76,7 +76,7 @@ BOOL CSceneManager::DispatchPacket(NetPacket* pNetPacket)
 	CScene* pScene = GetSceneByCopyGuid(pPacketHeader->dwUserData);
 	if (pScene == NULL)
 	{
-		CLog::GetInstancePtr()->LogError("Error : Invalid CopyGuid:%d, MessageID:%d", pPacketHeader->dwUserData, pNetPacket->m_nMsgID);
+		spdlog::error("Error : Invalid CopyGuid:%d, MessageID:%d", pPacketHeader->dwUserData, pNetPacket->m_nMsgID);
 		return TRUE;
 	}
 

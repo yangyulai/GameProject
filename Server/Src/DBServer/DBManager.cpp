@@ -21,8 +21,8 @@ BOOL CDBManager::Init()
 
 	if(!m_DBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
 	{
-		CLog::GetInstancePtr()->LogError("CDBManager::Init Error: Can not open mysql database! Reason:%s", m_DBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("CDBManager::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+		spdlog::error("CDBManager::Init Error: Can not open mysql database! Reason:%s", m_DBConnection.GetErrorMsg());
+        spdlog::error("CDBManager::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
 		return FALSE;
 	}
 
@@ -45,7 +45,7 @@ BOOL CDBManager::GetRoleList(UINT64 u64AccountID, RoleListAck& Ack)
 	CppMySQLQuery  QueryRes = m_DBConnection.querySQL(szSql);
     if (m_DBConnection.GetErrorNo() != 0)
     {
-        CLog::GetInstancePtr()->LogError("CDBManager::GetRoleList Error :%s", m_DBConnection.GetErrorMsg());
+        spdlog::error("CDBManager::GetRoleList Error :%s", m_DBConnection.GetErrorMsg());
         return FALSE;
     }
 
@@ -73,7 +73,7 @@ BOOL CDBManager::GetRoleData(UINT64 u64ID, DBRoleLoginAck& Ack)
 	CppMySQLQuery  QueryRes = m_DBConnection.querySQL(szSql);
     if (m_DBConnection.GetErrorNo() != 0)
     {
-        CLog::GetInstancePtr()->LogError("CDBManager::GetRoleData Error :%s", m_DBConnection.GetErrorMsg());
+        spdlog::error("CDBManager::GetRoleData Error :%s", m_DBConnection.GetErrorMsg());
         return FALSE;
     }
 

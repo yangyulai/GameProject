@@ -89,7 +89,7 @@ BOOL CWebCommandMgr::OnMsgGmCommandReq(NetPacket* pNetPacket)
 	HttpParameter Params;
 	Params.ParseStringToMap(szMsgBuf);
 	std::string strAction = Params.GetStrValue("Action");
-	CLog::GetInstancePtr()->LogInfo("Web Action :%s", strAction.c_str());
+	spdlog::info("Web Action :%s", strAction.c_str());
 
 	EWebAction eWebAction = (EWebAction)CommonConvert::StringToInt(strAction.c_str());
 	switch (eWebAction)
@@ -178,7 +178,7 @@ void CWebCommandMgr::OnGmSealRole(HttpParameter& hParams, INT32 nConnID)
 	if (uRoleID <= 0)
 	{
 		SendWebResult(nConnID, EWR_FAILURE);
-		CLog::GetInstancePtr()->LogError("CWebCommandMgr::OnGmSealRole Invalid roleid and Invalid rolename");
+		spdlog::error("CWebCommandMgr::OnGmSealRole Invalid roleid and Invalid rolename");
 		return;
 	}
 

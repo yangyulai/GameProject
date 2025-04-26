@@ -349,13 +349,13 @@ BOOL CProxyMsgHandler::OnMsgReconnectReq(NetPacket* pPacket)
         CConnection* pConn = ServiceBase::GetInstancePtr()->GetConnectionByID(pPlayer->GetConnID());
         if (pConn != NULL)
         {
-            CLog::GetInstancePtr()->LogError("OnMsgReconnectReq RoleID:%lld, OrgConnID:%d, NewConnID:%d", pPacketHeader->u64TargetID, pPlayer->GetConnID(), pPacket->m_nConnID);
+            spdlog::error("OnMsgReconnectReq RoleID:%lld, OrgConnID:%d, NewConnID:%d", pPacketHeader->u64TargetID, pPlayer->GetConnID(), pPacket->m_nConnID);
             pConn->SetConnectionData(0);
             pConn->Shutdown();
         }
         else
         {
-            CLog::GetInstancePtr()->LogError("OnMsgReconnectReq Error orgin connect alreay removed:%d", pPlayer->GetConnID());
+            spdlog::error("OnMsgReconnectReq Error orgin connect alreay removed:%d", pPlayer->GetConnID());
         }
     }
 

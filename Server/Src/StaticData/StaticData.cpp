@@ -72,7 +72,7 @@ BOOL CStaticData::LoadConfigData(std::string strDbFile)
     }
     catch(CppSQLite3Exception& e)
     {
-        CLog::GetInstancePtr()->LogError("CConfigData::LoadConfigData Failed!!!, Reason:%s", e.errorMessage());
+        spdlog::error("CConfigData::LoadConfigData Failed!!!, Reason:%s", e.errorMessage());
         return FALSE;
     }
 #else
@@ -85,7 +85,7 @@ BOOL CStaticData::LoadConfigData(std::string strDbFile)
     CppMySQL3DB tDBConnection;
     if (!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
         return FALSE;
     }
     char szSql[SQL_BUFF_LEN] = { 0 };
@@ -127,7 +127,7 @@ BOOL CStaticData::ReloadConfigData( std::string strTbName )
     }
     catch(CppSQLite3Exception& e)
     {
-        CLog::GetInstancePtr()->LogError("CConfigData::ReloadConfigData Failed!!!, Reason:%s", e.errorMessage());
+        spdlog::error("CConfigData::ReloadConfigData Failed!!!, Reason:%s", e.errorMessage());
         return FALSE;
     }
 
@@ -466,7 +466,7 @@ BOOL CStaticData::ReadAwardData(CppSQLite3Query& QueryData)
 
             if (nCheckRatio != 10000)
             {
-                CLog::GetInstancePtr()->LogError("ReadAwardData Error: Invalid awardid :%d", stValue.dwAwardID);
+                spdlog::error("ReadAwardData Error: Invalid awardid :%d", stValue.dwAwardID);
             }
         }
 
@@ -546,7 +546,7 @@ BOOL CStaticData::GetAwardItemByIndex(INT32 nAwardID, INT32 nCarrer, INT32 nInde
 
     if (nIndex >= (INT32)AwardItem.FixItems.size())
     {
-        CLog::GetInstancePtr()->LogError("GetItemByIndex Error: Invalid index :%d", nIndex);
+        spdlog::error("GetItemByIndex Error: Invalid index :%d", nIndex);
         return FALSE;
     }
 

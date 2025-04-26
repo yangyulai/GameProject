@@ -29,8 +29,8 @@ BOOL CAccountObjectMgr::LoadCacheAccount()
     CppMySQL3DB tDBConnection;
     if(!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("LoadCacheAccount Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("LoadCacheAccount Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+        spdlog::error("LoadCacheAccount Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("LoadCacheAccount Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
         return FALSE;
     }
 
@@ -114,7 +114,7 @@ BOOL CAccountObjectMgr::SealAccount(UINT64& uAccountID, const std::string& strNa
 
     if (pAccObj == NULL)
     {
-        CLog::GetInstancePtr()->LogError("CAccountObjectMgr::SealAccount Error Cannot find account uAccountID:%lld, strName:%s", uAccountID, strName.c_str());
+        spdlog::error("CAccountObjectMgr::SealAccount Error Cannot find account uAccountID:%lld, strName:%s", uAccountID, strName.c_str());
         return FALSE;
     }
 
@@ -187,8 +187,8 @@ BOOL CAccountObjectMgr::SaveAccountThread()
     CppMySQL3DB tDBConnection;
     if (!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("SaveAccountChange Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("SaveAccountChange Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+        spdlog::error("SaveAccountChange Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("SaveAccountChange Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
         return FALSE;
     }
 
@@ -228,7 +228,7 @@ BOOL CAccountObjectMgr::SaveAccountThread()
                 continue;
             }
 
-            CLog::GetInstancePtr()->LogError("CAccountMsgHandler::SaveAccountChange Failed! Reason: %s", tDBConnection.GetErrorMsg());
+            spdlog::error("CAccountMsgHandler::SaveAccountChange Failed! Reason: %s", tDBConnection.GetErrorMsg());
             break;
         }
     }

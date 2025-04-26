@@ -85,7 +85,7 @@ BOOL CAccountMsgHandler::OnMsgAccountRegReq(NetPacket* pPacket)
     if(pAccount == NULL)
     {
         Ack.set_retcode(MRC_UNKNOW_ERROR);
-        CLog::GetInstancePtr()->LogError("Error CAccountMsgHandler::OnMsgAccountRegReq RetCode:MRC_UNKNOW_ERROR");
+        spdlog::error("Error CAccountMsgHandler::OnMsgAccountRegReq RetCode:MRC_UNKNOW_ERROR");
     }
     else
     {
@@ -116,7 +116,7 @@ BOOL CAccountMsgHandler::OnMsgAccontLoginReq(NetPacket* pPacket)
     if (!m_AccountManager.CheckAccountName(strAccountName, Req.fromchannel()))
     {
         Ack.set_retcode(MRC_ACCOUNT_NAME_ERR_FMT);
-        CLog::GetInstancePtr()->LogError("Error CAccountMsgHandler::OnMsgAccontLoginReq Invalid Account Name:%s", strAccountName.c_str());
+        spdlog::error("Error CAccountMsgHandler::OnMsgAccontLoginReq Invalid Account Name:%s", strAccountName.c_str());
         ServiceBase::GetInstancePtr()->SendMsgProtoBuf(pPacket->m_nConnID, MSG_ACCOUNT_LOGIN_ACK, 0, pHeader->dwUserData, Ack);
         return TRUE;
     }
@@ -164,7 +164,7 @@ BOOL CAccountMsgHandler::OnMsgAccontLoginReq(NetPacket* pPacket)
     if (pAccObj == NULL)
     {
         Ack.set_retcode(MRC_UNKNOW_ERROR);
-        CLog::GetInstancePtr()->LogError("Error CAccountMsgHandler::OnMsgAccontLoginReq RetCode:MRC_UNKNOW_ERROR");
+        spdlog::error("Error CAccountMsgHandler::OnMsgAccontLoginReq RetCode:MRC_UNKNOW_ERROR");
     }
     else
     {

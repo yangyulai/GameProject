@@ -37,11 +37,11 @@ BOOL CGameService::Init(INT32 nServerID, INT32 nPort)
         return FALSE;
     }
 
-    CLog::GetInstancePtr()->LogInfo("---------服务器开始启动-ServerID:%d--Port:%d--------", nServerID, nPort);
+    spdlog::info("---------服务器开始启动-ServerID:%d--Port:%d--------", nServerID, nPort);
 
     if(!CConfigFile::GetInstancePtr()->Load("servercfg.ini"))
     {
-        CLog::GetInstancePtr()->LogError("配制文件加载失败!");
+        spdlog::error("配制文件加载失败!");
         return FALSE;
     }
 
@@ -59,7 +59,7 @@ BOOL CGameService::Init(INT32 nServerID, INT32 nPort)
     INT32  nMaxConn = CConfigFile::GetInstancePtr()->GetIntValue("game_svr_max_con");
     if(!ServiceBase::GetInstancePtr()->StartNetwork(nPort, nMaxConn, this))
     {
-        CLog::GetInstancePtr()->LogError("启动服务失败!");
+        spdlog::error("启动服务失败!");
         return FALSE;
     }
 
@@ -67,11 +67,11 @@ BOOL CGameService::Init(INT32 nServerID, INT32 nPort)
 
     if(!m_SceneManager.Init(TRUE))
     {
-        CLog::GetInstancePtr()->LogError("启动场景管理器失败!");
+        spdlog::error("启动场景管理器失败!");
         return FALSE;
     }
 
-    CLog::GetInstancePtr()->LogHiInfo("---------服务器启动成功!--------");
+    spdlog::info("---------服务器启动成功!--------");
     return TRUE;
 }
 
@@ -146,7 +146,7 @@ BOOL CGameService::DispatchPacket(NetPacket* pNetPacket)
 
 BOOL CGameService::Uninit()
 {
-    CLog::GetInstancePtr()->LogHiInfo("==========服务器开始关闭=======================");
+    spdlog::info("==========服务器开始关闭=======================");
 
     ServiceBase::GetInstancePtr()->StopNetwork();
 
@@ -154,7 +154,7 @@ BOOL CGameService::Uninit()
 
     google::protobuf::ShutdownProtobufLibrary();
 
-    CLog::GetInstancePtr()->LogHiInfo("==========服务器关闭完成=======================");
+    spdlog::info("==========服务器关闭完成=======================");
 
     return TRUE;
 }
@@ -262,7 +262,7 @@ BOOL CGameService::OnMsgWebCommandReq(NetPacket* pNetPacket)
     HttpParameter Params;
     Params.ParseStringToMap(szMsgBuf);
     std::string strAction = Params.GetStrValue("Action");
-    CLog::GetInstancePtr()->LogInfo("Web Action :%s", strAction.c_str());
+    spdlog::info("Web Action :%s", strAction.c_str());
 
     EWebAction eWebAction = (EWebAction)CommonConvert::StringToInt(strAction.c_str());
     switch (eWebAction)

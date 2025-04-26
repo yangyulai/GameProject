@@ -60,8 +60,8 @@ BOOL GiftCodeManager::ProceeGiftCodeThread()
     CppMySQL3DB         tDBConnection;
     if (!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("GiftCodeManager::Init Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("GiftCodeManager::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+        spdlog::error("GiftCodeManager::Init Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("GiftCodeManager::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
         return FALSE;
     }
 
@@ -109,7 +109,7 @@ BOOL GiftCodeManager::ProceeGiftCodeThread()
 
             if (CommonConvert::HasSymbol(pTmpNode->m_strCode.c_str(), (const char*)"\'\" \\\r\n%%"))
             {
-                CLog::GetInstancePtr()->LogError("GiftCodeManager::Invalid Gift Code :%s", pTmpNode->m_strCode.c_str());
+                spdlog::error("GiftCodeManager::Invalid Gift Code :%s", pTmpNode->m_strCode.c_str());
                 pTmpNode->m_nResult = MRC_GIFTCODE_INVALIDE_CODE;
                 m_ArrFinishNode.push(pTmpNode);
                 continue;
@@ -120,7 +120,7 @@ BOOL GiftCodeManager::ProceeGiftCodeThread()
             CppMySQLQuery codeResult = tDBConnection.querySQL(szSql);
             if (tDBConnection.GetErrorNo() != 0)
             {
-                CLog::GetInstancePtr()->LogError("GiftCodeManager::get gift code failure Error :%s", tDBConnection.GetErrorMsg());
+                spdlog::error("GiftCodeManager::get gift code failure Error :%s", tDBConnection.GetErrorMsg());
                 pTmpNode->m_nResult = MRC_GIFTCODE_INVALIDE_CODE;
                 m_ArrFinishNode.push(pTmpNode);
                 continue;

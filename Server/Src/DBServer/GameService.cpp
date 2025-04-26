@@ -32,17 +32,17 @@ BOOL CGameService::Init()
         return FALSE;
     }
 
-    CLog::GetInstancePtr()->LogInfo("---------服务器开始启动-----------");
+    spdlog::info("---------服务器开始启动-----------");
 
     if(!CConfigFile::GetInstancePtr()->Load("servercfg.ini"))
     {
-        CLog::GetInstancePtr()->LogError("配制文件加载失败!");
+        spdlog::error("配制文件加载失败!");
         return FALSE;
     }
 
     if (CommonFunc::IsAlreadyRun("DBServer" + CConfigFile::GetInstancePtr()->GetStringValue("areaid")))
     {
-        CLog::GetInstancePtr()->LogError("DBServer己经在运行!");
+        spdlog::error("DBServer己经在运行!");
         return FALSE;
     }
 
@@ -51,14 +51,14 @@ BOOL CGameService::Init()
     UINT16 nPort = CConfigFile::GetInstancePtr()->GetRealNetPort("db_svr_port");
     if (nPort <= 0)
     {
-        CLog::GetInstancePtr()->LogError("配制文件db_svr_port配制错误!");
+        spdlog::error("配制文件db_svr_port配制错误!");
         return FALSE;
     }
 
     INT32 nMaxConn = CConfigFile::GetInstancePtr()->GetIntValue("db_svr_max_con");
     if(!ServiceBase::GetInstancePtr()->StartNetwork(nPort, nMaxConn, this, "127.0.0.1"))
     {
-        CLog::GetInstancePtr()->LogError("启动服务失败!");
+        spdlog::error("启动服务失败!");
         return FALSE;
     }
 
@@ -66,7 +66,7 @@ BOOL CGameService::Init()
 
     ERROR_RETURN_FALSE(m_DBWriterManger.Init());
 
-    CLog::GetInstancePtr()->LogHiInfo("---------服务器启动成功!--------");
+    spdlog::info("---------服务器启动成功!--------");
 
     return TRUE;
 }
@@ -150,7 +150,7 @@ BOOL CGameService::CheckLogicServer()
 
 BOOL CGameService::Uninit()
 {
-    CLog::GetInstancePtr()->LogError("==========服务器开始关闭=======================");
+    spdlog::error("==========服务器开始关闭=======================");
 
     ServiceBase::GetInstancePtr()->StopNetwork();
 
@@ -160,7 +160,7 @@ BOOL CGameService::Uninit()
 
     google::protobuf::ShutdownProtobufLibrary();
 
-    CLog::GetInstancePtr()->LogError("==========服务器关闭完成=======================");
+    spdlog::error("==========服务器关闭完成=======================");
 
     return TRUE;
 }

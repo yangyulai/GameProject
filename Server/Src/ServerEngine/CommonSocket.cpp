@@ -133,8 +133,8 @@ VOID CommonSocket::IgnoreSignal()
 std::string CommonSocket::HttpGet(std::string strHost, INT32 nPort, std::string strPath, std::string strContent)
 {
     CHAR szReq[20480] = { 0 };
-    sprintf(szReq, "GET {}?{} HTTP/1.0\r\nHost: {}\r\nUser-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3\r\n\r\n",
-            strPath.c_str(), strContent.c_str(), strHost.c_str());
+    //sprintf(szReq, "GET {}?{} HTTP/1.0\r\nHost: {}\r\nUser-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3\r\n\r\n",
+    //        strPath.c_str(), strContent.c_str(), strHost.c_str());
 
     SOCKET hSocket = CreateSocket();
     if (hSocket == INVALID_SOCKET)

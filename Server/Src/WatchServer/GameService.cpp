@@ -27,16 +27,16 @@ BOOL CGameService::Init()
         return FALSE;
     }
 
-    CLog::GetInstancePtr()->LogInfo("---------服务器开始启动--------");
+    spdlog::info("---------服务器开始启动--------");
     if(!CConfigFile::GetInstancePtr()->Load("watchcfg.ini"))
     {
-        CLog::GetInstancePtr()->LogError("配制文件加载失败!");
+        spdlog::error("配制文件加载失败!");
         return FALSE;
     }
 
     if (CommonFunc::IsAlreadyRun("WatchServer"))
     {
-        CLog::GetInstancePtr()->LogError("WatchServer己经在运行!");
+        spdlog::error("WatchServer己经在运行!");
         return FALSE;
     }
 
@@ -47,13 +47,13 @@ BOOL CGameService::Init()
     std::string strListenIp = CConfigFile::GetInstancePtr()->GetStringValue("watch_svr_ip");
     if(!ServiceBase::GetInstancePtr()->StartNetwork(nPort, nMaxConn, this, strListenIp))
     {
-        CLog::GetInstancePtr()->LogError("启动服务失败!");
+        spdlog::error("启动服务失败!");
         return FALSE;
     }
 
     m_WatchMsgHandler.Init(0);
 
-    CLog::GetInstancePtr()->LogHiInfo("---------服务器启动成功!--------");
+    spdlog::info("---------服务器启动成功!--------");
 
     return TRUE;
 }
@@ -92,7 +92,7 @@ BOOL CGameService::DispatchPacket(NetPacket* pNetPacket)
 
 BOOL CGameService::Uninit()
 {
-    CLog::GetInstancePtr()->LogError("==========服务器开始关闭=======================");
+    spdlog::error("==========服务器开始关闭=======================");
 
     ServiceBase::GetInstancePtr()->StopNetwork();
 
@@ -100,7 +100,7 @@ BOOL CGameService::Uninit()
 
     google::protobuf::ShutdownProtobufLibrary();
 
-    CLog::GetInstancePtr()->LogError("==========服务器关闭完成=======================");
+    spdlog::error("==========服务器关闭完成=======================");
 
     return TRUE;
 }

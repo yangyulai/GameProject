@@ -58,7 +58,7 @@ BOOL ServiceBase::StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatche
 
     if (!CNetManager::GetInstancePtr()->Start(nPortNum, nMaxConn, this, strListenIp))
     {
-        LOG_ERROR("启动网络层失败!");
+        spdlog::error("启动网络层失败!");
         return FALSE;
     }
 
@@ -94,7 +94,7 @@ BOOL ServiceBase::SendMsgProtoBuf(INT32 nConnID, INT32 nMsgID, UINT64 u64TargetI
 {
     if (nConnID <= 0)
     {
-        LOG_WARN("SendMsgProtoBuf Error nConnID is Zero MessageID:%d", nMsgID);
+        spdlog::warn("SendMsgProtoBuf Error nConnID is Zero MessageID:%d", nMsgID);
         return FALSE;
     }
 

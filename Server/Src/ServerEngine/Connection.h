@@ -26,6 +26,24 @@ enum ENetStatus
     ENS_CLOSEING   = 4,
     ENS_CLOSED     = 5
 };
+template<>
+struct fmt::formatter<ENetStatus> {
+    constexpr auto parse(fmt::format_parse_context& ctx) {
+        return ctx.begin();
+    }
+    template <typename FormatContext>
+    auto format(ENetStatus e, FormatContext& ctx) const {
+        const char* name = nullptr;
+        switch (e) {
+        case ENetStatus::ENS_INIT:           name = "ENS_INIT"; break;
+        case ENetStatus::ENS_CONNECTING: name = "ENS_CONNECTING"; break;
+        case ENetStatus::ENS_CONNECTED:   name = "ENS_CONNECTED"; break;
+        case ENetStatus::ENS_CLOSEING:   name = "ENS_CLOSEING"; break;
+        case ENetStatus::ENS_CLOSED:   name = "ENS_CLOSED"; break;
+        }
+        return fmt::format_to(ctx.out(), "{}", name);
+    }
+};
 
 struct NetIoOperatorData
 {

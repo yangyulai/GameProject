@@ -220,7 +220,7 @@ BOOL CPlayerObject::SendMsgRawData(INT32 nMsgID, const char* pdata, UINT32 dwLen
 {
     if (m_nProxyConnID == 0)
     {
-        CLog::GetInstancePtr()->LogError("Error SendMsgRawData MessageID:%d, RoleID:%ld", nMsgID, m_uRoleID);
+        spdlog::error("Error SendMsgRawData MessageID:%d, RoleID:%ld", nMsgID, m_uRoleID);
         return FALSE;
     }
 
@@ -233,7 +233,7 @@ BOOL CPlayerObject::SendMsgToScene(INT32 nMsgID, const google::protobuf::Message
 
     if (nConnID == 0)
     {
-        CLog::GetInstancePtr()->LogError("Error SendMsgToScene MessageID:%d, CopySvrID:%ld", nMsgID, m_dwCopySvrID);
+        spdlog::error("Error SendMsgToScene MessageID:%d, CopySvrID:%ld", nMsgID, m_dwCopySvrID);
         return FALSE;
     }
 
@@ -361,7 +361,7 @@ INT64 CPlayerObject::GetProperty(ERoleProperty ePropertyID)
 
     if (nModuleID < MT_ROLE || nModuleID >= MT_END)
     {
-        CLog::GetInstancePtr()->LogError("CPlayerObject::GetProperty Error Inavlie PropertyID:%d", ePropertyID);
+        spdlog::error("CPlayerObject::GetProperty Error Inavlie PropertyID:%d", ePropertyID);
         return 0;
     }
 

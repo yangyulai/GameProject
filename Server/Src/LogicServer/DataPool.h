@@ -53,7 +53,7 @@ T* CreateObject(EShareData nIndex, BOOL bNewBlock = TRUE)
 
 	if (pTmp == NULL)
 	{
-		CLog::GetInstancePtr()->LogError("CreateObject Error, Reason:%s", CommonFunc::GetLastErrorStr(CommonFunc::GetLastError()).c_str());
+		spdlog::error("CreateObject Error, Reason:%s", CommonFunc::GetLastErrorStr(CommonFunc::GetLastError()).c_str());
 	}
 
 	return pTmp;

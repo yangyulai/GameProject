@@ -84,7 +84,7 @@ BOOL CGameSvrMgr::CreateScene(UINT32 dwCopyID, UINT64 uCreateParam, UINT32 dwPla
     UINT32 dwServerID = GetBestGameServerID();
     if(dwServerID == 0)
     {
-        CLog::GetInstancePtr()->LogError("没有找到可用的场景服务器，或者说没有找到可用的副本服务器");
+        spdlog::error("没有找到可用的场景服务器，或者说没有找到可用的副本服务器");
         return FALSE;
     }
 
@@ -92,7 +92,7 @@ BOOL CGameSvrMgr::CreateScene(UINT32 dwCopyID, UINT64 uCreateParam, UINT32 dwPla
     if(!SendCreateSceneCmd(dwServerID, dwCopyID, dwCopyType, uCreateParam, dwPlayerNum))
     {
         //发送创建副本的消息失败
-        CLog::GetInstancePtr()->LogError("发送创建副本的消息失败");
+        spdlog::error("发送创建副本的消息失败");
         return FALSE;
     }
 

@@ -60,7 +60,7 @@ BOOL CDBWriterManager::Init()
     {
         if (m_vtDataWriters[i] == NULL)
         {
-            CLog::GetInstancePtr()->LogError("CDBWriterManager::Init Error: ModuleID:[%d] Is NULL!", i);
+            spdlog::error("CDBWriterManager::Init Error: ModuleID:[%d] Is NULL!", i);
             return FALSE;
         }
     }
@@ -171,11 +171,11 @@ void CDBWriterManager::DBWriteThread()
 
         if (IsStop())
         {
-            CLog::GetInstancePtr()->LogError("开始退出将所有己修改的数据写入数据库.....");
+            spdlog::error("开始退出将所有己修改的数据写入数据库.....");
             BOOL bHasWrite = WriteDataToDB();
             if (!bHasWrite)
             {
-                CLog::GetInstancePtr()->LogError("所有己修改的数据己写入数据库.");
+                spdlog::error("所有己修改的数据己写入数据库.");
                 break;
             }
 

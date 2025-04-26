@@ -80,7 +80,7 @@ VOID CPayManager::WritePayRecordThread(CreatePaymentReq* pReq)
     CppMySQL3DB tDBConnection;
     if (!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("CPayManager::WritePayRecordThread Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("CPayManager::WritePayRecordThread Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
         return ;
     }
 
@@ -90,7 +90,7 @@ VOID CPayManager::WritePayRecordThread(CreatePaymentReq* pReq)
 
     if (tDBConnection.execSQL(szSql) < 0)
     {
-        CLog::GetInstancePtr()->LogError("CPayManager::WritePayRecordThread Failed! Reason: %s", tDBConnection.GetErrorMsg());
+        spdlog::error("CPayManager::WritePayRecordThread Failed! Reason: %s", tDBConnection.GetErrorMsg());
         return;
     }
 
@@ -154,7 +154,7 @@ BOOL CPayManager::OnMsgCreatePayRecord(NetPacket* pNetPacket)
         Ack.set_retcode(MRC_DUPLICATED_ORDER_ID);
         Ack.set_orderid(pReq->orderid());
         pPlayer->SendMsgProtoBuf(MSG_CREATE_PAYMENT_ACK, Ack);
-        CLog::GetInstancePtr()->LogError("CPayManager::OnMsgCreatePayRecord Error! Invalid Product ID");
+        spdlog::error("CPayManager::OnMsgCreatePayRecord Error! Invalid Product ID");
         return TRUE;
     }
     if (m_setCreatedOrder.find(pReq->orderid()) != m_setCreatedOrder.end())
@@ -163,7 +163,7 @@ BOOL CPayManager::OnMsgCreatePayRecord(NetPacket* pNetPacket)
         Ack.set_retcode(MRC_DUPLICATED_ORDER_ID);
         Ack.set_orderid(pReq->orderid());
         pPlayer->SendMsgProtoBuf(MSG_CREATE_PAYMENT_ACK, Ack);
-        CLog::GetInstancePtr()->LogError("CPayManager::OnMsgCreatePayRecord Error! Duplicated strOrderID:%s", pReq->orderid().c_str());
+        spdlog::error("CPayManager::OnMsgCreatePayRecord Error! Duplicated strOrderID:%s", pReq->orderid().c_str());
         return TRUE;
     }
 
@@ -193,7 +193,7 @@ void CPayManager::OnGmPayCallBack(HttpParameter& hParams, INT32 nConnID)
     //避免重复通知
     if (GetPayOrderByID(strOrderID) != NULL)
     {
-        CLog::GetInstancePtr()->LogError("CPayManager::OnGmPayCallBack Error! Duplicated strOrderID:%s", strOrderID.c_str());
+        spdlog::error("CPayManager::OnGmPayCallBack Error! Duplicated strOrderID:%s", strOrderID.c_str());
         return;
     }
 
@@ -222,7 +222,7 @@ BOOL CPayManager::ProcessSussessPayOrder(PayDataObject* pOrderData)
     CPlayerObject* pPlayer = CPlayerManager::GetInstancePtr()->GetPlayer(pOrderData->m_uRoleID);
     if (pPlayer == NULL)
     {
-        CLog::GetInstancePtr()->LogError("CPayManager::OnGmPayCallBack Error! Invalid uRoleID:%lld", pOrderData->m_uRoleID);
+        spdlog::error("CPayManager::OnGmPayCallBack Error! Invalid uRoleID:%lld", pOrderData->m_uRoleID);
         return FALSE;
     }
     pOrderData->Lock();

@@ -114,41 +114,41 @@ private:
 #define ERROR_RETURN_FALSE(P) \
     if((P) == FALSE)\
     {\
-        LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+        spdlog::error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
         return FALSE;   \
     }
 
 #define ERROR_RETURN_NULL(P) \
     if((P) == FALSE)\
 {\
-    LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+    spdlog::error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
     return NULL;    \
 }
 
 #define ERROR_RETURN_NONE(P) \
     if((P) == FALSE)\
 {\
-    LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+    spdlog::error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
     return ;    \
 }
 
 #define ERROR_RETURN_VALUE(P, V) \
     if((P) == FALSE)\
 {\
-    LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+    spdlog::error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
     return V;   \
 }
 
 #define ERROR_CONTINUE_EX(P) \
     if((P) == FALSE)\
 {\
-    LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+    spdlog::error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
     continue; \
 }
 
 #define ERROR_TO_CONTINUE(P) \
     if((P) == FALSE)\
 {\
-    LOG_ERROR("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
+    spdlog::error("Error : File:{}, Func: {} Line:%d", __FILE__ , __FUNCTION__, __LINE__);\
     continue; \
 }

@@ -83,17 +83,17 @@ BOOL CGameService::Init()
         return FALSE;
     }
 
-    CLog::GetInstancePtr()->LogInfo("---------服务器开始启动--------");
+    spdlog::info("---------服务器开始启动--------");
 
     if(!CConfigFile::GetInstancePtr()->Load("servercfg.ini"))
     {
-        CLog::GetInstancePtr()->LogError("加载 servercfg.ini文件失败!");
+        spdlog::error("加载 servercfg.ini文件失败!");
         return FALSE;
     }
 
     if (CommonFunc::IsAlreadyRun("LogicServer" + CConfigFile::GetInstancePtr()->GetStringValue("areaid")))
     {
-        CLog::GetInstancePtr()->LogError("LogicServer己经在运行!");
+        spdlog::error("LogicServer己经在运行!");
         return FALSE;
     }
 
@@ -102,7 +102,7 @@ BOOL CGameService::Init()
     UINT16 nPort = CConfigFile::GetInstancePtr()->GetRealNetPort("logic_svr_port");
     if (nPort <= 0)
     {
-        CLog::GetInstancePtr()->LogError("配制文件logic_svr_port配制错误!");
+        spdlog::error("配制文件logic_svr_port配制错误!");
         return FALSE;
     }
 
@@ -111,13 +111,13 @@ BOOL CGameService::Init()
     INT32  nMaxConn = CConfigFile::GetInstancePtr()->GetIntValue("logic_svr_max_con");
     if(!ServiceBase::GetInstancePtr()->StartNetwork(nPort, nMaxConn, this, strListenIp))
     {
-        CLog::GetInstancePtr()->LogError("启动服务失败!");
+        spdlog::error("启动服务失败!");
         return FALSE;
     }
 
     if (!CDataPool::GetInstancePtr()->InitDataPool())
     {
-        CLog::GetInstancePtr()->LogError("初始化共享内存池失败!");
+        spdlog::error("初始化共享内存池失败!");
         return FALSE;
     }
 
@@ -125,25 +125,25 @@ BOOL CGameService::Init()
     //服务器启动之前需要加载的数据
     if (!CStaticData::GetInstancePtr()->LoadConfigData("Config.db"))
     {
-        CLog::GetInstancePtr()->LogError("加载静态配制数据失败!");
+        spdlog::error("加载静态配制数据失败!");
         return FALSE;
     }
 
     //if (!CLuaManager::GetInstancePtr()->Init())
     //{
-    //  CLog::GetInstancePtr()->LogError("初始化Lua环境失败!");
+    //  spdlog::error("初始化Lua环境失败!");
     //  return FALSE;
     //}
 
     //if (!luaopen_LuaScript(CLuaManager::GetInstancePtr()->GetLuaState()))
     //{
-    //  CLog::GetInstancePtr()->LogError("导出Lua接口失败!");
+    //  spdlog::error("导出Lua接口失败!");
     //  return FALSE;
     //}
 
     //if (!CLuaManager::GetInstancePtr()->LoadAllLua(".\\Lua"))
     //{
-    //  CLog::GetInstancePtr()->LogError("加载lua代码失败!");
+    //  spdlog::error("加载lua代码失败!");
     //  return FALSE;
     //}
 
@@ -158,7 +158,7 @@ BOOL CGameService::Init()
     CppMySQL3DB tDBConnection;
     if(!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
         return FALSE;
     }
 
@@ -202,14 +202,14 @@ BOOL CGameService::Init()
 
     RegisterMessageHanler();
 
-    CLog::GetInstancePtr()->LogError("---------服务器启动成功!--------");
+    spdlog::error("---------服务器启动成功!--------");
 
     return TRUE;
 }
 
 BOOL CGameService::Uninit()
 {
-    CLog::GetInstancePtr()->LogError("==========服务器开始关闭=======================");
+    spdlog::error("==========服务器开始关闭=======================");
 
     ServiceBase::GetInstancePtr()->StopNetwork();
 
@@ -219,7 +219,7 @@ BOOL CGameService::Uninit()
 
     google::protobuf::ShutdownProtobufLibrary();
 
-    CLog::GetInstancePtr()->LogError("==========服务器关闭完成=======================");
+    spdlog::error("==========服务器关闭完成=======================");
 
     return TRUE;
 }
@@ -431,7 +431,7 @@ BOOL CGameService::DispatchPacket(NetPacket* pNetPacket)
 {
     if (pNetPacket->m_nMsgID != MSG_LOGIC_UPDATE_ACK)
     {
-        CLog::GetInstancePtr()->LogInfo("Receive Message:[%s]", MessageID_Name((MessageID)pNetPacket->m_nMsgID).c_str());
+        spdlog::info("Receive Message:[%s]", MessageID_Name((MessageID)pNetPacket->m_nMsgID).c_str());
     }
 
     if (CWatcherClient::GetInstancePtr()->DispatchPacket(pNetPacket))
@@ -453,7 +453,7 @@ BOOL CGameService::DispatchPacket(NetPacket* pNetPacket)
     CPlayerObject* pPlayer = CPlayerManager::GetInstancePtr()->GetPlayer(pHeader->u64TargetID);
     if (pPlayer == NULL)
     {
-        CLog::GetInstancePtr()->LogError("CGameService::DispatchPacket Error Invalid u64TargetID:%lld, MessageID:%d", pHeader->u64TargetID, pNetPacket->m_nMsgID);
+        spdlog::error("CGameService::DispatchPacket Error Invalid u64TargetID:%lld, MessageID:%d", pHeader->u64TargetID, pNetPacket->m_nMsgID);
         return TRUE;
     }
 
@@ -537,7 +537,7 @@ BOOL CGameService::OnMsgRegToLoginAck(NetPacket* pNetPacket)
 
     m_uSvrOpenTime = Ack.svropentime();
 
-    CLog::GetInstancePtr()->LogError("---------开服时间:%s--------", CommonFunc::TimeToString(m_uSvrOpenTime).c_str());
+    spdlog::error("---------开服时间:%s--------", CommonFunc::TimeToString(m_uSvrOpenTime).c_str());
 
     return TRUE;
 }
@@ -566,7 +566,7 @@ BOOL CGameService::OnMsgUpdateInfoAck(NetPacket* pNetPacket)
     m_uSvrOpenTime = Ack.svropentime();
 
     //这里处理开服时间发生改变有事件
-    CLog::GetInstancePtr()->LogError("---------开服时间:%s--------", CommonFunc::TimeToString(m_uSvrOpenTime).c_str());
+    spdlog::error("---------开服时间:%s--------", CommonFunc::TimeToString(m_uSvrOpenTime).c_str());
 
     return TRUE;
 }

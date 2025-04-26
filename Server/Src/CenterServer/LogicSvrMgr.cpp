@@ -82,7 +82,7 @@ BOOL CLogicSvrMgr::OnCloseConnect(INT32 nConnID)
         {
             pNode->m_nConnID = 0;
 
-            CLog::GetInstancePtr()->LogError("Lost Connect To Server:[%d] !", pNode->m_nServerID);
+            spdlog::error("Lost Connect To Server:[%d] !", pNode->m_nServerID);
         }
 
     }

@@ -142,7 +142,7 @@ BOOL CRoleModule::ReadFromDBLoginData( DBRoleLoginAck& Ack )
         }
         else
         {
-            CLog::GetInstancePtr()->LogError("Error m_pRoleDataObject->m_CarrerID is 0");
+            spdlog::error("Error m_pRoleDataObject->m_CarrerID is 0");
         }
     }
 
@@ -218,13 +218,13 @@ BOOL CRoleModule::CostAction(UINT32 dwActionID, INT32 nActionNum)
 {
     if ((dwActionID <= 0) || (dwActionID >= ACTION_NUM))
     {
-        CLog::GetInstancePtr()->LogError("CostAction Error: Inavlid dwActionID :%d", dwActionID);
+        spdlog::error("CostAction Error: Inavlid dwActionID :%d", dwActionID);
         return FALSE;
     }
 
     if (nActionNum <= 0)
     {
-        CLog::GetInstancePtr()->LogError("CostAction Error: Inavlid nActionNum :%d", nActionNum);
+        spdlog::error("CostAction Error: Inavlid nActionNum :%d", nActionNum);
         return FALSE;
     }
 
@@ -255,13 +255,13 @@ BOOL CRoleModule::CheckActionEnough(UINT32 dwActionID, INT32 nActionNum)
 {
     if ((dwActionID <= 0) || (dwActionID > ACTION_NUM))
     {
-        CLog::GetInstancePtr()->LogError("CheckActionEnough Error: Inavlid dwActionID :%d", dwActionID);
+        spdlog::error("CheckActionEnough Error: Inavlid dwActionID :%d", dwActionID);
         return FALSE;
     }
 
     if (nActionNum <= 0)
     {
-        CLog::GetInstancePtr()->LogError("CheckActionEnough Error: Inavlid nActionNum :%d", nActionNum);
+        spdlog::error("CheckActionEnough Error: Inavlid nActionNum :%d", nActionNum);
         return FALSE;
     }
 
@@ -284,7 +284,7 @@ UINT64 CRoleModule::GetAction(UINT32 dwActionID)
 {
     if ((dwActionID <= 0) || (dwActionID > ACTION_NUM))
     {
-        CLog::GetInstancePtr()->LogError("GetAction Error: Inavlid dwActionID :%d", dwActionID);
+        spdlog::error("GetAction Error: Inavlid dwActionID :%d", dwActionID);
         return 0;
     }
 
@@ -297,7 +297,7 @@ UINT64 CRoleModule::AddAction(UINT32 dwActionID, INT64 nActionNum)
 {
     if ((dwActionID <= 0) || (dwActionID > ACTION_NUM))
     {
-        CLog::GetInstancePtr()->LogError("AddAction Error: Inavlid dwActionID :%d", dwActionID);
+        spdlog::error("AddAction Error: Inavlid dwActionID :%d", dwActionID);
         return 0;
     }
 
@@ -320,7 +320,7 @@ BOOL CRoleModule::UpdateAction(UINT32 dwActionID)
     {
         if (m_pRoleDataObject->m_Actime[dwActionID - 1] > 0)
         {
-            CLog::GetInstancePtr()->LogError("UpdateAction error  StartTime is not 0");
+            spdlog::error("UpdateAction error  StartTime is not 0");
         }
         m_pRoleDataObject->m_Actime[dwActionID - 1] = 0;
         return FALSE;
@@ -328,7 +328,7 @@ BOOL CRoleModule::UpdateAction(UINT32 dwActionID)
 
     if (m_pRoleDataObject->m_Actime[dwActionID - 1] <= 0)
     {
-        //CLog::GetInstancePtr()->LogError("UpdateAction error  action not max, but starttime is 0");
+        //spdlog::error("UpdateAction error  action not max, but starttime is 0");
     }
 
     UINT64 dwTimeElapse = CommonFunc::GetCurrTime() - m_pRoleDataObject->m_Actime[dwActionID - 1];

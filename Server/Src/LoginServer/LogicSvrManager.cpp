@@ -245,8 +245,8 @@ BOOL LogicSvrManager::ReloadServerList(INT32 nServerID)
     CppMySQL3DB tDBConnection;
     if (!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("LogicSvrManager::ReloadServerList Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("LogicSvrManager::ReloadServerList Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+        spdlog::error("LogicSvrManager::ReloadServerList Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("LogicSvrManager::ReloadServerList Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
         return FALSE;
     }
 
@@ -281,13 +281,13 @@ BOOL LogicSvrManager::ReloadServerList(INT32 nServerID)
         pNode->m_uSvrOpenTime = QueryResult.getInt64Field("opentime");
         if (pNode->m_strOuterAddr.empty() || pNode->m_strOuterAddr == "*")
         {
-            CLog::GetInstancePtr()->LogError("ReloadServerList Failed, Serverid:%d need a domain name or outer ip address!", nSvrID);
+            spdlog::error("ReloadServerList Failed, Serverid:%d need a domain name or outer ip address!", nSvrID);
             return FALSE;
         }
 
         if (pNode->m_strInnerAddr.empty() || pNode->m_strInnerAddr == "*")
         {
-            CLog::GetInstancePtr()->LogError("ReloadServerList Failed, Serverid:%d has no inner ip address!", nSvrID);
+            spdlog::error("ReloadServerList Failed, Serverid:%d has no inner ip address!", nSvrID);
             return FALSE;
         }
 
@@ -368,8 +368,8 @@ BOOL LogicSvrManager::SaveLogicServerThread()
     CppMySQL3DB tDBConnection;
     if (!tDBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort))
     {
-        CLog::GetInstancePtr()->LogError("LogicSvrManager::Init Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
-        CLog::GetInstancePtr()->LogError("LogicSvrManager::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
+        spdlog::error("LogicSvrManager::Init Error: Can not open mysql database! Reason:%s", tDBConnection.GetErrorMsg());
+        spdlog::error("LogicSvrManager::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
         return FALSE;
     }
 
@@ -407,7 +407,7 @@ BOOL LogicSvrManager::SaveLogicServerThread()
                          pTempNode->m_nServerID, pTempNode->m_strSvrName.c_str(), "127.0.0.1", pTempNode->m_strInnerAddr.c_str(), pTempNode->m_nPort, pTempNode->m_nHttpPort, pTempNode->m_ServerFlag, pTempNode->m_CornerMark, pTempNode->m_uSvrOpenTime, "1.0.0", "9.0.0", "*", "*");
                 if (tDBConnection.execSQL(szSql) < 0)
                 {
-                    CLog::GetInstancePtr()->LogError("LogicSvrManager::SaveLogicServerInfo Error :%s", tDBConnection.GetErrorMsg());
+                    spdlog::error("LogicSvrManager::SaveLogicServerInfo Error :%s", tDBConnection.GetErrorMsg());
                     return FALSE;
                 }
 
@@ -416,7 +416,7 @@ BOOL LogicSvrManager::SaveLogicServerThread()
                          pTempNode->m_nServerID, pTempNode->m_strSvrName.c_str(), pTempNode->m_nCurOnline, pTempNode->m_nMaxOnline, pTempNode->m_nTotalNum, pTempNode->m_nCacheNum, pTempNode->m_nErrorCnt, pTempNode->m_ServerStatus, 0);
                 if (tDBConnection.execSQL(szSql) < 0)
                 {
-                    CLog::GetInstancePtr()->LogError("LogicSvrManager::SaveLogicServerInfo Error :%s", tDBConnection.GetErrorMsg());
+                    spdlog::error("LogicSvrManager::SaveLogicServerInfo Error :%s", tDBConnection.GetErrorMsg());
                 }
             }
 
@@ -426,7 +426,7 @@ BOOL LogicSvrManager::SaveLogicServerThread()
                          pTempNode->m_strSvrName.c_str(), pTempNode->m_nPort, pTempNode->m_nHttpPort, pTempNode->m_strInnerAddr.c_str(),  pTempNode->m_nServerID);
                 if (tDBConnection.execSQL(szSql) < 0)
                 {
-                    CLog::GetInstancePtr()->LogError("LogicSvrManager::RegisterLogicServer Error :%s", tDBConnection.GetErrorMsg());
+                    spdlog::error("LogicSvrManager::RegisterLogicServer Error :%s", tDBConnection.GetErrorMsg());
                 }
 
                 memset(szSql, 0, SQL_BUFF_LEN);
@@ -434,7 +434,7 @@ BOOL LogicSvrManager::SaveLogicServerThread()
                          pTempNode->m_nServerID, pTempNode->m_strSvrName.c_str(), pTempNode->m_nCurOnline, pTempNode->m_nMaxOnline, pTempNode->m_nTotalNum, pTempNode->m_nCacheNum, pTempNode->m_nErrorCnt, pTempNode->m_ServerStatus, 0);
                 if (tDBConnection.execSQL(szSql) < 0)
                 {
-                    CLog::GetInstancePtr()->LogError("LogicSvrManager::RegisterLogicServer Error :%s", tDBConnection.GetErrorMsg());
+                    spdlog::error("LogicSvrManager::RegisterLogicServer Error :%s", tDBConnection.GetErrorMsg());
                 }
             }
 
@@ -444,7 +444,7 @@ BOOL LogicSvrManager::SaveLogicServerThread()
                          pTempNode->m_nServerID, pTempNode->m_strSvrName.c_str(), pTempNode->m_nCurOnline, pTempNode->m_nMaxOnline, pTempNode->m_nTotalNum, pTempNode->m_nCacheNum, pTempNode->m_nErrorCnt, pTempNode->m_ServerStatus, 0);
                 if (tDBConnection.execSQL(szSql) < 0)
                 {
-                    CLog::GetInstancePtr()->LogError("LogicSvrManager::RegisterLogicServer Error :%s", tDBConnection.GetErrorMsg());
+                    spdlog::error("LogicSvrManager::RegisterLogicServer Error :%s", tDBConnection.GetErrorMsg());
                 }
             }
 

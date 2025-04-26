@@ -963,7 +963,7 @@ VOID CScene::DeletePlayer(UINT64 uID)
     }
     else
     {
-        CLog::GetInstancePtr()->LogError("Error CScene::DeletePlayer cannot find player id:%d", uID);
+        spdlog::error("Error CScene::DeletePlayer cannot find player id:%d", uID);
     }
 
     return ;
@@ -992,7 +992,7 @@ VOID CScene::DeleteMonster(UINT64 uID)
     }
     else
     {
-        CLog::GetInstancePtr()->LogError("Error CScene::DeleteMonster cannot find player id:%d", uID);
+        spdlog::error("Error CScene::DeleteMonster cannot find player id:%d", uID);
     }
 }
 

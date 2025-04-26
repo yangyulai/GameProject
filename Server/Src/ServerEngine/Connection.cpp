@@ -84,7 +84,7 @@ BOOL CConnection::DoReceive()
         int nError = CommonSocket::GetSocketLastError();
         if(nError != ERROR_IO_PENDING )
         {
-            LOG_WARN("关闭连接，因为接收数据发生错误:{}!", CommonFunc::GetLastErrorStr(nError).c_str());
+            spdlog::warn("关闭连接，因为接收数据发生错误:{}!", CommonFunc::GetLastErrorStr(nError).c_str());
 
             return FALSE;
         }
@@ -110,7 +110,7 @@ BOOL CConnection::DoReceive()
                 return TRUE;
             }
 
-            LOG_WARN("读失败， 可能连接己断开 原因:{}!!", CommonFunc::GetLastErrorStr(nErr).c_str());
+            spdlog::warn("读失败， 可能连接己断开 原因:{}!!", CommonFunc::GetLastErrorStr(nErr).c_str());
             return FALSE;
         }
 
@@ -211,7 +211,7 @@ BOOL CConnection::ExtractBuffer()
         {
             if (m_nDataLen >= 1 && *(BYTE*)m_pBufPos != 0x88)
             {
-                LOG_INFO("验证首字节失改!, m_nDataLen:%d--ConnID:%d", m_nDataLen, m_nConnID);
+                spdlog::info("验证首字节失改!, m_nDataLen:%d--ConnID:%d", m_nDataLen, m_nConnID);
                 return FALSE;
             }
 
@@ -409,19 +409,19 @@ BOOL CConnection::CheckHeader(CHAR* pNetPacket)
     PacketHeader* pHeader = (PacketHeader*)pNetPacket;
     if (pHeader->CheckCode != CODE_VALUE)
     {
-        LOG_INFO("验证-失败 pHeader->CheckCode error");
+        spdlog::info("验证-失败 pHeader->CheckCode error");
         return FALSE;
     }
 
     if ((pHeader->nSize > 1024 * 1024) || (pHeader->nSize <= 0))
     {
-        LOG_INFO("验证-失败 packetsize < 0, pHeader->nMsgID:%d, roleid:%lld", pHeader->nMsgID, pHeader->u64TargetID);
+        spdlog::info("验证-失败 packetsize < 0, pHeader->nMsgID:%d, roleid:%lld", pHeader->nMsgID, pHeader->u64TargetID);
         return FALSE;
     }
 
     if (pHeader->nMsgID > 399999 || pHeader->nMsgID <= 0)
     {
-        LOG_INFO("验证-失败 Invalid MessageID roleid:%lld", pHeader->u64TargetID);
+        spdlog::info("验证-失败 Invalid MessageID roleid:%lld", pHeader->u64TargetID);
         return FALSE;
     }
 
@@ -434,7 +434,7 @@ BOOL CConnection::CheckHeader(CHAR* pNetPacket)
 
     if (nPktChkNo <= 0)
     {
-        LOG_INFO("nPktChkNo <= 0");
+        spdlog::info("nPktChkNo <= 0");
         return FALSE;
     }
 
@@ -448,7 +448,7 @@ BOOL CConnection::CheckHeader(CHAR* pNetPacket)
         return TRUE;
     }
 
-    LOG_INFO("验证-失败 m_nCheckNo:%d, nPktChkNo:%ld", m_nCheckNo, nPktChkNo);
+    spdlog::info("验证-失败 m_nCheckNo:%d, nPktChkNo:%ld", m_nCheckNo, nPktChkNo);
 
     return FALSE;
 }
@@ -570,7 +570,7 @@ BOOL CConnection::DoSend()
             pSendingBuffer->Release();
             pSendingBuffer = NULL;
             Close();
-            LOG_ERROR("发送线程:发送失败, 连接关闭原因:{}!", CommonFunc::GetLastErrorStr(errCode).c_str());
+            spdlog::error("发送线程:发送失败, 连接关闭原因:{}!", CommonFunc::GetLastErrorStr(errCode).c_str());
         }
     }
 
@@ -761,7 +761,7 @@ BOOL CConnectionMgr::CheckConntionAvalible(INT32 nInterval)
         {
             if (uCurTick > (pConnection->m_uLastRecvTick + 10 * 1000))
             {
-                LOG_ERROR("CConnectionMgr::CheckConntionAvalible WAIT超时主动断开连接 ConnID:%d", pConnection->GetConnectionID());
+                spdlog::error("CConnectionMgr::CheckConntionAvalible WAIT超时主动断开连接 ConnID:%d", pConnection->GetConnectionID());
                 pConnection->Close();
             }
 
