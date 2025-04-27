@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "LuaManager.h"
 
 CLuaHelper::CLuaHelper()

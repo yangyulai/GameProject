@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "PlayerObject.h"
 #include "PartnerModule.h"
 #include "DataPool.h"

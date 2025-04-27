@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CommonFunc.h"
 
 INT32 CommonFunc::GetProcessorNum()

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "ConfigFile.h"
 
 CConfigFile::CConfigFile( void )

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 
 #include "WatchMsgHandler.h"
 #include "GameService.h"

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SkillObject.h"
 #include "SceneObject.h"
 #include "StaticStruct.h"

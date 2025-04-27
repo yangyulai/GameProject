@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "LoginClientMgr.h"
 #include "../Message/Msg_ID.pb.h"
 

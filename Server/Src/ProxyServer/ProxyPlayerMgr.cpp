@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "ProxyPlayerMgr.h"
 
 CProxyPlayer::CProxyPlayer()

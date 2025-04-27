@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "BagModule.h"
 #include "DataPool.h"
 #include "StaticStruct.h"

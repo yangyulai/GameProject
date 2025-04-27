@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "DataPool.h"
 #include "GlobalDataMgr.h"
 #include "SkillModule.h"

@@ -1,31 +1,32 @@
-﻿#ifndef __COMMON_CONVERT__
-#define __COMMON_CONVERT__
+﻿#pragma once
+#include <vector>
+#include <string>
 
 namespace CommonConvert
 {
-INT32 StringToInt(const char* pStr);
+int32_t StringToInt(const char* pStr);
 
-INT64 StringToInt64(const char* pStr);
+int64_t StringToInt64(const char* pStr);
 
-FLOAT StringToFloat(const char* pStr);
+float StringToFloat(const char* pStr);
 
-DOUBLE StringToDouble(const char* pStr);
+double StringToDouble(const char* pStr);
 
-std::string DoubleToString(DOUBLE dValue);
+std::string DoubleToString(double dValue);
 
-std::string IntToString(UINT32 nValue);
+std::string IntToString(uint32_t nValue);
 
-std::string IntToString(INT32 nValue);
+std::string IntToString(int32_t nValue);
 
-std::string IntToString(UINT64 nValue);
+std::string IntToString(uint64_t nValue);
 
-std::string IntToString(INT64 nValue);
+std::string IntToString(int64_t nValue);
 
-std::string FloatToString(FLOAT fValue, INT32 nPrecision = -1, BOOL bRound = FALSE);
+std::string FloatToString(float fValue, int32_t nPrecision = -1, bool bRound = false);
 
-BOOL  StringToPos(const char* pStr, FLOAT& x, FLOAT& y, FLOAT& z);
+bool  StringToPos(const char* pStr, float& x, float& y, float& z);
 
-BOOL  StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT& right, FLOAT& bottom);
+bool  StringToBox(const char* pStr, float& left, float& top, float& right, float& bottom);
 
 // std::wstring Utf8_To_Unicode(std::string strValue);
 //
@@ -39,44 +40,41 @@ BOOL  StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT& right, FLOAT
 //
 std::string Ansi_To_Uft8(std::string strValue);
 
-BOOL IsTextUTF8(const char* str, INT32 nLength);
+bool IsTextUTF8(const char* str, int32_t nLength);
 
-INT32 GetValidUtf8Length(char* pStr, INT32 nLen);
+int32_t GetValidUtf8Length(char* pStr, int32_t nLen);
 
-std::string TruncateUtf8(char* pStr, INT32 nLen);
+std::string TruncateUtf8(char* pStr, int32_t nLen);
 
-BOOL SpliteString(std::string strSrc,  std::string strDelim, std::vector<std::string>& vtStr);
+bool SpliteString(std::string strSrc,  std::string strDelim, std::vector<std::string>& vtStr);
 
-BOOL SpliteStringByMuti(std::string strSrc, std::string strDelim, std::vector<std::string>& vtStr);
+bool SpliteStringByMuti(std::string strSrc, std::string strDelim, std::vector<std::string>& vtStr);
 
-BOOL SpliteStringByBlank(std::string strSrc, std::vector<std::string>& vtStr);
+bool SpliteStringByBlank(std::string strSrc, std::vector<std::string>& vtStr);
 
-BOOL SpliteString(std::string strSrc, char cDelim, std::vector<std::string>& vtStr);
+bool SpliteString(std::string strSrc, char cDelim, std::vector<std::string>& vtStr);
 
-BOOL ReplaceString(std::string& strSrc, const std::string& pattern, const std::string& newpat);
+bool ReplaceString(std::string& strSrc, const std::string& pattern, const std::string& newpat);
 
-BOOL StringToVector(const char* pStrValue, std::vector<INT32>& vtInt, char cDelim = ',');
+bool StringToVector(const char* pStrValue, std::vector<int32_t>& vtInt, char cDelim = ',');
 
-BOOL StringToVector(const char* pStrValue, INT32 IntVector[], INT32 nSize, char cDelim = ',');
+bool StringToVector(const char* pStrValue, int32_t IntVector[], int32_t nSize, char cDelim = ',');
 
-BOOL StringToVector(const char* pStrValue, FLOAT FloatVector[], INT32 nSize, char cDelim = ',');
+bool StringToVector(const char* pStrValue, float FloatVector[], int32_t nSize, char cDelim = ',');
 
-INT32 VersionToInt(const std::string& strVersion);
+int32_t VersionToInt(const std::string& strVersion);
 
-INT32 CountSymbol(const char* pStr, char cSymbol);
+int32_t CountSymbol(const char* pStr, char cSymbol);
 
-BOOL HasSymbol(const char* pStr, const char* pszSymbol);
+bool HasSymbol(const char* pStr, const char* pszSymbol);
 
-BOOL StringTrim(std::string& strValue);
+bool StringTrim(std::string& strValue);
 
-BOOL StrCopy(char* pszDest, const char* pszSrc, INT32 nLen);
+bool StrCopy(char* pszDest, const char* pszSrc, int32_t nLen);
 
-BOOL EscapeString(char* pszDest, INT32 nLen);
+bool EscapeString(char* pszDest, int32_t nLen);
 
-BYTE FromHex(const BYTE& x);
+uint8_t FromHex(const uint8_t& x);
 
 std::string UrlDecode(const std::string& strIn);
 }
-
-
-#endif /* __COMMON_CONVERT__ */

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SpinLock.h"
 #include "ServiceBase.h"
 #include "NetManager.h"

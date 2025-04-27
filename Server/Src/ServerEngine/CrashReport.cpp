@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 
 #ifdef WIN32
 #pragma warning(disable: 4996)

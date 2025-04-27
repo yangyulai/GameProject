@@ -1,50 +1,47 @@
-﻿#ifndef __COMMON_TIME__
-#define __COMMON_TIME__
+﻿#pragma once
+#include <string>
 
 namespace CommonFunc
 {
-BOOL            IsSameDay(UINT64 uTime);
+bool            IsSameDay(uint64_t uTime);
 
-BOOL            IsSameWeek(UINT64 uTime);
+bool            IsSameWeek(uint64_t uTime);
 
-BOOL            IsSameMonth(UINT64 uTime, UINT64 sTime = 0);
+bool            IsSameMonth(uint64_t uTime, uint64_t sTime = 0);
 
-INT32           DiffWeeks(UINT64 uTimeSrc, UINT64 uTimeDest);
+int32_t           DiffWeeks(uint64_t uTimeSrc, uint64_t uTimeDest);
 
-INT32           DiffDays(UINT64 uTimeSrc, UINT64 uTimeDest);
+int32_t           DiffDays(uint64_t uTimeSrc, uint64_t uTimeDest);
 
-UINT64          GetCurrTime(); //获取当前的秒数
+uint64_t          GetCurrTime(); //获取当前的秒数
 
-BOOL            SetCurrTimeAdd(INT64 nTimeAdd);
+bool            SetCurrTimeAdd(int64_t nTimeAdd);
 
-UINT64          GetCurMsTime(); //获取当前的毫秒数
+uint64_t          GetCurMsTime(); //获取当前的毫秒数
 
-tm              GetCurrTmTime(UINT64 uTime = 0);
+tm              GetCurrTmTime(uint64_t uTime = 0);
 
-UINT64          GetDayBeginTime(UINT64 uTime = 0); //获取当天起点的秒数
+uint64_t          GetDayBeginTime(uint64_t uTime = 0); //获取当天起点的秒数
 
-UINT64          GetWeekBeginTime(UINT64 uTime = 0); //获取当周起点的秒数
+uint64_t          GetWeekBeginTime(uint64_t uTime = 0); //获取当周起点的秒数
 
-UINT64          GetMonthBeginTime(UINT64 uTime = 0);//获取当月起点的秒数
+uint64_t          GetMonthBeginTime(uint64_t uTime = 0);//获取当月起点的秒数
 
-UINT64          GetMonthRemainTime(UINT64 uTime = 0);   //获取当月剩余的秒数
+uint64_t          GetMonthRemainTime(uint64_t uTime = 0);   //获取当月剩余的秒数
 
-INT32           GetWeekDay();       //获得周几
+int32_t           GetWeekDay();       //获得周几
 
-INT32           GetMonthDay();
+int32_t           GetMonthDay();
 
-INT32           GetMonth(UINT64 uTime = 0);
+int32_t           GetMonth(uint64_t uTime = 0);
 
-INT32           GetTimeZone();
+int32_t           GetTimeZone();
 
-time_t          YearTimeToSec(INT32 nYear, INT32 nMonth, INT32 nDay, INT32 nHour, INT32 nMin, INT32 nSec);
+time_t          YearTimeToSec(int32_t nYear, int32_t nMonth, int32_t nDay, int32_t nHour, int32_t nMin, int32_t nSec);
 
 std::string     TimeToString(time_t tTime);
 
 time_t          DateStringToTime(std::string strDate);
 
-UINT64          GetTickCount();
+uint64_t          GetTickCount();
 }
-
-
-#endif /* __COMMON_TIME__*/

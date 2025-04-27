@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CopyModule.h"
 #include "DataPool.h"
 #include "../Message/Msg_Copy.pb.h"

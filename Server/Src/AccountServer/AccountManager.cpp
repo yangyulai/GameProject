@@ -1,6 +1,7 @@
-﻿#include "stdafx.h"
-#include "AccountManager.h"
+﻿#include "AccountManager.h"
 #include <regex>
+
+#include "ConfigFile.h"
 
 CAccountObjectMgr::CAccountObjectMgr()
 {

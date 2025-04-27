@@ -1,6 +1,6 @@
-﻿#ifndef __COMMON_SOCKET__
-#define __COMMON_SOCKET__
-
+﻿#pragma once
+#include <winnt.h>
+#include "DBInterface/CppMysql.h"
 #define SOCKET_ERROR        (-1)
 
 namespace CommonSocket
@@ -71,6 +71,3 @@ BOOL        GetSocketAddress(SOCKET hSocket, CHAR* pDataBuffer, sockaddr_in*& pA
 BOOL        DisconnectEx(SOCKET hSocket, LPOVERLAPPED lpOverlapped, BOOL bReuse);
 #endif
 }
-
-
-#endif /* __COMMON_SOCKET__*/

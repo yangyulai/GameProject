@@ -1,5 +1,7 @@
 ﻿#pragma once
-
+#include <cstdint>
+#include <string>
+#include "../Platform.h"
 #include "mysql.h"
 
 class CppMySQL3DB;
@@ -32,8 +34,8 @@ public:
     int getIntField(int nField, int nNullValue = 0);
     int getIntField(const char* szField, int nNullValue = 0);
 
-    INT64 getInt64Field(int nField, INT64 nNullValue = 0);
-    INT64 getInt64Field(const char* szField, INT64 nNullValue = 0);
+    int64_t getint64_tField(int nField, int64_t nNullValue = 0);
+    int64_t getint64_tField(const char* szField, int64_t nNullValue = 0);
 
     double getFloatField(int nField, double fNullValue = 0.0);
     double getFloatField(const char* szField, double fNullValue = 0.0);
@@ -140,9 +142,9 @@ public:
     /*修改当前的数据库*/
     bool changeCurDB(const char* name);
 
-    INT64 GetAutoIncrementID(const char* szTableName, const char* szDBName);
+    int64_t GetAutoIncrementID(const char* szTableName, const char* szDBName);
 
-    bool  SetAutoIncrementID(INT64 nId, const char* szTableName, const char* szDBName);
+    bool  SetAutoIncrementID(int64_t nId, const char* szTableName, const char* szDBName);
 
 private:
     CppMySQL3DB(const CppMySQL3DB& db);

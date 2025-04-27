@@ -1,8 +1,6 @@
-﻿#include "stdafx.h"
-#include "CppMysql.h"
+﻿#include "CppMysql.h"
 #include <stdlib.h>
 #include <errmsg.h>
-
 CppMySQLQuery::CppMySQLQuery()
 {
     m_MysqlRes = NULL;
@@ -243,7 +241,7 @@ const char* CppMySQLQuery::getStringField(const char* szField, const char* szNul
     return getStringField(nField, szNullValue);
 }
 
-INT64 CppMySQLQuery::getInt64Field(int nField, INT64 nNullValue /*= 0*/)
+int64_t CppMySQLQuery::getint64_tField(int nField, int64_t nNullValue /*= 0*/)
 {
     if ( NULL == m_MysqlRes )
     {
@@ -266,7 +264,7 @@ INT64 CppMySQLQuery::getInt64Field(int nField, INT64 nNullValue /*= 0*/)
 #endif
 }
 
-INT64 CppMySQLQuery::getInt64Field(const char* szField, INT64 nNullValue /*= 0*/)
+int64_t CppMySQLQuery::getint64_tField(const char* szField, int64_t nNullValue /*= 0*/)
 {
     if ( NULL == m_MysqlRes || NULL == szField )
     {
@@ -372,10 +370,10 @@ bool CppMySQLQuery::fieldIsNull(int nField)
     const unsigned char* pData = (const unsigned char*)getStringField(nField);
     if (NULL == pData)
     {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 bool CppMySQLQuery::fieldIsNull(const char* szField)
@@ -388,10 +386,10 @@ bool CppMySQLQuery::fieldIsNull(const char* szField)
     const unsigned char* pData = (const unsigned char*)getStringField(szField);
     if (NULL == pData)
     {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 bool CppMySQLQuery::eof()
@@ -754,7 +752,7 @@ int CppMySQL3DB::createDB(const char* name)
 {
     m_nErrNo = 0;
     char temp[1024] = {};
-    snprintf(temp, 1024, "CREATE DATABASE {}", name);
+    snprintf(temp, 1024, "CREATE DATABASE %s", name);
     if(!mysql_real_query( m_pMySqlDB, temp, (unsigned long)strlen(temp)) )
     {
         return 0;
@@ -771,7 +769,7 @@ int CppMySQL3DB::dropDB(const char*  name)
 {
     m_nErrNo = 0;
     char temp[1024];
-    snprintf(temp, 1024, "DROP DATABASE {}", name);
+    snprintf(temp, 1024, "DROP DATABASE %s", name);
     if(!mysql_real_query( m_pMySqlDB, temp, (unsigned long)strlen(temp)) )
     {
         return 0;
@@ -798,7 +796,7 @@ bool CppMySQL3DB::changeCurDB(const char* name)
     return false;
 }
 
-INT64 CppMySQL3DB::GetAutoIncrementID(const char* szTableName, const char* szDBName)
+int64_t CppMySQL3DB::GetAutoIncrementID(const char* szTableName, const char* szDBName)
 {
     if ((szTableName == NULL) || (szDBName == NULL))
     {
@@ -807,7 +805,7 @@ INT64 CppMySQL3DB::GetAutoIncrementID(const char* szTableName, const char* szDBN
 
     m_nErrNo = 0;
     char strSql[1024];
-    snprintf(strSql, 1024, "SELECT auto_increment FROM information_schema.tables where table_schema=\"{}\" and table_name=\"{}\"", szDBName, szTableName);
+    snprintf(strSql, 1024, "SELECT auto_increment FROM information_schema.tables where table_schema=\"%s\" and table_name=\"%s\"", szDBName, szTableName);
 
     CppMySQLQuery tQuery;
     int nRet = mysql_real_query(m_pMySqlDB, strSql, (unsigned long)strlen(strSql));
@@ -820,10 +818,10 @@ INT64 CppMySQL3DB::GetAutoIncrementID(const char* szTableName, const char* szDBN
 
     tQuery.m_MysqlRes = mysql_store_result(m_pMySqlDB);
 
-    return tQuery.getInt64Field(0);
+    return tQuery.getint64_tField(0);
 }
 
-bool CppMySQL3DB::SetAutoIncrementID(INT64 nId, const char* szTableName, const char* szDBName)
+bool CppMySQL3DB::SetAutoIncrementID(int64_t nId, const char* szTableName, const char* szDBName)
 {
     if ((szTableName == NULL) || (szDBName == NULL))
     {
@@ -832,7 +830,7 @@ bool CppMySQL3DB::SetAutoIncrementID(INT64 nId, const char* szTableName, const c
 
     m_nErrNo = 0;
     char strSql[1024];
-    snprintf(strSql, 1024, "alter table {}.{} AUTO_INCREMENT=%lld;", szDBName, szTableName, nId);
+    snprintf(strSql, 1024, "alter table %s.%s AUTO_INCREMENT=%lld;", szDBName, szTableName, nId);
 
     if (!mysql_real_query(m_pMySqlDB, strSql, (unsigned long)strlen(strSql)))
     {

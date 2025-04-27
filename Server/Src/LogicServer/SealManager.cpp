@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SealManager.h"
 #include "GameService.h"
 #include "StaticData.h"

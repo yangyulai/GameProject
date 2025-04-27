@@ -1,7 +1,6 @@
-﻿
-#ifndef _SQL_RESULT_H_
-#define _SQL_RESULT_H_
-
+﻿#pragma once
+#include <string>
+#include <map>
 #include <my_global.h>
 #include <mysql.h>
 #undef snprintf
@@ -68,5 +67,3 @@ private:
 	MYSQL_RES*					m_pResult;
 	MYSQL_BIND*					m_pBinds;
 };
-
-#endif // _SQL_RESULT_H_

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "Connection.h"
 #include "DataBuffer.h"
 #include "CommandDef.h"

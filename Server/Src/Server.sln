@@ -25,8 +25,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CenterServer", "CenterServe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchServer", "WatchServer\WatchServer.vcxproj", "{398AED55-152C-4102-BA05-511AEC1AA780}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerEngine_asio", "ServerEngine_asio\ServerEngine_asio.vcxproj", "{4D748B17-0220-45C8-9A08-3B3617ED0788}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{1114E9C5-8071-4380-A3C8-3183C1B6D3AE}"
 EndProject
 Global
@@ -75,8 +73,6 @@ Global
 		{398AED55-152C-4102-BA05-511AEC1AA780}.Debug|x64.Build.0 = Debug|x64
 		{398AED55-152C-4102-BA05-511AEC1AA780}.Release|x64.ActiveCfg = Release|x64
 		{398AED55-152C-4102-BA05-511AEC1AA780}.Release|x64.Build.0 = Release|x64
-		{4D748B17-0220-45C8-9A08-3B3617ED0788}.Debug|x64.ActiveCfg = Debug|x64
-		{4D748B17-0220-45C8-9A08-3B3617ED0788}.Release|x64.ActiveCfg = Release|x64
 		{1114E9C5-8071-4380-A3C8-3183C1B6D3AE}.Debug|x64.ActiveCfg = Debug|x64
 		{1114E9C5-8071-4380-A3C8-3183C1B6D3AE}.Debug|x64.Build.0 = Debug|x64
 		{1114E9C5-8071-4380-A3C8-3183C1B6D3AE}.Release|x64.ActiveCfg = Release|x64

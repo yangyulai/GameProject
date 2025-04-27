@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "GameService.h"
 
 CGameService::CGameService(void)

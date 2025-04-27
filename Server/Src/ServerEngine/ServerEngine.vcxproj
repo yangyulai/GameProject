@@ -14,7 +14,7 @@
     <ProjectGuid>{639FA6BE-9921-4385-9210-BD6CAC868D58}</ProjectGuid>
     <RootNamespace>ServerEngine</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -59,11 +59,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../Common;../../Common/protobuf/src;../../Common/MySql;../../Common/Lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SERVER_ENGINE;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../Common;../../Common/protobuf/src;../../Common/MySql;../../Common/Lua;$(BOOST_ROOT);$(OPENSSL_ROOT_DIR)/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SERVER_ENGINE;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=0x0A01;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4996;4800;</DisableSpecificWarnings>
@@ -109,6 +109,7 @@
     <ClCompile Include="DBInterface\DBConnection.cpp" />
     <ClCompile Include="DBInterface\DBRecordSet.cpp" />
     <ClCompile Include="DBInterface\DBStoredProc.cpp" />
+    <ClCompile Include="DBInterface\MySqlClient.cpp" />
     <ClCompile Include="DFA.cpp" />
     <ClCompile Include="HttpParameter.cpp" />
     <ClCompile Include="Log.cpp" />
@@ -116,12 +117,6 @@
     <ClCompile Include="NetManager.cpp" />
     <ClCompile Include="ServiceBase.cpp" />
     <ClCompile Include="SharedMemory.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="TimerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +136,7 @@
     <ClInclude Include="DBInterface\DBInterface.h" />
     <ClInclude Include="DBInterface\DBRecordSet.h" />
     <ClInclude Include="DBInterface\DBStoredProc.h" />
+    <ClInclude Include="DBInterface\MySqlClient.h" />
     <ClInclude Include="DFA.h" />
     <ClInclude Include="HttpParameter.h" />
     <ClInclude Include="LockFreeQueue.h" />

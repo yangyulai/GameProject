@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SceneXmlMgr.h"
 
 CSceneXmlManager::CSceneXmlManager()

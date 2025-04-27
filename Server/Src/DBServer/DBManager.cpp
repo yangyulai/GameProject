@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "DBManager.h"
 #include "../Message/Msg_RetCode.pb.h"
 

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "LoginCodeMgr.h"
 #include "RoleModule.h"
 #include "RoleData.h"

@@ -1,8 +1,9 @@
-﻿#include "stdafx.h"
-#include "CommonTime.h"
+﻿#include "CommonTime.h"
 #include <chrono>
 
-INT64 g_TimeAdd = 0;
+#include "CommonFunc.h"
+
+int64_t g_TimeAdd = 0;
 
 UINT64 CommonFunc::GetCurrTime()
 {
@@ -11,7 +12,7 @@ UINT64 CommonFunc::GetCurrTime()
     return (UINT64)t + g_TimeAdd;
 }
 
-BOOL CommonFunc::SetCurrTimeAdd(INT64 nTimeAdd)
+BOOL CommonFunc::SetCurrTimeAdd(int64_t nTimeAdd)
 {
     g_TimeAdd += nTimeAdd;
 

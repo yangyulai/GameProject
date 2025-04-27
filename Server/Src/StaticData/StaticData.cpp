@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "StaticData.h"
 #include "RapidXml.h"
 #include "ConfigFile.h"

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SceneLogic_Arena.h"
 #include "../GameObject/SceneObject.h"
 #include "../Scene.h"

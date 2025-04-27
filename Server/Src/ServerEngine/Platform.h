@@ -1,5 +1,5 @@
-﻿#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+﻿#pragma once
+
 
 #include <errno.h>
 
@@ -24,7 +24,7 @@
 #pragma  comment(lib, "Mswsock")
 
 #else
-
+static_assert(false)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -114,5 +114,3 @@ typedef int                 HANDLE;
 #else
 #define EngineClass
 #endif
-
-#endif /* __PLATFORM_H__ */

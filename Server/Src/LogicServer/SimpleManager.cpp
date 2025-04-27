@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SimpleManager.h"
 #include "GameService.h"
 

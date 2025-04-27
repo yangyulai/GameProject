@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "BuffObject.h"
 #include "../Message/Game_Define.pb.h"
 #include "TimerManager.h"

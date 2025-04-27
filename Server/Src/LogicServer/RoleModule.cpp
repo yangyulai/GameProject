@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "RoleModule.h"
 #include "../ServerData/ServerDefine.h"
 #include "../StaticData/StaticData.h"

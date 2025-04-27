@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "AccountMsgHandler.h"
+﻿#include "AccountMsgHandler.h"
 #include "PacketHeader.h"
 #include "GameService.h"
 #include "../Message/Msg_ID.pb.h"

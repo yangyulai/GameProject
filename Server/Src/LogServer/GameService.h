@@ -1,6 +1,8 @@
-﻿#ifndef _GAME_SERVICE_H_
-#define _GAME_SERVICE_H_
+﻿#pragma once
+#include <Platform.h>
+#include <IBufferHandler.h>
 #include "LogMsgHandler.h"
+#include "DBInterface/MySqlClient.h"
 
 class CGameService : public IPacketDispatcher
 {
@@ -17,21 +19,23 @@ public:
 
 	BOOL		Run();
 	void Test();
+	void Test2();
+	void TestQuerySync();
+	void TestQueryAsync();
 
-	BOOL		OnNewConnect(INT32 nConnID);
+	bool		OnNewConnect(INT32 nConnID);
 
-	BOOL		OnCloseConnect(INT32 nConnID);
+	bool		OnCloseConnect(INT32 nConnID);
 
-	BOOL		OnSecondTimer();
+	bool		OnSecondTimer();
 
-	BOOL		DispatchPacket( NetPacket* pNetPacket);
+	bool		DispatchPacket( NetPacket* pNetPacket);
 
 public:
 	CLogMsgHandler		m_LogMsgHandler;
-
+	boost::asio::io_context m_ioContext;
+	std::unique_ptr<MySqlClient> m_dbClient;
 public:
 	//*********************消息处理定义开始******************************
 	//*********************消息处理定义结束******************************
 };
-
-#endif

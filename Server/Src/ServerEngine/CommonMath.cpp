@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CommonConvert.h"
 #include "CommonMath.h"
 #include <cmath>

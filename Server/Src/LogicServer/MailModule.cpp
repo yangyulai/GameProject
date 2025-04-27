@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "MailModule.h"
 #include "DataPool.h"
 #include "GlobalDataMgr.h"

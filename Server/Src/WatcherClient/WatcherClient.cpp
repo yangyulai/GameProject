@@ -1,11 +1,12 @@
-﻿#include "stdafx.h"
+﻿
+#include "Platform.h"
 #include "WatcherClient.h"
 #include "../Message/Msg_Game.pb.h"
 #include "../Message/Msg_RetCode.pb.h"
 #include "../Message/Msg_ID.pb.h"
 
 #ifdef WIN32
-static BOOL        ExitRoutine(INT32 nSignal)
+static bool        ExitRoutine(int32_t nSignal)
 {
     switch (nSignal)
     {
@@ -33,7 +34,7 @@ static BOOL        ExitRoutine(INT32 nSignal)
             break;
     }
 
-    return TRUE;
+    return true;
 }
 #else
 
@@ -69,7 +70,7 @@ static VOID        ExitRoutine(INT32 nSignal)
 
 CWatcherClient::CWatcherClient(void)
 {
-    m_bRun              = TRUE;
+    m_bRun              = true;
 }
 
 CWatcherClient::~CWatcherClient(void)
@@ -83,51 +84,51 @@ CWatcherClient* CWatcherClient::GetInstancePtr()
     return &_WatcherClient;
 }
 
-BOOL CWatcherClient::IsRun()
+bool CWatcherClient::IsRun()
 {
     return m_bRun;
 }
 
-BOOL CWatcherClient::RegExitSignal()
+bool CWatcherClient::RegExitSignal()
 {
 #ifdef _WIN32
-    return SetConsoleCtrlHandler((PHANDLER_ROUTINE)ExitRoutine, TRUE);
+    return SetConsoleCtrlHandler((PHANDLER_ROUTINE)ExitRoutine, true);
 #else
     signal(SIGINT, ExitRoutine);
     signal(SIGQUIT, ExitRoutine);
     signal(SIGKILL, ExitRoutine);
     signal(SIGTERM, ExitRoutine);
-    return TRUE;
+    return true;
 #endif
 }
 
-BOOL CWatcherClient::StopServer()
+bool CWatcherClient::StopServer()
 {
-    m_bRun = FALSE;
+    m_bRun = false;
 
-    return TRUE;
+    return true;
 }
 
-BOOL CWatcherClient::OnNewConnect(INT32 nConnID)
+bool CWatcherClient::OnNewConnect(int32_t nConnID)
 {
 
-    return TRUE;
+    return true;
 }
 
-BOOL CWatcherClient::OnCloseConnect(INT32 nConnID)
+bool CWatcherClient::OnCloseConnect(int32_t nConnID)
 {
-    return TRUE;
+    return true;
 }
 
-BOOL CWatcherClient::OnSecondTimer()
+bool CWatcherClient::OnSecondTimer()
 {
-    return TRUE;
+    return true;
 }
 
-BOOL CWatcherClient::DispatchPacket(NetPacket* pNetPacket)
+bool CWatcherClient::DispatchPacket(NetPacket* pNetPacket)
 {
 
-    return FALSE;
+    return false;
 }
 
 

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "MountModule.h"
 #include "DataPool.h"
 #include "GlobalDataMgr.h"

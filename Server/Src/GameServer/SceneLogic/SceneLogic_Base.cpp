@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CommonMath.h"
 #include "SceneLogic_Base.h"
 #include "../Scene.h"

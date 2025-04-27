@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+struct NetPacket;
 #include "DBInterface/CppMysql.h"
 
 class CLogMsgHandler

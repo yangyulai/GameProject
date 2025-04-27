@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "GuildManager.h"
 #include "GameService.h"
 #include "DataPool.h"

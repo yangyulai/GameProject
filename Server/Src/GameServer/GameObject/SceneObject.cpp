@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SceneObject.h"
 #include "../GameService.h"
 #include "../Message/Msg_Copy.pb.h"

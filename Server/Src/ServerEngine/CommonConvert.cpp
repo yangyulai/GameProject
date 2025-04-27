@@ -1,7 +1,8 @@
-﻿#include "stdafx.h"
+﻿#include <algorithm>
 #include "CommonConvert.h"
+#include <Windows.h>
 
-INT32 CommonConvert::StringToInt(const char* pStr)
+int32_t CommonConvert::StringToInt(const char* pStr)
 {
     if(pStr == NULL)
     {
@@ -11,7 +12,7 @@ INT32 CommonConvert::StringToInt(const char* pStr)
     return atoi(pStr);
 }
 
-INT64 CommonConvert::StringToInt64(const char* pStr)
+int64_t CommonConvert::StringToInt64(const char* pStr)
 {
     if(pStr == NULL)
     {
@@ -25,17 +26,17 @@ INT64 CommonConvert::StringToInt64(const char* pStr)
 #endif
 }
 
-FLOAT  CommonConvert::StringToFloat(const char* pStr)
+float  CommonConvert::StringToFloat(const char* pStr)
 {
     if(pStr == NULL)
     {
         return 0;
     }
 
-    return (FLOAT)atof(pStr);
+    return (float)atof(pStr);
 }
 
-DOUBLE CommonConvert::StringToDouble(const char* pStr)
+double CommonConvert::StringToDouble(const char* pStr)
 {
     if (pStr == NULL)
     {
@@ -45,56 +46,56 @@ DOUBLE CommonConvert::StringToDouble(const char* pStr)
     return strtod(pStr, NULL);
 }
 
-std::string CommonConvert::DoubleToString(DOUBLE dValue)
+std::string CommonConvert::DoubleToString(double dValue)
 {
-    CHAR szValue[64] = { 0 };
+    char szValue[64] = { 0 };
 
     snprintf(szValue, 64, "%f", dValue);
 
     return std::string(szValue);
 }
 
-std::string CommonConvert::IntToString(INT32 nValue)
+std::string CommonConvert::IntToString(int32_t nValue)
 {
-    CHAR szValue[64] = {0};
+    char szValue[64] = {0};
 
     snprintf(szValue, 64, "%d", nValue);
 
     return std::string(szValue);
 }
 
-std::string CommonConvert::IntToString(INT64 uValue)
+std::string CommonConvert::IntToString(int64_t uValue)
 {
-    CHAR szValue[64] = { 0 };
+    char szValue[64] = { 0 };
 
     snprintf(szValue, 64, "%lld", uValue);
 
     return std::string(szValue);
 }
 
-std::string CommonConvert::IntToString(UINT32 nValue)
+std::string CommonConvert::IntToString(uint32_t nValue)
 {
-    CHAR szValue[64] = { 0 };
+    char szValue[64] = { 0 };
 
     snprintf(szValue, 64, "%d", nValue);
 
     return std::string(szValue);
 }
 
-std::string CommonConvert::IntToString(UINT64 uValue)
+std::string CommonConvert::IntToString(uint64_t uValue)
 {
-    CHAR szValue[64] = { 0 };
+    char szValue[64] = { 0 };
 
     snprintf(szValue, 64, "%lld", uValue);
 
     return std::string(szValue);
 }
 
-BOOL CommonConvert::StringToPos(const char* pStr, FLOAT& x, FLOAT& y, FLOAT& z)
+bool CommonConvert::StringToPos(const char* pStr, float& x, float& y, float& z)
 {
     if(pStr == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     char szTempBuf[256] = { 0 };
@@ -103,7 +104,7 @@ BOOL CommonConvert::StringToPos(const char* pStr, FLOAT& x, FLOAT& y, FLOAT& z)
     char* pPos = strchr(szTempBuf, ',');
     if(pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     x = CommonConvert::StringToFloat(szTempBuf + 1);
@@ -112,7 +113,7 @@ BOOL CommonConvert::StringToPos(const char* pStr, FLOAT& x, FLOAT& y, FLOAT& z)
     pPos = strchr(pPos + 1, ',');
     if(pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     y = CommonConvert::StringToFloat(pOldPos);
@@ -121,19 +122,19 @@ BOOL CommonConvert::StringToPos(const char* pStr, FLOAT& x, FLOAT& y, FLOAT& z)
     pPos = strchr(pPos + 1, ')');
     if(pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     z = CommonConvert::StringToFloat(pOldPos);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT& right, FLOAT& bottom)
+bool CommonConvert::StringToBox(const char* pStr, float& left, float& top, float& right, float& bottom)
 {
     if (pStr == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     char szTempBuf[256] = { 0 };
@@ -142,7 +143,7 @@ BOOL CommonConvert::StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT
     char* pPos = strchr(szTempBuf, ',');
     if (pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     left = CommonConvert::StringToFloat(szTempBuf + 1);
@@ -151,7 +152,7 @@ BOOL CommonConvert::StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT
     pPos = strchr(pPos + 1, ',');
     if (pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     top = CommonConvert::StringToFloat(pOldPos);
@@ -160,7 +161,7 @@ BOOL CommonConvert::StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT
     pPos = strchr(pPos + 1, ',');
     if (pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     right = CommonConvert::StringToFloat(pOldPos);
@@ -169,21 +170,21 @@ BOOL CommonConvert::StringToBox(const char* pStr, FLOAT& left, FLOAT& top, FLOAT
     pPos = strchr(pPos + 1, ')');
     if (pPos == NULL)
     {
-        return FALSE;
+        return false;
     }
     *pPos = 0;
     bottom = CommonConvert::StringToFloat(pOldPos);
 
-    return TRUE;
+    return true;
 }
 
-std::string CommonConvert::FloatToString(FLOAT fValue, INT32 nPrecision, BOOL bRound)
+std::string CommonConvert::FloatToString(float fValue, int32_t nPrecision, bool bRound)
 {
-    CHAR szValue[64] = {0};
+    char szValue[64] = {0};
 
     if((bRound) && (nPrecision > 0) && (nPrecision < 6))
     {
-        FLOAT fRoundValue = 5;
+        float fRoundValue = 5;
 
         for(int i = 0; i < nPrecision + 1; i++)
         {
@@ -195,7 +196,7 @@ std::string CommonConvert::FloatToString(FLOAT fValue, INT32 nPrecision, BOOL bR
 
     snprintf(szValue, 64, "%f", fValue);
 
-    CHAR* pChar = strchr(szValue, '.');
+    char* pChar = strchr(szValue, '.');
     if(pChar == NULL)
     {
         return std::string(szValue);
@@ -206,18 +207,18 @@ std::string CommonConvert::FloatToString(FLOAT fValue, INT32 nPrecision, BOOL bR
     return std::string(szValue);
 }
 
-BOOL CommonConvert::SpliteString(std::string strSrc, std::string strDelim, std::vector<std::string>& vtStr)
+bool CommonConvert::SpliteString(std::string strSrc, std::string strDelim, std::vector<std::string>& vtStr)
 {
     vtStr.clear();
     if (strDelim.empty())
     {
         vtStr.push_back(strSrc);
-        return TRUE;
+        return true;
     }
 
     if (strSrc.size() <= 0)
     {
-        return TRUE;
+        return true;
     }
 
     std::string::iterator subStart, subEnd;
@@ -237,14 +238,14 @@ BOOL CommonConvert::SpliteString(std::string strSrc, std::string strDelim, std::
         subStart = subEnd + strDelim.size();
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::SpliteStringByMuti(std::string strSrc, std::string strDelim, std::vector<std::string>& vtStr)
+bool CommonConvert::SpliteStringByMuti(std::string strSrc, std::string strDelim, std::vector<std::string>& vtStr)
 {
-    INT32 posStart = -1;
+    int32_t posStart = -1;
 
-    for (INT32 i = 0; i < strSrc.size(); i++)
+    for (int32_t i = 0; i < strSrc.size(); i++)
     {
         if (strDelim.find(strSrc.at(i)) != std::string::npos)
         {
@@ -262,19 +263,19 @@ BOOL CommonConvert::SpliteStringByMuti(std::string strSrc, std::string strDelim,
         }
     }
 
-    if (posStart >= 0 && posStart < (INT32)strSrc.size())
+    if (posStart >= 0 && posStart < (int32_t)strSrc.size())
     {
         vtStr.emplace_back(std::string(strSrc, posStart, strSrc.size() - posStart));
     }
 
-    return TRUE;
+    return true;
 }
 
 
-BOOL CommonConvert::SpliteStringByBlank(std::string strSrc, std::vector<std::string>& vtStr)
+bool CommonConvert::SpliteStringByBlank(std::string strSrc, std::vector<std::string>& vtStr)
 {
     vtStr.clear();
-    BOOL bWordStart = FALSE;
+    bool bWordStart = false;
     std::string::size_type posStart;
     std::string::size_type posCur = 0;
 
@@ -293,7 +294,7 @@ BOOL CommonConvert::SpliteStringByBlank(std::string strSrc, std::vector<std::str
                 vtStr.push_back(strSrc.substr(posStart, posCur - posStart));
             }
 
-            bWordStart = FALSE;
+            bWordStart = false;
             posStart = 0;
             posCur += 1;
         }
@@ -302,16 +303,16 @@ BOOL CommonConvert::SpliteStringByBlank(std::string strSrc, std::vector<std::str
             if (!bWordStart)
             {
                 posStart = posCur;
-                bWordStart = TRUE;
+                bWordStart = true;
             }
             posCur += 1;
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::ReplaceString(std::string& str, const std::string& pattern, const std::string& newpat)
+bool CommonConvert::ReplaceString(std::string& str, const std::string& pattern, const std::string& newpat)
 {
     const size_t nsize = newpat.size();
     const size_t psize = pattern.size();
@@ -321,14 +322,14 @@ BOOL CommonConvert::ReplaceString(std::string& str, const std::string& pattern, 
         str.replace(pos, psize, newpat);
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::StringToVector(const char* pStrValue, INT32 IntVector[], INT32 nSize, char cDelim)
+bool CommonConvert::StringToVector(const char* pStrValue, int32_t IntVector[], int32_t nSize, char cDelim)
 {
     if (pStrValue == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     char szBuf[1024] = { 0 };
@@ -343,14 +344,14 @@ BOOL CommonConvert::StringToVector(const char* pStrValue, INT32 IntVector[], INT
         pEndPos = strchr(pBeginPos, cDelim);
     }
 
-    INT32 nIndex = 0;
+    int32_t nIndex = 0;
     while (pEndPos != NULL)
     {
         //*pEndPos = 0;
         IntVector[nIndex++] = StringToInt(pBeginPos);
         if (nIndex >= nSize)
         {
-            return TRUE;
+            return true;
         }
 
         pBeginPos = pEndPos + 1;
@@ -362,19 +363,19 @@ BOOL CommonConvert::StringToVector(const char* pStrValue, INT32 IntVector[], INT
         IntVector[nIndex++] = StringToInt(pBeginPos);
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::StringToVector(const char* pStrValue, std::vector<INT32>& vtInt, char cDelim /*= ','*/)
+bool CommonConvert::StringToVector(const char* pStrValue, std::vector<int32_t>& vtInt, char cDelim /*= ','*/)
 {
     if (pStrValue == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     if (strlen(pStrValue) > 1024)
     {
-        return FALSE;
+        return false;
     }
 
     char szBuf[1024] = { 0 };
@@ -391,7 +392,7 @@ BOOL CommonConvert::StringToVector(const char* pStrValue, std::vector<INT32>& vt
 
     while (pEndPos != NULL)
     {
-        INT32 nValue = StringToInt(pBeginPos);
+        int32_t nValue = StringToInt(pBeginPos);
         vtInt.push_back(nValue);
         pBeginPos = pEndPos + 1;
         pEndPos = strchr(pBeginPos, cDelim);
@@ -399,18 +400,18 @@ BOOL CommonConvert::StringToVector(const char* pStrValue, std::vector<INT32>& vt
 
     if (*pBeginPos != 0)
     {
-        INT32 nValue = StringToInt(pBeginPos);
+        int32_t nValue = StringToInt(pBeginPos);
         vtInt.push_back(nValue);
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::StringToVector(const char* pStrValue, FLOAT FloatVector[], INT32 nSize, char cDelim /*= ','*/)
+bool CommonConvert::StringToVector(const char* pStrValue, float FloatVector[], int32_t nSize, char cDelim /*= ','*/)
 {
     if (pStrValue == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     char szBuf[1024] = { 0 };
@@ -425,13 +426,13 @@ BOOL CommonConvert::StringToVector(const char* pStrValue, FLOAT FloatVector[], I
         pEndPos = strchr(pBeginPos, cDelim);
     }
 
-    INT32 nIndex = 0;
+    int32_t nIndex = 0;
     while (pEndPos != NULL)
     {
         FloatVector[nIndex++] = StringToFloat(pBeginPos);
         if (nIndex >= nSize)
         {
-            return TRUE;
+            return true;
         }
 
         pBeginPos = pEndPos + 1;
@@ -443,10 +444,10 @@ BOOL CommonConvert::StringToVector(const char* pStrValue, FLOAT FloatVector[], I
         FloatVector[nIndex++] = StringToFloat(pBeginPos);
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::SpliteString(std::string strSrc,  char cDelim, std::vector<std::string>& vtStr)
+bool CommonConvert::SpliteString(std::string strSrc,  char cDelim, std::vector<std::string>& vtStr)
 {
     vtStr.clear();
 
@@ -466,7 +467,7 @@ BOOL CommonConvert::SpliteString(std::string strSrc,  char cDelim, std::vector<s
         vtStr.emplace_back(strSrc.substr(posStart));
     }
 
-    return TRUE;
+    return true;
 }
 
 /*
@@ -486,7 +487,7 @@ std::wstring CommonConvert::Utf8_To_Unicode( std::string strSrc )
 std::string CommonConvert::Unicode_To_Uft8( std::wstring wstrValue )
 {
 #ifdef WIN32
-    CHAR sBuff[102400] = { 0 };
+    char sBuff[102400] = { 0 };
     WideCharToMultiByte(CP_UTF8, 0, wstrValue.c_str(), -1, sBuff, 102400, NULL, NULL);
     std::string strRet = sBuff;
     return strRet;
@@ -512,7 +513,7 @@ std::wstring CommonConvert::Ansi_To_Unicode( std::string strSrc )
 
 std::string CommonConvert::Unicode_To_Ansi( std::wstring strValue )
 {
-    CHAR sBuff[102400] = { 0 };
+    char sBuff[102400] = { 0 };
 #ifdef WIN32
     WideCharToMultiByte(CP_ACP, 0, strValue.c_str(), -1, sBuff, 102400, NULL, NULL);
     return std::string(sBuff);
@@ -525,7 +526,7 @@ std::string CommonConvert::Unicode_To_Ansi( std::wstring strValue )
 std::string CommonConvert::Utf8_To_Ansi( std::string strSrc )
 {
     wchar_t wBuff[102400] = {0};
-    CHAR sBuff[102400] = {0};
+    char sBuff[102400] = {0};
 #ifdef WIN32
     MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, wBuff, 102400);
     WideCharToMultiByte(CP_ACP, 0, wBuff, -1, sBuff, 102400, NULL, NULL);
@@ -539,7 +540,7 @@ std::string CommonConvert::Utf8_To_Ansi( std::string strSrc )
 std::string CommonConvert::Ansi_To_Uft8( std::string strSrc )
 {
     wchar_t wBuff[102400] = {0};
-    CHAR sBuff[102400] = {0};
+    char sBuff[102400] = {0};
 #ifdef WIN32
     MultiByteToWideChar(CP_ACP,  0, strSrc.c_str(), -1, wBuff, 102400);
     WideCharToMultiByte(CP_UTF8, 0, wBuff, -1, sBuff, 102400, NULL, NULL);
@@ -550,18 +551,18 @@ std::string CommonConvert::Ansi_To_Uft8( std::string strSrc )
 }
 
 
-BOOL CommonConvert::IsTextUTF8(const char* str, INT32 nLength)
+bool CommonConvert::IsTextUTF8(const char* str, int32_t nLength)
 {
-    INT32 i;
-    INT32 nBytes = 0;//UFT8可用1-6个字节编码,ASCII用一个字节
-    UINT8 chr;
-    BOOL bAllAscii = TRUE; //如果全部都是ASCII, 说明不是UTF-8
+    int32_t i;
+    int32_t nBytes = 0;//UFT8可用1-6个字节编码,ASCII用一个字节
+    uint8_t chr;
+    bool bAllAscii = true; //如果全部都是ASCII, 说明不是UTF-8
     for (i = 0; i < nLength; i++)
     {
         chr = *(str + i);
         if ((chr & 0x80) != 0) // 判断是否ASCII编码,如果不是,说明有可能是UTF-8,ASCII用7位编码,但用一个字节存,最高位标记为0,o0xxxxxxx
         {
-            bAllAscii = FALSE;
+            bAllAscii = false;
         }
         if (nBytes == 0) //如果不是ASCII码,应该是多字节符,计算字节数
         {
@@ -589,7 +590,7 @@ BOOL CommonConvert::IsTextUTF8(const char* str, INT32 nLength)
                 }
                 else
                 {
-                    return FALSE;
+                    return false;
                 }
                 nBytes--;
             }
@@ -598,31 +599,31 @@ BOOL CommonConvert::IsTextUTF8(const char* str, INT32 nLength)
         {
             if ((chr & 0xC0) != 0x80)
             {
-                return FALSE;
+                return false;
             }
             nBytes--;
         }
     }
     if (nBytes > 0) //违返规则
     {
-        return FALSE;
+        return false;
     }
     if (bAllAscii) //如果全部都是ASCII, 说明不是UTF-8
     {
-        return TRUE;
+        return true;
     }
-    return TRUE;
+    return true;
 }
 
-INT32 CommonConvert::GetValidUtf8Length(char* pStr, INT32 nLen)
+int32_t CommonConvert::GetValidUtf8Length(char* pStr, int32_t nLen)
 {
-    INT32 nCurPos = 0;
-    BOOL bUtfStart = FALSE;
-    INT32 nUtfLen = 0;
-    INT32 nBkLen = 0;
+    int32_t nCurPos = 0;
+    bool bUtfStart = false;
+    int32_t nUtfLen = 0;
+    int32_t nBkLen = 0;
     for (int i = 0; i < nLen; i++)
     {
-        UINT8 nCurChar = *(pStr + i);
+        uint8_t nCurChar = *(pStr + i);
         if (!bUtfStart)
         {
             if ((nCurChar & 0x80) == 0)
@@ -633,31 +634,31 @@ INT32 CommonConvert::GetValidUtf8Length(char* pStr, INT32 nLen)
             else if (nCurChar >= 0xFC && nCurChar <= 0xFD)
             {
                 nBkLen = nUtfLen = 6;
-                bUtfStart = TRUE;
+                bUtfStart = true;
                 nUtfLen -= 1;
             }
             else if (nCurChar >= 0xF8)
             {
                 nBkLen = nUtfLen = 5;
-                bUtfStart = TRUE;
+                bUtfStart = true;
                 nUtfLen -= 1;
             }
             else if (nCurChar >= 0xF0)
             {
                 nBkLen = nUtfLen = 4;
-                bUtfStart = TRUE;
+                bUtfStart = true;
                 nUtfLen -= 1;
             }
             else if (nCurChar >= 0xE0)
             {
                 nBkLen = nUtfLen = 3;
-                bUtfStart = TRUE;
+                bUtfStart = true;
                 nUtfLen -= 1;
             }
             else if (nCurChar >= 0xC0)
             {
                 nBkLen = nUtfLen = 2;
-                bUtfStart = TRUE;
+                bUtfStart = true;
                 nUtfLen -= 1;
             }
             else
@@ -676,7 +677,7 @@ INT32 CommonConvert::GetValidUtf8Length(char* pStr, INT32 nLen)
                 nUtfLen -= 1;
                 if (nUtfLen <= 0)
                 {
-                    bUtfStart = FALSE;
+                    bUtfStart = false;
                     nCurPos += nBkLen;
                     nBkLen = nUtfLen = 0;
                 }
@@ -687,28 +688,28 @@ INT32 CommonConvert::GetValidUtf8Length(char* pStr, INT32 nLen)
     return nCurPos;
 }
 
-std::string CommonConvert::TruncateUtf8(char* pStr, INT32 nLen)
+std::string CommonConvert::TruncateUtf8(char* pStr, int32_t nLen)
 {
-    INT32 nUtf8Len = GetValidUtf8Length(pStr, nLen);
+    int32_t nUtf8Len = GetValidUtf8Length(pStr, nLen);
 
     return std::string(pStr, nUtf8Len);
 }
 
-INT32 CommonConvert::VersionToInt(const std::string& strVersion )
+int32_t CommonConvert::VersionToInt(const std::string& strVersion )
 {
-    INT32 nValue[3] = { 0 };
+    int32_t nValue[3] = { 0 };
     StringToVector(strVersion.c_str(), nValue, 3, '.');
     return nValue[0] * 1000000 + nValue[1] * 1000 + nValue[2];
 }
 
-INT32 CommonConvert::CountSymbol(const char* pStr, char cSymbol )
+int32_t CommonConvert::CountSymbol(const char* pStr, char cSymbol )
 {
     if(pStr == NULL)
     {
         return 0;
     }
 
-    INT32 nCount = 0;
+    int32_t nCount = 0;
 
     const char* pTemp = pStr;
     while(*pTemp != '\0')
@@ -724,11 +725,11 @@ INT32 CommonConvert::CountSymbol(const char* pStr, char cSymbol )
     return nCount;
 }
 
-BOOL CommonConvert::HasSymbol(const char* pStr, const char* pszSymbol)
+bool CommonConvert::HasSymbol(const char* pStr, const char* pszSymbol)
 {
     if (pStr == NULL || pszSymbol == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     const char* pSym = pszSymbol;
@@ -739,7 +740,7 @@ BOOL CommonConvert::HasSymbol(const char* pStr, const char* pszSymbol)
         {
             if (*pTemp == *pSym)
             {
-                return TRUE;
+                return true;
             }
 
             pTemp += 1;
@@ -748,35 +749,35 @@ BOOL CommonConvert::HasSymbol(const char* pStr, const char* pszSymbol)
         pSym += 1;
     }
 
-    return FALSE;
+    return false;
 }
 
-BOOL CommonConvert::StringTrim(std::string& strValue)
+bool CommonConvert::StringTrim(std::string& strValue)
 {
     if(!strValue.empty())
     {
         strValue.erase(0, strValue.find_first_not_of((" \n\r\t\v\f")));
         strValue.erase(strValue.find_last_not_of((" \n\r\t\v\f")) + 1);
     }
-    return TRUE;
+    return true;
 }
 
 /*      nLen的大小必须小于等于pszDest的大小                      */
-BOOL CommonConvert::StrCopy(char* pszDest, const char* pszSrc, INT32 nLen)
+bool CommonConvert::StrCopy(char* pszDest, const char* pszSrc, int32_t nLen)
 {
     if (pszDest == NULL || pszSrc == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     if (nLen <= 0)
     {
-        return FALSE;
+        return false;
     }
 
-    INT32 nSrcLen = (INT32)strlen(pszSrc);
+    int32_t nSrcLen = (int32_t)strlen(pszSrc);
 
-    INT32 nCpyLen = 0;
+    int32_t nCpyLen = 0;
     if ((nLen - 1) > nSrcLen)
     {
         nCpyLen = nSrcLen;
@@ -790,10 +791,10 @@ BOOL CommonConvert::StrCopy(char* pszDest, const char* pszSrc, INT32 nLen)
     strncpy(pszDest, pszSrc, nCpyLen);
     pszDest[nCpyLen] = '\0';
 
-    return TRUE;
+    return true;
 }
 
-BOOL CommonConvert::EscapeString(char* pszDest, INT32 nLen)
+bool CommonConvert::EscapeString(char* pszDest, int32_t nLen)
 {
     for (int i = 0; i < nLen; i++)
     {
@@ -818,7 +819,7 @@ BOOL CommonConvert::EscapeString(char* pszDest, INT32 nLen)
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 BYTE CommonConvert::FromHex(const BYTE& x)

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "RapidXml.h"
 #include "CommonMath.h"
 #include "MonsterCreator.h"

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "CommandLine.h"
 
 CCommandLine::CCommandLine(INT32 argc, CHAR* argv[])

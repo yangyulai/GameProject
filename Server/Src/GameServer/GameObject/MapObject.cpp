@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "MapObject.h"
 #include "../Scene.h"
 

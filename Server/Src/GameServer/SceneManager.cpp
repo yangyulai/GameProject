@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "SceneManager.h"
 #include "PacketHeader.h"
 #include "GameService.h"

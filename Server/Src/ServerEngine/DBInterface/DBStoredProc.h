@@ -1,6 +1,5 @@
-﻿#ifndef __DB_STORED_PROCEDURE__
-#define __DB_STORED_PROCEDURE__
-
+﻿#pragma once
+#include <string>
 #include "DBRecordSet.h"
 
 class CDBStoredProcedure
@@ -32,5 +31,3 @@ public:
 	size_t                m_nCount;
 	std::string           m_strSql;
 };
-
-#endif // __DB_STORED_PROCEDURE__

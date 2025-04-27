@@ -1,5 +1,8 @@
-﻿#ifndef __COMMON_FUNCTION__
-#define __COMMON_FUNCTION__
+﻿#pragma once
+#include <string>
+#include <vector>
+#include <winnt.h>
+#include <stdint.h>
 
 #define GET_BIT(X,Y) (((X) >> (Y-1)) & 1)
 #define SET_BIT(X,Y) ((X) |= (1 << (Y-1)))
@@ -7,64 +10,61 @@
 
 namespace CommonFunc
 {
-INT32           GetProcessorNum();
+int32_t           GetProcessorNum();
 
 std::string     GetCurrentWorkDir();
 
-BOOL            SetCurrentWorkDir(std::string strPath);
+bool            SetCurrentWorkDir(std::string strPath);
 
 std::string     GetCurrentExeDir();
 
-BOOL            CreateDir(std::string& strDir);
+bool            CreateDir(std::string& strDir);
 
-BOOL            GetDirFiles(const char* pszDir, char* pszFileType, std::vector<std::string>& vtFileList, BOOL bRecursion);
+bool            GetDirFiles(const char* pszDir, char* pszFileType, std::vector<std::string>& vtFileList, bool bRecursion);
 
-BOOL            GetSubDirNames(const char* pszDir, const char* pszBegin, std::vector<std::string>& vtDirList, BOOL bRecursion);
+bool            GetSubDirNames(const char* pszDir, const char* pszBegin, std::vector<std::string>& vtDirList, bool bRecursion);
 
-INT32           GetCurThreadID();
+int32_t           GetCurThreadID();
 
-INT32           GetCurProcessID();
+int32_t           GetCurProcessID();
 
-VOID            Sleep(INT32 nMilliseconds);
+void            Sleep(int32_t nMilliseconds);
 
-INT32           GetFreePhysMemory();
+int32_t           GetFreePhysMemory();
 
-INT32           GetRandNum(INT32 nType);
+int32_t           GetRandNum(int32_t nType);
 
-INT32           GetLastError();
+int32_t           GetLastError();
 
-std::string     GetLastErrorStr(INT32 nError);
+std::string     GetLastErrorStr(int32_t nError);
 
-// HANDLE       CreateShareMemory(std::string strName, INT32 nSize);
+// HANDLE       CreateShareMemory(std::string strName, int32_t nSize);
 //
 // HANDLE       OpenShareMemory(std::string strName);
 
-HANDLE          CreateShareMemory(INT32 nModuleID, INT32 nPage, INT32 nSize);
+HANDLE          CreateShareMemory(int32_t nModuleID, int32_t nPage, int32_t nSize);
 
-HANDLE          OpenShareMemory(INT32 nModuleID, INT32 nPage);
+HANDLE          OpenShareMemory(int32_t nModuleID, int32_t nPage);
 
 CHAR*           GetShareMemory(HANDLE hShm);
 
-BOOL            ReleaseShareMemory(CHAR* pMem);
+bool            ReleaseShareMemory(CHAR* pMem);
 
-BOOL            CloseShareMemory(HANDLE hShm);
+bool            CloseShareMemory(HANDLE hShm);
 
-BOOL            KillProcess(INT32 nPid);
+bool            KillProcess(int32_t nPid);
 
-BOOL            IsProcessExist(INT32 nPid);
+bool            IsProcessExist(int32_t nPid);
 
-INT32           GetProcessID(const char* pszProcName);
+int32_t           GetProcessID(const char* pszProcName);
 
-BOOL            StartProcess(const char* pszProcName, const char* pszCommandLine = NULL, const char*  pszWorkPath = NULL);
+bool            StartProcess(const char* pszProcName, const char* pszCommandLine = NULL, const char*  pszWorkPath = NULL);
 
-BOOL            IsAlreadyRun(std::string strSignName);
+bool            IsAlreadyRun(std::string strSignName);
 
-BOOL            PrintColorText(CHAR* pSzText, INT32 nColor);
+bool            PrintColorText(CHAR* pSzText, int32_t nColor);
 
-BOOL            GetBitValue(UINT64 nValue, INT32 nPos);
+bool            GetBitValue(UINT64 nValue, int32_t nPos);
 
-BOOL            SetBitValue(UINT64& nValue, INT32 nPos, BOOL bValue);
+bool            SetBitValue(UINT64& nValue, int32_t nPos, bool bValue);
 }
-
-
-#endif /* __COMMON_FUNCTION__*/

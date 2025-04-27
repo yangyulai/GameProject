@@ -1,8 +1,9 @@
-﻿#include "stdafx.h"
+﻿#include "Platform.h"
 #include "LogMsgHandler.h"
+#include <CommandDef.h>
+#include <spdlog/spdlog.h>
+#include "ConfigFile.h"
 #include "GameService.h"
-#include "PacketHeader.h"
-#include "CommonSocket.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_Game.pb.h"
 #include "../LogData/LogStruct.h"

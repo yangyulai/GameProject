@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "DBInterface/CppMysql.h"
 #include "Guild.h"
 #include "GameService.h"

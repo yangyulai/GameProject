@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CppSQLite3.h"
 #include <cstdlib>
 

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "ModuleBase.h"
 #include "PlayerObject.h"
 

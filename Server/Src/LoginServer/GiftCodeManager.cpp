@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "GiftCodeManager.h"
 #include "../Message/Msg_RetCode.pb.h"
 #include "../Message/Msg_ID.pb.h"

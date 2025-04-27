@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "MailManager.h"
 #include "GameService.h"
 #include "DataPool.h"

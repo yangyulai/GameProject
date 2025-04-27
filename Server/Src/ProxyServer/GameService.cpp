@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "GameService.h"
 #include "Position.h"
 #include "../Message/Msg_Game.pb.h"

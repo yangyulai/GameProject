@@ -1,5 +1,5 @@
-﻿#ifndef _CONFIG_FILE_H_
-#define _CONFIG_FILE_H_
+﻿#pragma once
+
 
 class CConfigFile
 {
@@ -26,5 +26,3 @@ public:
 private:
 	std::map<std::string, std::string> m_Values;
 };
-
-#endif

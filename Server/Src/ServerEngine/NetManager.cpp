@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "NetManager.h"
 #include "Connection.h"
 #include "CommonSocket.h"

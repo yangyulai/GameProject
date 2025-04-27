@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "HttpParameter.h"
 
 HttpParameter::HttpParameter()

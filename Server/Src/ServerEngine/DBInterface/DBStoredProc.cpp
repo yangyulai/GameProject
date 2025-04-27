@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿#include "../CommonConvert.h"
 #include "DBStoredProc.h"
 
 
@@ -37,7 +37,7 @@ CDBStoredProcedure::~CDBStoredProcedure( void )
 // set bool value.
 void CDBStoredProcedure::set_bool( int idx_, bool bval_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -53,7 +53,7 @@ void CDBStoredProcedure::set_bool( int idx_, bool bval_ )
 // set int8 value.
 void CDBStoredProcedure::set_int8(int idx_, int8 i8_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -68,7 +68,7 @@ void CDBStoredProcedure::set_int8(int idx_, int8 i8_ )
 // set uint8 value.
 void CDBStoredProcedure::set_uint8(int idx_, uint8 ui8_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -84,7 +84,7 @@ void CDBStoredProcedure::set_uint8(int idx_, uint8 ui8_ )
 // set int16 value.
 void CDBStoredProcedure::set_int16(int idx_, int16 i16_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -99,7 +99,7 @@ void CDBStoredProcedure::set_int16(int idx_, int16 i16_ )
 // set uint16 value.
 void CDBStoredProcedure::set_uint16(int idx_, uint16 ui16_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -115,7 +115,7 @@ void CDBStoredProcedure::set_uint16(int idx_, uint16 ui16_ )
 // set int32 value.
 void CDBStoredProcedure::set_int32(int idx_, int32 i32_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -130,7 +130,7 @@ void CDBStoredProcedure::set_int32(int idx_, int32 i32_ )
 // set uint32 value.
 void CDBStoredProcedure::set_uint32(int idx_, uint32 ui32_)
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -146,7 +146,7 @@ void CDBStoredProcedure::set_uint32(int idx_, uint32 ui32_)
 // set int64 value.
 void CDBStoredProcedure::set_int64(int idx_, int64 i64_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -161,7 +161,7 @@ void CDBStoredProcedure::set_int64(int idx_, int64 i64_ )
 // set uint64 value.
 void CDBStoredProcedure::set_uint64(int idx_, uint64 ui64_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -177,7 +177,7 @@ void CDBStoredProcedure::set_uint64(int idx_, uint64 ui64_ )
 // set float value.
 void CDBStoredProcedure::set_float(int idx_, float fval_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -192,7 +192,7 @@ void CDBStoredProcedure::set_float(int idx_, float fval_ )
 // set double value.
 void CDBStoredProcedure::set_double(int idx_, double dval_ )
 {
-	ERROR_RETURN_NONE(idx_ < m_nCount);
+	assert(idx_ < m_nCount);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if(pBind->buffer == NULL)
 	{
@@ -207,9 +207,9 @@ void CDBStoredProcedure::set_double(int idx_, double dval_ )
 // set string.
 void CDBStoredProcedure::set_string(int idx_, char const* str_, size_t size)
 {
-	ERROR_RETURN_NONE(NULL != str_);
-	ERROR_RETURN_NONE(idx_ < m_nCount);
-	ERROR_RETURN_NONE(size < 2048);
+	assert(NULL != str_);
+	assert(idx_ < m_nCount);
+	assert(size < 2048);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if (pBind->buffer == NULL)
 	{
@@ -227,9 +227,9 @@ void CDBStoredProcedure::set_string(int idx_, char const* str_, size_t size)
 
 void CDBStoredProcedure::set_tinyblob(int idx_, void const* ptr_, size_t size)
 {
-	ERROR_RETURN_NONE(NULL != ptr_);
-	ERROR_RETURN_NONE(idx_ < m_nCount);
-	ERROR_RETURN_NONE(size < 255);
+	assert(NULL != ptr_);
+	assert(idx_ < m_nCount);
+	assert(size < 255);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if (pBind->buffer == NULL)
 	{
@@ -247,9 +247,9 @@ void CDBStoredProcedure::set_tinyblob(int idx_, void const* ptr_, size_t size)
 // set blob.
 void CDBStoredProcedure::set_blob(int idx_, void const* ptr_, size_t size)
 {
-	ERROR_RETURN_NONE(NULL != ptr_);
-	ERROR_RETURN_NONE(idx_ < m_nCount);
-	ERROR_RETURN_NONE(size < 65 * 1024);
+	assert(NULL != ptr_);
+	assert(idx_ < m_nCount);
+	assert(size < 65 * 1024);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if (pBind->buffer == NULL)
 	{
@@ -266,9 +266,9 @@ void CDBStoredProcedure::set_blob(int idx_, void const* ptr_, size_t size)
 
 void CDBStoredProcedure::set_medium_blob(int idx_, void const* ptr_, size_t size)
 {
-	ERROR_RETURN_NONE(NULL != ptr_);
-	ERROR_RETURN_NONE(idx_ < m_nCount);
-	ERROR_RETURN_NONE(size < 1024 * 1024);
+	assert(NULL != ptr_);
+	assert(idx_ < m_nCount);
+	assert(size < 1024 * 1024);
 	MYSQL_BIND* pBind = &m_pMybind[idx_];
 	if (pBind->buffer == NULL)
 	{

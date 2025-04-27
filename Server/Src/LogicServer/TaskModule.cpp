@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "TaskModule.h"
 #include "DataPool.h"
 #include "GlobalDataMgr.h"

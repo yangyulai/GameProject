@@ -1,6 +1,6 @@
-﻿#ifndef _WATCHER_CLIENT_H_
-#define _WATCHER_CLIENT_H_
-
+﻿#pragma once
+#include <cstdint>
+struct NetPacket;
 class CWatcherClient
 {
 private:
@@ -10,24 +10,22 @@ private:
 public:
     static CWatcherClient* GetInstancePtr();
 
-    BOOL        OnNewConnect(INT32 nConnID);
+    bool        OnNewConnect(int32_t nConnID);
 
-    BOOL        OnCloseConnect(INT32 nConnID);
+    bool        OnCloseConnect(int32_t nConnID);
 
-    BOOL        OnSecondTimer();
+    bool        OnSecondTimer();
 
-    BOOL        DispatchPacket( NetPacket* pNetPacket);
+    bool        DispatchPacket( NetPacket* pNetPacket);
 
-    BOOL        IsRun();
+    bool        IsRun();
 
-    BOOL        RegExitSignal();
+    bool        RegExitSignal();
 
-    BOOL        StopServer();
+    bool        StopServer();
 
-    BOOL                    m_bRun;
+    bool                    m_bRun;
 public:
     //*********************消息处理定义开始******************************
     //*********************消息处理定义结束******************************
 };
-
-#endif //_WATCHER_CLIENT_H_

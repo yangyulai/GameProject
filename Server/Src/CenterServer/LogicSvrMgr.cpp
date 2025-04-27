@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "LogicSvrMgr.h"
 #include "CommonSocket.h"
 

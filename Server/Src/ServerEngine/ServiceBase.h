@@ -1,12 +1,10 @@
-﻿#ifndef __SERVICE_BASE_H__
-#define __SERVICE_BASE_H__
+﻿#pragma once
 
 #include "IBufferHandler.h"
 #include "Connection.h"
 #include "google/protobuf/message.h"
-#include "ConfigFile.h"
 
-class ServiceBase : public IDataHandler//, public CEventFuncManager
+class ServiceBase : public IDataHandler
 {
 protected:
     ServiceBase(void);
@@ -63,6 +61,3 @@ protected:
     INT32                               m_nFps;
     INT32                               m_nLastMsgID;
 };
-
-
-#endif /*__SERVICE_BASE_H__*/

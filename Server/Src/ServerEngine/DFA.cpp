@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "DFA.h"
 
 INT32 DFANode::s_length = 0;

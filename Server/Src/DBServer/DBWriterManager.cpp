@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "DBWriterManager.h"
 
 CDBWriterManager::CDBWriterManager()

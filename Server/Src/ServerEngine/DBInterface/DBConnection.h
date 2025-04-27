@@ -1,7 +1,5 @@
-﻿#ifndef _SQL_CONN_H_
-#define _SQL_CONN_H_
+﻿#pragma once
 
-#include <mysql.h>
 #include "DBInterface.h"
 
 #ifdef _DEBUG
@@ -18,29 +16,29 @@ public:
     CDBConnection( void );
     ~CDBConnection( void );
 
-    BOOL    Init();
+    bool    Init();
 
-    BOOL    Uninit();
+    bool    Uninit();
 
-    BOOL    SetConnectParam(char const* szHost, char const* szUser, char const* szPwd, char const* szDb, int nPort, char const* szCharSet = "utf8mb4");
+    bool    SetConnectParam(char const* szHost, char const* szUser, char const* szPwd, char const* szDb, int nPort, char const* szCharSet = "utf8mb4");
 
-    BOOL    Connect(char const* szHost, char const* szUser, char const* szPwd, char const* szDb, int nPort, char const* szCharSet = "utf8mb4");
+    bool    Connect(char const* szHost, char const* szUser, char const* szPwd, char const* szDb, int nPort, char const* szCharSet = "utf8mb4");
 
     void    Close(void);
 
-    BOOL    Execute(CDBStoredProcedure* pDBStoredProcedure);
+    bool    Execute(CDBStoredProcedure* pDBStoredProcedure);
 
-    BOOL    Query(CDBStoredProcedure* pDBStoredProcedure);
+    bool    Query(CDBStoredProcedure* pDBStoredProcedure);
 
-    BOOL    Execute(std::string sql);
+    bool    Execute(std::string sql);
 
-    BOOL    Query(std::string sql);
+    bool    Query(std::string sql);
 
     int     GetError(void) const;
 
-    BOOL    Reconnect(void);
+    bool    Reconnect(void);
 
-    BOOL    Ping();
+    bool    Ping();
 
 private:
     MYSQL*       m_pMySql;
@@ -53,5 +51,3 @@ private:
     std::string  m_strError;
     std::string  m_strCharSet;
 };
-
-#endif // _SQL_CONN_H_

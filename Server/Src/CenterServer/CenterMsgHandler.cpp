@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CenterMsgHandler.h"
 #include "GameService.h"
 #include "PacketHeader.h"

@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿
 #include "CommonSocket.h"
 
 BOOL  CommonSocket::SetSocketReuseable(SOCKET hSocket)
