@@ -16,7 +16,7 @@ public:
 public:
     BOOL        Init();
 
-    BOOL        Uninit();
+    BOOL        UnInit();
 
     BOOL        Run();
 

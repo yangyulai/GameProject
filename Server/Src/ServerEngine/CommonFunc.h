@@ -1,8 +1,9 @@
 ﻿#pragma once
 #include <string>
 #include <vector>
-#include <winnt.h>
 #include <stdint.h>
+
+#include "CommonSocket.h"
 
 #define GET_BIT(X,Y) (((X) >> (Y-1)) & 1)
 #define SET_BIT(X,Y) ((X) |= (1 << (Y-1)))

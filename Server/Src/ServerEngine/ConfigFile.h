@@ -1,4 +1,8 @@
 ﻿#pragma once
+#include <string>
+#include <map>
+
+#include "CommonSocket.h"
 
 
 class CConfigFile

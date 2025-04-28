@@ -1,5 +1,5 @@
-﻿#ifndef __X_MATH_H_
-#define __X_MATH_H_
+﻿#pragma once
+#include "CommonFunc.h"
 
 #define PI          3.1415926f
 #define TWO_PI      6.2831852f
@@ -221,5 +221,3 @@ FLOAT Clamp(const FLOAT fValue, const FLOAT fMin, const FLOAT fMax);
 BOOL  IsInCircle(Vector3D tTarPos, FLOAT fTarRadius, Vector3D tCirclePos, FLOAT fCircleRadius);
 
 }
-
-#endif //_MAP_H_

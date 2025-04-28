@@ -1,6 +1,10 @@
 ﻿
 #include "ConfigFile.h"
 
+#include <spdlog/spdlog.h>
+
+#include "CommonConvert.h"
+
 CConfigFile::CConfigFile( void )
 {
 

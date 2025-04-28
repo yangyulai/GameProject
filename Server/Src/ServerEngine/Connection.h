@@ -1,6 +1,7 @@
-﻿#ifndef _CONNECTION_H_
-#define _CONNECTION_H_
-
+﻿#pragma once
+#include <mutex>
+#include <spdlog/fmt/bundled/base.h>
+#include "CommonSocket.h"
 #include "IBufferHandler.h"
 #include "ReaderWriterQueue.h"
 
@@ -186,5 +187,3 @@ public:
     std::vector<CConnection*>   m_vtConnList;            //连接列表
     std::mutex                  m_ConnListMutex;
 };
-
-#endif

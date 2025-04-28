@@ -1,5 +1,7 @@
 ﻿
+#include <cstdlib>
 #include "AstarFinder.h"
+
 
 
 AstarFinder::AstarFinder()
@@ -33,7 +35,7 @@ AstarFinder::~AstarFinder()
 ////////////////////////////////////////////////////////////////////////////////
 
 
-BOOL AstarFinder::InitAstarMap(BYTE* pMap, INT32 w, INT32 h)
+bool AstarFinder::InitAstarMap(uint8_t* pMap, int32_t w, int32_t h)
 {
 	m_nColCnt = w;	// 障碍图的宽度
 	m_nRowCnt = h;	// 障碍图的高度
@@ -48,16 +50,16 @@ BOOL AstarFinder::InitAstarMap(BYTE* pMap, INT32 w, INT32 h)
 	}
 	unsigned long BufSize;
 	BufSize = (m_nTotalTiles + 7) >> 3;
-	m_pTileMap = new BYTE[BufSize];
+	m_pTileMap = new uint8_t[BufSize];
 	memcpy(m_pTileMap, pMap, BufSize);
 #endif
 
-	return TRUE;
+	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BOOL AstarFinder::NewPath(int sx, int sy, int dx, int dy) //(dx,dy)目的节点，(sx,sy)源节点，入口函数
+bool AstarFinder::NewPath(int sx, int sy, int dx, int dy) //(dx,dy)目的节点，(sx,sy)源节点，入口函数
 {
 	if ( IsTileAviable(dx, dy) && IsTileAviable(sx, sy) && (GetTileNum(sx, sy) != GetTileNum(dx, dy)) )
 	{
@@ -70,30 +72,30 @@ BOOL AstarFinder::NewPath(int sx, int sy, int dx, int dy) //(dx,dy)目的节点�
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BOOL AstarFinder::IsReached(void) // check it's return value before getting
+bool AstarFinder::IsReached(void) // check it's return value before getting
 {
 	if ( m_pCurPath->Parent == NULL )
 	{
-		return FALSE;
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
-BOOL AstarFinder::PathNextNode(void)
+bool AstarFinder::PathNextNode(void)
 {
 	if(m_pCurPath->Parent != NULL)
 	{
 		m_pCurPath = m_pCurPath->Parent;
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
-INT32 AstarFinder::NodeGetX()
+int32_t AstarFinder::NodeGetX()
 {
 	return m_pCurPath->x;
 }

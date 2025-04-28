@@ -1,6 +1,5 @@
 ﻿#include "Platform.h"
 #include "LogMsgHandler.h"
-#include <CommandDef.h>
 #include <spdlog/spdlog.h>
 #include "ConfigFile.h"
 #include "GameService.h"
@@ -9,44 +8,31 @@
 #include "../LogData/LogStruct.h"
 
 
-CLogMsgHandler::CLogMsgHandler()
+CLogMsgHandler::CLogMsgHandler(): m_nWriteCount(0), m_nLastWriteTime(0)
 {
-
 }
 
-CLogMsgHandler::~CLogMsgHandler()
-{
+CLogMsgHandler::~CLogMsgHandler()= default;
 
-}
-
-BOOL CLogMsgHandler::Init(INT32 nReserved)
+bool CLogMsgHandler::Init(INT32 nReserved)
 {
     std::string strHost = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_ip");
     INT32 nPort = CConfigFile::GetInstancePtr()->GetIntValue("mysql_log_svr_port");
     std::string strUser = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_user");
     std::string strPwd = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_pwd");
     std::string strDb = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_db_name");
-    BOOL bRet = m_DBConnection.open(strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str(), nPort);
-    if(!bRet)
-    {
-        spdlog::error("CLogMsgHandler::Init Error: Can not open mysql database! Reason:%s", m_DBConnection.GetErrorMsg());
-        spdlog::error("CLogMsgHandler::Init Error: Host:[%s]-User:[%s]-Pwd:[%s]-DBName:[%s]", strHost.c_str(), strUser.c_str(), strPwd.c_str(), strDb.c_str());
-        return FALSE;
-    }
 
     m_nLastWriteTime = 0;
 
     return TRUE;
 }
 
-BOOL CLogMsgHandler::Uninit()
+bool CLogMsgHandler::UnInit()
 {
-    m_DBConnection.close();
-
     return TRUE;
 }
 
-BOOL CLogMsgHandler::OnUpdate(UINT64 uTick)
+bool CLogMsgHandler::OnUpdate(UINT64 uTick)
 {
     if (m_nLastWriteTime == 0)
     {
@@ -60,18 +46,6 @@ BOOL CLogMsgHandler::OnUpdate(UINT64 uTick)
 
     if (uTick - m_nLastWriteTime > 1000)
     {
-        if (!m_DBConnection.commit())
-        {
-            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
-        }
-
-        m_DBConnection.ping();
-
-        if (!m_DBConnection.startTransaction())
-        {
-            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
-        }
-
         m_nLastWriteTime = uTick;
         m_nWriteCount = 0;
     }
@@ -79,38 +53,22 @@ BOOL CLogMsgHandler::OnUpdate(UINT64 uTick)
     return TRUE;
 }
 
-BOOL CLogMsgHandler::DispatchPacket(NetPacket* pNetPacket)
+bool CLogMsgHandler::DispatchPacket(NetPacket* pNetPacket)
 {
     switch(pNetPacket->m_nMsgID)
     {
-            PROCESS_MESSAGE_ITEM(MSG_LOG_DATA_NTF,          OnMsgLogDataNtf)
+        case MSG_LOG_DATA_NTF:
+	        {
+		        spdlog::info("---Receive Message:[%s]----", "MSG_LOG_DATA_NTF");
+        		if(OnMsgLogDataNtf(pNetPacket))
+        		{
+        			return true;
+        		}
+	        }break;
     }
-
-    return FALSE;
+    return false;
 }
-bool CLogMsgHandler::Test()
-{
-    Log_RoleCreate log;
-    CHAR szSql[4096] = { 0 };
-    log.GetLogSql(szSql);
-    if (m_DBConnection.execSQL(szSql) <= 0)
-    {
-        spdlog::error(szSql);
-    }
-    if (!m_DBConnection.commit())
-    {
-        spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
-    }
-
-    m_DBConnection.ping();
-
-    if (!m_DBConnection.startTransaction())
-    {
-        spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
-    }
-    return true;
-}
-BOOL CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
+bool CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
 {
     Log_BaseData* pData = (Log_BaseData*)pNetPacket->m_pDataBuffer->GetData();
     CHAR szSql[4096] = {0};
@@ -153,37 +111,15 @@ BOOL CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
             p->GetLogSql(szSql);
         }
         break;
-
-
         default:
             break;
     }
-
-    if (m_DBConnection.execSQL(szSql) <= 0)
-    {
-        spdlog::error("CLogMsgHandler::OnLogDataNtf m_LogType :%d, Error :%s", pData->m_LogType,  m_DBConnection.GetErrorMsg());
-        spdlog::error(szSql);
-    }
-
     m_nWriteCount += 1;
 
     if (m_nWriteCount > 1000)
     {
-        if (!m_DBConnection.commit())
-        {
-            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
-        }
-
-        m_DBConnection.ping();
-
-        if (!m_DBConnection.startTransaction())
-        {
-            spdlog::error("CLogMsgHandler::commit Error :%s", m_DBConnection.GetErrorMsg());
-        }
-
         m_nWriteCount = 0;
     }
-
     return TRUE;
 }
 

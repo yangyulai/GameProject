@@ -1,7 +1,8 @@
-﻿#ifndef _DATA_BUFFER_H_
-#define _DATA_BUFFER_H_
+﻿#pragma once
+#include <mutex>
+#include <cassert>
+#include "CommonSocket.h"
 #include "IBufferHandler.h"
-
 template <int SIZE>
 class  CBufferManager;
 
@@ -31,7 +32,7 @@ public:
         m_pManager = NULL;
     }
 
-    BOOL AddRef()
+    bool AddRef()
     {
         m_pManager->m_BuffMutex.lock();
         m_nRefCount++;
@@ -39,7 +40,7 @@ public:
         return TRUE;
     }
 
-    BOOL Release()
+    bool Release()
     {
         assert(m_pManager != NULL);
 
@@ -334,5 +335,3 @@ public:
 
     CBufferManager<10 * 1024 * 1014> m_BufferManagerAny;        //管理<=10M的内存, 并不用池管理, 直接申请, 直接释放.
 };
-
-#endif

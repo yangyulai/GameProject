@@ -1,5 +1,5 @@
-
 #include "HttpParameter.h"
+#include "CommonConvert.h"
 
 HttpParameter::HttpParameter()
 {
@@ -11,11 +11,11 @@ HttpParameter::~HttpParameter(void)
 	m_ParameterMap.clear();
 }
 
-BOOL HttpParameter::ParseStringToMap(const std::string& strParam)
+bool HttpParameter::ParseStringToMap(const std::string& strParam)
 {
 	if(strParam.length() <= 0)
 	{
-		return FALSE;
+		return false;
 	}
 
 	std::vector<std::string> strVector;
@@ -31,7 +31,7 @@ BOOL HttpParameter::ParseStringToMap(const std::string& strParam)
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 std::string HttpParameter::GetResultString()
@@ -61,7 +61,7 @@ bool HttpParameter::HasKey(const std::string& strKey) const
 	return false;
 }
 
-INT32 HttpParameter::GetIntValue(const std::string& strKey) const
+int32_t HttpParameter::GetIntValue(const std::string& strKey) const
 {
 	auto itor = m_ParameterMap.find(strKey);
 	if(itor != m_ParameterMap.end())
@@ -81,7 +81,7 @@ std::string HttpParameter::GetStrValue(const std::string& strKey) const
 	return "";
 }
 
-INT64 HttpParameter::GetLongValue(const std::string& strKey) const
+int64_t HttpParameter::GetLongValue(const std::string& strKey) const
 {
 	auto it = m_ParameterMap.find(strKey);
 	if(it != m_ParameterMap.end())
@@ -92,7 +92,7 @@ INT64 HttpParameter::GetLongValue(const std::string& strKey) const
 	return 0;
 }
 
-FLOAT HttpParameter::GetFloatValue(const std::string& strKey) const
+float HttpParameter::GetFloatValue(const std::string& strKey) const
 {
 	auto it = m_ParameterMap.find(strKey);
 	if(it != m_ParameterMap.end())
@@ -102,7 +102,7 @@ FLOAT HttpParameter::GetFloatValue(const std::string& strKey) const
 	return 0.0f;
 }
 
-bool HttpParameter::SetKeyValue(const std::string& strKey, INT32 intValue)
+bool HttpParameter::SetKeyValue(const std::string& strKey, int32_t intValue)
 {
 	m_ParameterMap.insert(std::make_pair(strKey, CommonConvert::IntToString(intValue)));
 	return true;
@@ -114,13 +114,13 @@ bool HttpParameter::SetKeyValue(const std::string& strKey, std::string& strValue
 	return true;
 }
 
-bool HttpParameter::SetKeyValue(const std::string& strKey, INT64 longValue)
+bool HttpParameter::SetKeyValue(const std::string& strKey, int64_t longValue)
 {
 	m_ParameterMap.insert(std::make_pair(strKey, CommonConvert::IntToString(longValue)));
 	return true;
 }
 
-bool HttpParameter::SetKeyValue(const std::string& strKey, FLOAT floatValue)
+bool HttpParameter::SetKeyValue(const std::string& strKey, float floatValue)
 {
 	m_ParameterMap.insert(std::make_pair(strKey, CommonConvert::FloatToString(floatValue)));
 	return true;

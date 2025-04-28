@@ -1,6 +1,10 @@
 ﻿
 #include "CommonFunc.h"
 
+#include <corecrt_io.h>
+#include <direct.h>
+#include <TlHelp32.h>
+
 INT32 CommonFunc::GetProcessorNum()
 {
     INT32 nNum = 0;
@@ -42,7 +46,7 @@ std::string CommonFunc::GetCurrentExeDir()
 }
 
 
-BOOL CommonFunc::SetCurrentWorkDir(std::string strPath)
+bool CommonFunc::SetCurrentWorkDir(std::string strPath)
 {
     if (strPath.empty())
     {
@@ -57,7 +61,7 @@ BOOL CommonFunc::SetCurrentWorkDir(std::string strPath)
     return TRUE;
 }
 
-BOOL CommonFunc::CreateDir( std::string& strDir )
+bool CommonFunc::CreateDir( std::string& strDir )
 {
     int nRet = 0;
 #ifdef WIN32
@@ -79,7 +83,7 @@ BOOL CommonFunc::CreateDir( std::string& strDir )
     return FALSE;
 }
 
-BOOL CommonFunc::GetDirFiles(const char* pszDir, char* pszFileType, std::vector<std::string>& vtFileList, BOOL bRecursion)
+bool CommonFunc::GetDirFiles(const char* pszDir, char* pszFileType, std::vector<std::string>& vtFileList, bool bRecursion)
 {
     if (pszDir == NULL || pszFileType == NULL || NULL == strrchr(pszFileType, '.'))
     {
@@ -190,7 +194,7 @@ BOOL CommonFunc::GetDirFiles(const char* pszDir, char* pszFileType, std::vector<
     return TRUE;
 }
 
-BOOL CommonFunc::GetSubDirNames(const char* pszDir, const char* pszBegin, std::vector<std::string>& vtDirList, BOOL bRecursion)
+bool CommonFunc::GetSubDirNames(const char* pszDir, const char* pszBegin, std::vector<std::string>& vtDirList, bool bRecursion)
 {
     if (pszDir == NULL)
     {
@@ -364,7 +368,7 @@ INT32 CommonFunc::GetRandNum(INT32 nType)
 
     static INT32 nRandIndex[100] = {0};
     static INT32 vtGlobalRankValue[10000];
-    static BOOL  bInit = FALSE;
+    static bool  bInit = FALSE;
 
     if(bInit == FALSE)
     {
@@ -514,7 +518,7 @@ CHAR* CommonFunc::GetShareMemory(HANDLE hShm)
     return pdata;
 }
 
-BOOL CommonFunc::ReleaseShareMemory(CHAR* pMem)
+bool CommonFunc::ReleaseShareMemory(CHAR* pMem)
 {
 #ifdef WIN32
     return UnmapViewOfFile(pMem);
@@ -523,7 +527,7 @@ BOOL CommonFunc::ReleaseShareMemory(CHAR* pMem)
 #endif
 }
 
-BOOL CommonFunc::CloseShareMemory(HANDLE hShm)
+bool CommonFunc::CloseShareMemory(HANDLE hShm)
 {
 #ifdef WIN32
     return  CloseHandle(hShm);
@@ -533,7 +537,7 @@ BOOL CommonFunc::CloseShareMemory(HANDLE hShm)
 }
 
 
-BOOL CommonFunc::KillProcess(INT32 nPid)
+bool CommonFunc::KillProcess(INT32 nPid)
 {
 #ifdef WIN32
     HANDLE hPrc;
@@ -564,7 +568,7 @@ BOOL CommonFunc::KillProcess(INT32 nPid)
     return TRUE;
 }
 
-BOOL CommonFunc::IsProcessExist(INT32 nPid)
+bool CommonFunc::IsProcessExist(INT32 nPid)
 {
 #ifdef WIN32
     HANDLE hPrc;
@@ -608,7 +612,7 @@ INT32 CommonFunc::GetProcessID(const char* pszProcName)
     HANDLE Snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 stProcessEntry;
     stProcessEntry.dwSize = sizeof(PROCESSENTRY32);
-    BOOL bRet = Process32First(Snapshot, &stProcessEntry);
+    bool bRet = Process32First(Snapshot, &stProcessEntry);
     while (bRet)
     {
         if(stricmp(pszProcName, stProcessEntry.szExeFile) == 0)
@@ -643,7 +647,7 @@ INT32 CommonFunc::GetProcessID(const char* pszProcName)
 #endif
 }
 
-BOOL CommonFunc::StartProcess(const char* pszProcName, const char* pszCommandLine, const char*  pszWorkPath)
+bool CommonFunc::StartProcess(const char* pszProcName, const char* pszCommandLine, const char*  pszWorkPath)
 {
 #ifdef WIN32
     STARTUPINFO stStartUpInfo;
@@ -680,7 +684,7 @@ BOOL CommonFunc::StartProcess(const char* pszProcName, const char* pszCommandLin
     return TRUE;
 }
 
-BOOL CommonFunc::IsAlreadyRun(std::string strSignName)
+bool CommonFunc::IsAlreadyRun(std::string strSignName)
 {
 #ifdef WIN32
     HANDLE hMutex = NULL;
@@ -727,7 +731,7 @@ BOOL CommonFunc::IsAlreadyRun(std::string strSignName)
 #endif
 }
 
-BOOL CommonFunc::PrintColorText(CHAR* pSzText, INT32 nColor)
+bool CommonFunc::PrintColorText(CHAR* pSzText, INT32 nColor)
 {
 #ifdef WIN32
     switch (nColor)
@@ -788,12 +792,12 @@ BOOL CommonFunc::PrintColorText(CHAR* pSzText, INT32 nColor)
     return TRUE;
 }
 
-BOOL CommonFunc::GetBitValue(UINT64 nValue, INT32 nPos)
+bool CommonFunc::GetBitValue(UINT64 nValue, INT32 nPos)
 {
     return ((nValue >> (nPos - 1)) & 1) > 0;
 }
 
-BOOL CommonFunc::SetBitValue(UINT64& nValue, INT32 nPos, BOOL bValue)
+bool CommonFunc::SetBitValue(UINT64& nValue, INT32 nPos, bool bValue)
 {
     if (bValue)
     {

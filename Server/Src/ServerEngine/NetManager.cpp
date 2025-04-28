@@ -1,8 +1,13 @@
 ﻿
 #include "NetManager.h"
+
+#include <ws2tcpip.h>
+
+#include "CommonFunc.h"
 #include "Connection.h"
 #include "CommonSocket.h"
 #include "DataBuffer.h"
+#include "Log.h"
 #include "PacketHeader.h"
 
 CNetManager::CNetManager(void)

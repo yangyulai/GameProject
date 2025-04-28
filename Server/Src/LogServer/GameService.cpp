@@ -4,6 +4,7 @@
 #include "LogMsgHandler.h"
 
 #include "CommonFunc.h"
+#include "CommonTime.h"
 #include "ConfigFile.h"
 #include "../Message/Msg_Game.pb.h"
 #include "../Message/Msg_RetCode.pb.h"
@@ -35,8 +36,6 @@ BOOL CGameService::Init()
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     CommonFunc::SetCurrentWorkDir("");
-
-
     spdlog::info("---------服务器开始启动--------");
     if(!CConfigFile::GetInstancePtr()->Load("servercfg.ini"))
     {
@@ -113,7 +112,7 @@ bool CGameService::DispatchPacket(NetPacket* pNetPacket)
     return FALSE;
 }
 
-BOOL CGameService::Uninit()
+BOOL CGameService::UnInit()
 {
     spdlog::error("==========服务器开始关闭=======================");
 

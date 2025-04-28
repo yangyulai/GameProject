@@ -1,6 +1,8 @@
 ﻿
 #include "SharedMemory.h"
 
+#include "CommonFunc.h"
+
 ShareObject::ShareObject()
 {
     m_nCheckCode = BLOCK_CHECK_CODE;

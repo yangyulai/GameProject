@@ -75,7 +75,7 @@ BOOL CGameService::Init()
 }
 
 
-BOOL CGameService::Uninit()
+BOOL CGameService::UnInit()
 {
     spdlog::error("==========服务器开始关闭=======================");
 

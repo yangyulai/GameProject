@@ -1,7 +1,13 @@
 ﻿
 #include "Connection.h"
+
+#include <spdlog/spdlog.h>
+
+#include "CommonFunc.h"
 #include "DataBuffer.h"
 #include "CommonSocket.h"
+#include "CommonTime.h"
+#include "Log.h"
 #include "PacketHeader.h"
 
 void NetIoOperatorData::Reset()

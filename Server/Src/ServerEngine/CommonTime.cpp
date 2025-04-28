@@ -2,6 +2,7 @@
 #include <chrono>
 
 #include "CommonFunc.h"
+#include "CommonSocket.h"
 
 int64_t g_TimeAdd = 0;
 
@@ -12,7 +13,7 @@ UINT64 CommonFunc::GetCurrTime()
     return (UINT64)t + g_TimeAdd;
 }
 
-BOOL CommonFunc::SetCurrTimeAdd(int64_t nTimeAdd)
+bool CommonFunc::SetCurrTimeAdd(int64_t nTimeAdd)
 {
     g_TimeAdd += nTimeAdd;
 
@@ -223,7 +224,7 @@ UINT64 CommonFunc::GetTickCount()
 #endif
 }
 
-BOOL CommonFunc::IsSameDay(UINT64 uTime)
+bool CommonFunc::IsSameDay(UINT64 uTime)
 {
 #ifdef WIN32
     return ((uTime - _timezone) / 86400) == ((GetCurrTime() - _timezone) / 86400);
@@ -233,7 +234,7 @@ BOOL CommonFunc::IsSameDay(UINT64 uTime)
 
 }
 
-BOOL CommonFunc::IsSameWeek(UINT64 uTime)
+bool CommonFunc::IsSameWeek(UINT64 uTime)
 {
     time_t t = GetCurrTime();
     tm t_tmSrc = *localtime(&t);
@@ -246,7 +247,7 @@ BOOL CommonFunc::IsSameWeek(UINT64 uTime)
     return SrcWeekBegin == DestWeekBegin;
 }
 
-BOOL CommonFunc::IsSameMonth(UINT64 uTime, UINT64 sTime)
+bool CommonFunc::IsSameMonth(UINT64 uTime, UINT64 sTime)
 {
     time_t t1 = uTime;
     tm t_tmSrc1 = *localtime(&t1);

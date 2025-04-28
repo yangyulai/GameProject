@@ -1,6 +1,9 @@
-#ifndef __D_F_A_H__
-#define __D_F_A_H__
+#pragma once
+#include <string>
+#include <map>
+#include <set>
 
+#include "CommonSocket.h"
 class DFANode;
 typedef char KeyType;
 typedef std::map<KeyType, DFANode*> DFANodeMap;
@@ -43,5 +46,3 @@ protected:
 	static INT32 s_length;
 	static INT32 s_maxlen;
 };
-
-#endif

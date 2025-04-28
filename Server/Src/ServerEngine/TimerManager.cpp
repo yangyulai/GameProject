@@ -1,6 +1,8 @@
 ﻿
 #include "TimerManager.h"
 
+#include <assert.h>
+
 
 TimerManager::TimerManager()
 {
@@ -115,7 +117,7 @@ VOID TimerManager::UpdateTimer()
             }
             else
             {
-                ERROR_RETURN_NONE(pCurEvent->m_pPrev != NULL);
+                assert(pCurEvent->m_pPrev != NULL);
                 pCurEvent->m_pPrev->m_pNext = pCurEvent->m_pNext;
                 if (pCurEvent->m_pNext != NULL)
                 {

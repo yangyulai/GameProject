@@ -1,5 +1,5 @@
-﻿#ifndef _TIMER_MANAGER__
-#define _TIMER_MANAGER__
+﻿#pragma once
+#include "CommonSocket.h"
 #include "CommonTime.h"
 class CTimerSlotBase
 {
@@ -94,7 +94,7 @@ public:
     CTimerSlotBase* m_pTimerFuncSlot;
 };
 
-class EngineClass TimerManager
+class TimerManager
 {
     TimerManager();
     ~TimerManager();
@@ -207,7 +207,3 @@ public:
     UINT64     m_uInitTime;  //定时器开始工作时间(不对开始工作时间之前的定时器发生作用)
 public:
 };
-
-
-
-#endif /* _TIMER_MANAGER__ */

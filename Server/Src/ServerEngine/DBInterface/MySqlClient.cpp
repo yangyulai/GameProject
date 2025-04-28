@@ -1,4 +1,5 @@
-﻿#include "MySqlClient.h"
+﻿#include <iostream>
+#include "MySqlClient.h"
 
 MySqlClient::MySqlClient(boost::asio::io_context& io_context)
     : ctx_(io_context), conn_(ctx_)

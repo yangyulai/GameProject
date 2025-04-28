@@ -1,7 +1,11 @@
 ﻿
 #include "CommonSocket.h"
 
-BOOL  CommonSocket::SetSocketReuseable(SOCKET hSocket)
+#include <Mstcpip.h>
+#include <mswsock.h>
+#include <ws2tcpip.h>
+
+bool  CommonSocket::SetSocketReuseable(SOCKET hSocket)
 {
     int nReuse = 1;
 
@@ -15,7 +19,7 @@ BOOL  CommonSocket::SetSocketReuseable(SOCKET hSocket)
 
 
 //设置套接字阻塞状态
-BOOL    CommonSocket::SetSocketBlock(SOCKET hSocket, BOOL bBlock)
+bool    CommonSocket::SetSocketBlock(SOCKET hSocket, bool bBlock)
 {
 #ifdef WIN32
     u_long iMode = bBlock ? 0 : 1;
@@ -28,7 +32,7 @@ BOOL    CommonSocket::SetSocketBlock(SOCKET hSocket, BOOL bBlock)
     return TRUE;
 }
 
-BOOL    CommonSocket::SetSocketBuffSize(SOCKET hSocket, INT32 nRecvSize, INT32 nSendSize)
+bool    CommonSocket::SetSocketBuffSize(SOCKET hSocket, INT32 nRecvSize, INT32 nSendSize)
 {
     if (nRecvSize > 0)
     {
@@ -49,7 +53,7 @@ BOOL    CommonSocket::SetSocketBuffSize(SOCKET hSocket, INT32 nRecvSize, INT32 n
     return TRUE;
 }
 
-BOOL CommonSocket::SetSocketTimeOut(SOCKET hSocket, INT32 nSendTime, INT32 nRecvTime)
+bool CommonSocket::SetSocketTimeOut(SOCKET hSocket, INT32 nSendTime, INT32 nRecvTime)
 {
     if (nSendTime > 0)
     {
@@ -183,7 +187,7 @@ std::string CommonSocket::HttpGet(std::string strHost, INT32 nPort, std::string 
     return strRet.substr(nPos + 4);
 }
 
-BOOL    CommonSocket::SetSocketNoDelay(SOCKET hSocket)
+bool    CommonSocket::SetSocketNoDelay(SOCKET hSocket)
 {
     int bOn = 1;
 
@@ -196,7 +200,7 @@ BOOL    CommonSocket::SetSocketNoDelay(SOCKET hSocket)
 }
 
 
-BOOL   CommonSocket::InitNetwork()
+bool   CommonSocket::InitNetwork()
 {
 #if WIN32
     WSADATA wsaData;
@@ -210,7 +214,7 @@ BOOL   CommonSocket::InitNetwork()
     return TRUE;
 }
 
-BOOL   CommonSocket::UninitNetwork()
+bool   CommonSocket::UninitNetwork()
 {
 #if WIN32
     return (0 == WSACleanup());
@@ -280,7 +284,7 @@ SOCKET  CommonSocket::CreateSocket( int af, int type, int protocol)
 }
 
 
-BOOL    CommonSocket::BindSocket( SOCKET hSocket, const struct sockaddr* pAddr, int nNamelen)
+bool    CommonSocket::BindSocket( SOCKET hSocket, const struct sockaddr* pAddr, int nNamelen)
 {
     if(0 != bind(hSocket, pAddr, nNamelen))
     {
@@ -290,7 +294,7 @@ BOOL    CommonSocket::BindSocket( SOCKET hSocket, const struct sockaddr* pAddr, 
     return TRUE;
 }
 
-BOOL    CommonSocket::ListenSocket( SOCKET hSocket, int nBacklog)
+bool    CommonSocket::ListenSocket( SOCKET hSocket, int nBacklog)
 {
     if(0 != listen(hSocket, nBacklog))
     {
@@ -301,7 +305,7 @@ BOOL    CommonSocket::ListenSocket( SOCKET hSocket, int nBacklog)
 }
 
 
-BOOL    CommonSocket::ConnectSocket(SOCKET hSocket, const char* pAddr, short sPort)
+bool    CommonSocket::ConnectSocket(SOCKET hSocket, const char* pAddr, short sPort)
 {
     if(pAddr == NULL)
     {
@@ -338,7 +342,7 @@ INT32   CommonSocket::GetSocketLastError()
 }
 
 
-BOOL CommonSocket::IsSocketValid(SOCKET hSocket)
+bool CommonSocket::IsSocketValid(SOCKET hSocket)
 {
     if((hSocket == 0) || (hSocket == INVALID_SOCKET))
     {
@@ -375,7 +379,7 @@ UINT32  CommonSocket::IpAddrStrToInt(const CHAR* pszIpAddr)
 
 #ifdef WIN32
 
-BOOL    CommonSocket::AcceptSocketEx(SOCKET hListenSocket, SOCKET hAcceptSocket, CHAR* pBuff, LPOVERLAPPED lpOverlapped)
+bool    CommonSocket::AcceptSocketEx(SOCKET hListenSocket, SOCKET hAcceptSocket, CHAR* pBuff, LPOVERLAPPED lpOverlapped)
 {
     static LPFN_ACCEPTEX lpfnAcceptEx = NULL;
 
@@ -411,7 +415,7 @@ BOOL    CommonSocket::AcceptSocketEx(SOCKET hListenSocket, SOCKET hAcceptSocket,
     return TRUE;
 }
 
-BOOL CommonSocket::GetSocketAddress(SOCKET hSocket, CHAR* pDataBuffer, sockaddr_in*& pAddrClient, sockaddr_in*& pAddrLocal)
+bool CommonSocket::GetSocketAddress(SOCKET hSocket, CHAR* pDataBuffer, sockaddr_in*& pAddrClient, sockaddr_in*& pAddrLocal)
 {
     static  LPFN_GETACCEPTEXSOCKADDRS lpfnGetAcceptExSockaddrs = NULL;
     if (lpfnGetAcceptExSockaddrs == NULL)
@@ -441,7 +445,7 @@ BOOL CommonSocket::GetSocketAddress(SOCKET hSocket, CHAR* pDataBuffer, sockaddr_
     return TRUE;
 }
 
-BOOL CommonSocket::DisconnectEx(SOCKET hSocket, LPOVERLAPPED lpOverlapped, BOOL bReuse)
+bool CommonSocket::DisconnectEx(SOCKET hSocket, LPOVERLAPPED lpOverlapped, bool bReuse)
 {
     static  LPFN_DISCONNECTEX lpfnDisconnectEx = NULL;
     if (lpfnDisconnectEx == NULL)
@@ -462,7 +466,7 @@ BOOL CommonSocket::DisconnectEx(SOCKET hSocket, LPOVERLAPPED lpOverlapped, BOOL 
     return TRUE;
 }
 
-BOOL    CommonSocket::ConnectSocketEx(SOCKET hSocket, const char* pAddr, short sPort, LPOVERLAPPED lpOverlapped)
+bool    CommonSocket::ConnectSocketEx(SOCKET hSocket, const char* pAddr, short sPort, LPOVERLAPPED lpOverlapped)
 {
     static LPFN_CONNECTEX lpfnConnectEx = NULL;
 
@@ -516,7 +520,7 @@ std::string CommonSocket::IpAddrIntToStr( UINT32 dwIpAddr )
     return std::string(szIpBuffer);
 }
 
-BOOL CommonSocket::SetSocketKeepAlive( SOCKET hSocket, int nKeepInterval, int nKeepCount, int nKeepIdle )
+bool CommonSocket::SetSocketKeepAlive( SOCKET hSocket, int nKeepInterval, int nKeepCount, int nKeepIdle )
 {
 #ifdef WIN32
     tcp_keepalive  alive_in = { 0 }, alive_out = { 0 };

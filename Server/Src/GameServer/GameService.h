@@ -13,7 +13,7 @@ public:
 
     BOOL        Init(INT32 nServerID, INT32 nPort);
 
-    BOOL        Uninit();
+    BOOL        UnInit();
 
     BOOL        Run();
 

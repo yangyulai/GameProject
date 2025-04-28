@@ -1,5 +1,5 @@
-﻿#ifndef _CRASH_REPORT_H_
-#define _CRASH_REPORT_H_
+﻿#pragma once
+#include <string>
 
 void NewInvalidParamHandler(const wchar_t* expression,
                             const wchar_t* function,
@@ -13,5 +13,3 @@ void NewPureCallHandler(void);
 void SetCrashReport(std::string strAppName);
 
 void UnSetCrashReport();
-
-#endif

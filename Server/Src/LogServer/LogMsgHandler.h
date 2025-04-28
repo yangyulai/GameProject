@@ -1,32 +1,25 @@
 ﻿#pragma once
+#include <stdint.h>
 struct NetPacket;
-#include "DBInterface/CppMysql.h"
 
 class CLogMsgHandler
 {
 public:
+	CLogMsgHandler(const CLogMsgHandler& other) = delete;
+	CLogMsgHandler(CLogMsgHandler&& other) noexcept = delete;
+	CLogMsgHandler& operator=(const CLogMsgHandler& other) = delete;
+	CLogMsgHandler& operator=(CLogMsgHandler&& other) noexcept = delete;
+
 	CLogMsgHandler();
 
 	~CLogMsgHandler();
-
-	BOOL		Init(INT32 nReserved);
-
-	BOOL		Uninit();
-
-	BOOL		OnUpdate(UINT64 uTick);
-
-	BOOL		DispatchPacket(NetPacket* pNetPacket);
+	bool		Init(int32_t nReserved);
+	bool		UnInit();
+	bool		OnUpdate(uint64_t uTick);
+	bool		DispatchPacket(NetPacket* pNetPacket);
 	bool Test();
-
 public:
-	//*********************消息处理定义开始******************************
-	BOOL		OnMsgLogDataNtf(NetPacket* pNetPacket);
-	//*********************消息处理定义结束******************************
-
-	CppMySQL3DB     m_DBConnection;
-
-	UINT32			m_nWriteCount;
-
-	UINT64          m_nLastWriteTime;
-
+	bool		OnMsgLogDataNtf(NetPacket* pNetPacket);
+	uint32_t			m_nWriteCount;
+	uint64_t          m_nLastWriteTime;
 };

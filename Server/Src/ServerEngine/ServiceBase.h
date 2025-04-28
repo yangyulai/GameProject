@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <deque>
+#include "SpinLock.h"
 #include "IBufferHandler.h"
 #include "Connection.h"
 #include "google/protobuf/message.h"
@@ -12,15 +14,15 @@ protected:
 public:
     static ServiceBase* GetInstancePtr();
 
-    BOOL            StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatcher* pDispather, std::string strListenIp = "");
+    bool            StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatcher* pDispather, std::string strListenIp = "");
 
-    BOOL            StopNetwork();
+    bool            StopNetwork();
 
-    BOOL            OnDataHandle(IDataBuffer* pDataBuffer, INT32 nConnID);
+    bool            OnDataHandle(IDataBuffer* pDataBuffer, INT32 nConnID);
 
-    BOOL            OnCloseConnect(INT32 nConnID);
+    bool            OnCloseConnect(INT32 nConnID);
 
-    BOOL            OnNewConnect(INT32 nConnID);
+    bool            OnNewConnect(INT32 nConnID);
 
     CConnection*    ConnectTo(std::string strIpAddr, UINT16 sPort);
 

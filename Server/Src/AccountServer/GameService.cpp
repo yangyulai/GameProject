@@ -113,7 +113,7 @@ BOOL CGameService::DispatchPacket(NetPacket* pNetPacket)
     return FALSE;
 }
 
-BOOL CGameService::Uninit()
+BOOL CGameService::UnInit()
 {
     spdlog::error("==========服务器开始关闭=======================");
 

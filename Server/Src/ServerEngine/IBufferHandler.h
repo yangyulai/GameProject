@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <stdint.h>
+#include <string>
+#include <map>
 struct NetPacket;
 
 class IDataBuffer
@@ -13,7 +15,7 @@ public:
 
     virtual int32_t   GetTotalLenth() = 0;
 
-    virtual VOID    SetTotalLenth(int32_t nPos) = 0;
+    virtual void    SetTotalLenth(int32_t nPos) = 0;
 
     virtual int32_t   GetBodyLenth() = 0;
 

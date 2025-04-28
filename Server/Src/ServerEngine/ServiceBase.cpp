@@ -1,6 +1,8 @@
 ﻿
 #include "SpinLock.h"
 #include "ServiceBase.h"
+
+#include "CommonFunc.h"
 #include "NetManager.h"
 #include "Connection.h"
 #include "TimerManager.h"
@@ -38,7 +40,7 @@ ServiceBase* ServiceBase::GetInstancePtr()
 }
 
 
-BOOL ServiceBase::OnDataHandle(IDataBuffer* pDataBuffer, INT32 nConnID)
+bool ServiceBase::OnDataHandle(IDataBuffer* pDataBuffer, INT32 nConnID)
 {
     PacketHeader* pHeader = (PacketHeader*)pDataBuffer->GetBuffer();
 
@@ -48,7 +50,7 @@ BOOL ServiceBase::OnDataHandle(IDataBuffer* pDataBuffer, INT32 nConnID)
     return TRUE;
 }
 
-BOOL ServiceBase::StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatcher* pDispather, std::string strListenIp)
+bool ServiceBase::StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatcher* pDispather, std::string strListenIp)
 {
     ERROR_RETURN_FALSE(pDispather != NULL);
     ERROR_RETURN_FALSE(nPortNum > 0);
@@ -70,7 +72,7 @@ BOOL ServiceBase::StartNetwork(UINT16 nPortNum, INT32 nMaxConn, IPacketDispatche
     return TRUE;
 }
 
-BOOL ServiceBase::StopNetwork()
+bool ServiceBase::StopNetwork()
 {
     CNetManager::GetInstancePtr()->Stop();
 
@@ -161,7 +163,7 @@ BOOL ServiceBase::SetHeartInterval(INT32 nInterval)
     return TRUE;
 }
 
-BOOL ServiceBase::OnCloseConnect(INT32 nConnID)
+bool ServiceBase::OnCloseConnect(INT32 nConnID)
 {
     ERROR_RETURN_FALSE(nConnID != 0);
     m_QueueLock.Lock();
@@ -170,7 +172,7 @@ BOOL ServiceBase::OnCloseConnect(INT32 nConnID)
     return TRUE;
 }
 
-BOOL ServiceBase::OnNewConnect(INT32 nConnID)
+bool ServiceBase::OnNewConnect(INT32 nConnID)
 {
     ERROR_RETURN_FALSE(nConnID != 0);
     m_QueueLock.Lock();

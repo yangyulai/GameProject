@@ -1,5 +1,11 @@
-﻿#ifndef __SHARE_MEMORY_H__
-#define __SHARE_MEMORY_H__
+﻿#pragma once
+#include <vector>
+#include <map>
+#include <spdlog/spdlog.h>
+
+#include "CommonSocket.h"
+#include "CommonTime.h"
+
 #include "DBInterface/DBInterface.h"
 
 #define BLOCK_CHECK_CODE    0x5A
@@ -404,5 +410,3 @@ private:
     INT32               m_nModuleID;  //模块ID
     INT32               m_nErrorCount;
 };
-
-#endif

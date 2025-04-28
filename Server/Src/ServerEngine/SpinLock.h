@@ -1,7 +1,6 @@
-﻿#ifndef __SPIN_LOCK_h__
-#define __SPIN_LOCK_h__
+﻿#pragma once
 #include <atomic>
-
+#include <thread>
 class CSpinLock
 {
 public:
@@ -101,6 +100,4 @@ public:
 private:
     std::atomic<bool> d_atomic_bool;
 };
-
-#endif /* __SPIN_LOCK_h__ */
 

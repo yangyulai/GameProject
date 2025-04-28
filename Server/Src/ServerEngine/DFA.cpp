@@ -1,6 +1,8 @@
 
 #include "DFA.h"
 
+#include <algorithm>
+
 INT32 DFANode::s_length = 0;
 INT32 DFANode::s_maxlen = 0;
 

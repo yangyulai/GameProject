@@ -57,18 +57,6 @@
     <ClCompile Include="TimerManager.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="DBInterface\CppMysql.cpp">
-      <Filter>DBInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="DBInterface\DBConnection.cpp">
-      <Filter>DBInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="DBInterface\DBRecordSet.cpp">
-      <Filter>DBInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="DBInterface\DBStoredProc.cpp">
-      <Filter>DBInterface</Filter>
-    </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -79,9 +67,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="HttpParameter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CommonMath.cpp">
@@ -137,26 +122,11 @@
     <ClInclude Include="DataBuffer.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="DBInterface\CppMysql.h">
-      <Filter>DBInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="DBInterface\DBConnection.h">
-      <Filter>DBInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="DBInterface\DBRecordSet.h">
-      <Filter>DBInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="DBInterface\DBStoredProc.h">
-      <Filter>DBInterface</Filter>
-    </ClInclude>
     <ClInclude Include="LockFreeQueue.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="LockFreeQueueImpl.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="DBInterface\DBInterface.h">
-      <Filter>DBInterface</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>头文件</Filter>

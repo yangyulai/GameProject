@@ -1,12 +1,9 @@
 ﻿#pragma once
-#include <Windows.h>
 #include <boost/mysql.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/awaitable.hpp>
 #include <boost/asio/detached.hpp>
-#include <memory>
 #include <string>
-#include <iostream>
 
 class MySqlClient
 {

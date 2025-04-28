@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <string>
 #include "../Platform.h"
-#include "mysql.h"
 
 class CppMySQL3DB;
 

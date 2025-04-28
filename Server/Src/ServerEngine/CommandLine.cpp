@@ -1,11 +1,12 @@
 
 #include "CommandLine.h"
+#include "CommonConvert.h"
 
-CCommandLine::CCommandLine(INT32 argc, CHAR* argv[])
+CCommandLine::CCommandLine(int32_t argc, char* argv[])
 {
 	for (int i = 0; i < argc; i++)
 	{
-		CHAR* pChar = strchr(argv[i], '=');
+		char* pChar = strchr(argv[i], '=');
 		if (pChar == NULL)
 		{
 			continue;
@@ -27,7 +28,7 @@ CCommandLine::~CCommandLine()
 	m_ParameterMap.clear();
 }
 
-INT32 CCommandLine::GetIntValue(const std::string& strKey) const
+int32_t CCommandLine::GetIntValue(const std::string& strKey) const
 {
 	auto itor = m_ParameterMap.find(strKey);
 	if(itor != m_ParameterMap.end())
@@ -47,7 +48,7 @@ std::string CCommandLine::GetStrValue(const std::string& strKey) const
 	return "";
 }
 
-INT64 CCommandLine::GetLongValue(const std::string& strKey) const
+int64_t CCommandLine::GetLongValue(const std::string& strKey) const
 {
 	auto it = m_ParameterMap.find(strKey);
 	if(it != m_ParameterMap.end())
@@ -58,7 +59,7 @@ INT64 CCommandLine::GetLongValue(const std::string& strKey) const
 	return 0;
 }
 
-FLOAT CCommandLine::GetFloatValue(const std::string& strKey) const
+float CCommandLine::GetFloatValue(const std::string& strKey) const
 {
 	auto it = m_ParameterMap.find(strKey);
 	if(it != m_ParameterMap.end())
