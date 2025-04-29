@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameService.cpp">
+    <ClCompile Include="LogService.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="LogMsgHandler.cpp">
@@ -30,24 +30,15 @@
     <ClCompile Include="..\Message\Msg_Game.pb.cc">
       <Filter>Proto</Filter>
     </ClCompile>
-    <ClCompile Include="..\WatcherClient\WatcherClient.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\Message\Msg_Base.pb.cc">
       <Filter>Proto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="LogService.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="LogMsgHandler.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WatcherClient\WatcherClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\Message\Msg_Base.pb.h">

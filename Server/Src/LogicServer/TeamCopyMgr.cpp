@@ -1,6 +1,6 @@
 ﻿
 #include "TeamCopyMgr.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "PacketHeader.h"
 
 #include "ServerDefine.h"

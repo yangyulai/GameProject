@@ -120,7 +120,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\WatcherClient\WatcherClient.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="CenterMsgHandler.cpp" />
     <ClCompile Include="LogicSvrMgr.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -132,7 +132,7 @@
   <ItemGroup>
     <ClInclude Include="..\Message\Msg_Base.pb.h" />
     <ClInclude Include="..\WatcherClient\WatcherClient.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="CenterMsgHandler.h" />
     <ClInclude Include="LogicSvrMgr.h" />
     <ClInclude Include="stdafx.h" />

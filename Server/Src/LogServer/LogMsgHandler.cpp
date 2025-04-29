@@ -2,13 +2,13 @@
 #include "LogMsgHandler.h"
 #include <spdlog/spdlog.h>
 #include "ConfigFile.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_Game.pb.h"
 #include "../LogData/LogStruct.h"
 
 
-CLogMsgHandler::CLogMsgHandler(): m_nWriteCount(0), m_nLastWriteTime(0)
+CLogMsgHandler::CLogMsgHandler()
 {
 }
 
@@ -16,41 +16,17 @@ CLogMsgHandler::~CLogMsgHandler()= default;
 
 bool CLogMsgHandler::Init(INT32 nReserved)
 {
-    std::string strHost = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_ip");
-    INT32 nPort = CConfigFile::GetInstancePtr()->GetIntValue("mysql_log_svr_port");
-    std::string strUser = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_user");
-    std::string strPwd = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_pwd");
-    std::string strDb = CConfigFile::GetInstancePtr()->GetStringValue("mysql_log_svr_db_name");
-
-    m_nLastWriteTime = 0;
-
-    return TRUE;
+    return true;
 }
 
 bool CLogMsgHandler::UnInit()
 {
-    return TRUE;
+    return true;
 }
 
 bool CLogMsgHandler::OnUpdate(UINT64 uTick)
 {
-    if (m_nLastWriteTime == 0)
-    {
-        m_nLastWriteTime = uTick;
-    }
-
-    if (m_nWriteCount == 0)
-    {
-        return TRUE;
-    }
-
-    if (uTick - m_nLastWriteTime > 1000)
-    {
-        m_nLastWriteTime = uTick;
-        m_nWriteCount = 0;
-    }
-
-    return TRUE;
+    return true;
 }
 
 bool CLogMsgHandler::DispatchPacket(NetPacket* pNetPacket)
@@ -114,12 +90,18 @@ bool CLogMsgHandler::OnMsgLogDataNtf(NetPacket* pNetPacket)
         default:
             break;
     }
-    m_nWriteCount += 1;
 
-    if (m_nWriteCount > 1000)
-    {
-        m_nWriteCount = 0;
-    }
-    return TRUE;
+    boost::asio::co_spawn(
+        sLogService.m_ioContext,
+        [sql = std::string(szSql)]() -> boost::asio::awaitable<void> {
+            boost::system::error_code ec;
+            auto conn = co_await sLogService.m_pool.async_get_connection(boost::asio::redirect_error(boost::asio::use_awaitable, ec));
+            boost::mysql::results res;
+            co_await conn->async_execute(sql, res);
+            co_return;
+        },
+        boost::asio::detached
+    );
+    return true;
 }
 

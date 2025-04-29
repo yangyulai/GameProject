@@ -1,6 +1,6 @@
 ﻿
 #include "GlobalDataMgr.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "DataPool.h"
 
 CGlobalDataManager::CGlobalDataManager()
@@ -24,10 +24,10 @@ BOOL CGlobalDataManager::LoadData(CppMySQL3DB& tDBConnection)
 {
     m_pGlobalDataObject = DataPool::CreateObject<GlobalDataObject>(ESD_GLOBAL, FALSE);
     m_pGlobalDataObject->Lock();
-    m_pGlobalDataObject->m_dwServerID = CGameService::GetInstancePtr()->GetServerID();
+    m_pGlobalDataObject->m_dwServerID = LogService::GetInstancePtr()->GetServerID();
 
     CHAR szSql[SQL_BUFF_LEN] = { 0 };
-    snprintf(szSql, SQL_BUFF_LEN, "select * from globaldata where serverid = %d", CGameService::GetInstancePtr()->GetServerID());
+    snprintf(szSql, SQL_BUFF_LEN, "select * from globaldata where serverid = %d", LogService::GetInstancePtr()->GetServerID());
 
     CppMySQLQuery QueryResult = tDBConnection.querySQL(szSql);
     if(!QueryResult.eof())
@@ -41,7 +41,7 @@ BOOL CGlobalDataManager::LoadData(CppMySQL3DB& tDBConnection)
 
     if(m_pGlobalDataObject->m_u64Guid <= 0)
     {
-        m_pGlobalDataObject->m_u64Guid =  CGameService::GetInstancePtr()->GetServerID();
+        m_pGlobalDataObject->m_u64Guid =  LogService::GetInstancePtr()->GetServerID();
         m_pGlobalDataObject->m_u64Guid = (m_pGlobalDataObject->m_u64Guid << 48) + 1;
     }
 

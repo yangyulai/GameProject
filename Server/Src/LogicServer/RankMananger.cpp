@@ -1,6 +1,6 @@
 ﻿
 #include "RankMananger.h"
-#include "GameService.h"
+#include "LogService.h"
 
 CRankManager* CRankManager::GetInstancePtr()
 {

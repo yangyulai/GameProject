@@ -1,7 +1,7 @@
 ﻿
 #include "ProxyMsgHandler.h"
 #include "PacketHeader.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "ProxyPlayerMgr.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_RetCode.pb.h"
@@ -54,7 +54,7 @@ BOOL CProxyMsgHandler::DispatchPacket(NetPacket* pNetPacket)
         {
             if((pPacketHeader->nMsgID >= MSG_LOGICSVR_MSGID_BEGIN) && (pPacketHeader->nMsgID <= MSG_LOGICSVR_MSGID_END))
             {
-                if(pNetPacket->m_nConnID == CGameService::GetInstancePtr()->GetLogicConnID())
+                if(pNetPacket->m_nConnID == LogService::GetInstancePtr()->GetLogicConnID())
                 {
                     RelayToConnect(pPacketHeader->dwUserData, pNetPacket->m_pDataBuffer);
                 }
@@ -115,7 +115,7 @@ BOOL CProxyMsgHandler::OnCloseConnect(INT32 nConnID)
 
     RoleDisconnectReq Req;
     Req.set_roleid(pConn->GetConnectionData());
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetLogicConnID(), MSG_DISCONNECT_NTY, pConn->GetConnectionData(), 0,  Req);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetLogicConnID(), MSG_DISCONNECT_NTY, pConn->GetConnectionData(), 0,  Req);
 
     CProxyPlayer* pPlayer = CProxyPlayerMgr::GetInstancePtr()->GetByRoleID(pConn->GetConnectionData());
     ERROR_RETURN_TRUE(pPlayer != NULL);
@@ -142,7 +142,7 @@ BOOL CProxyMsgHandler::RelayToGameServer( CProxyPlayer* pClientObj, IDataBuffer*
 
 BOOL CProxyMsgHandler::RelayToLogicServer(IDataBuffer* pBuffer )
 {
-    if(!ServiceBase::GetInstancePtr()->SendMsgBuffer(CGameService::GetInstancePtr()->GetLogicConnID(), pBuffer))
+    if(!ServiceBase::GetInstancePtr()->SendMsgBuffer(LogService::GetInstancePtr()->GetLogicConnID(), pBuffer))
     {
         return FALSE;
     }
@@ -173,7 +173,7 @@ INT32 CProxyMsgHandler::GetGameSvrConnID(INT32 nSvrID)
 
 BOOL CProxyMsgHandler::IsServerConnID(INT32 nConnID)
 {
-    if(nConnID == CGameService::GetInstancePtr()->GetLogicConnID())
+    if(nConnID == LogService::GetInstancePtr()->GetLogicConnID())
     {
         return TRUE;
     }
@@ -361,7 +361,7 @@ BOOL CProxyMsgHandler::OnMsgReconnectReq(NetPacket* pPacket)
 
     pPacketHeader->dwUserData = pPacket->m_nConnID;
 
-    if (!CGameService::GetInstancePtr()->m_bLogicConnect)
+    if (!LogService::GetInstancePtr()->m_bLogicConnect)
     {
         RoleReconnectAck Ack;
         Ack.set_retcode(MRC_CANNOT_RECONNECT); //内存己经没有玩家必须要重登

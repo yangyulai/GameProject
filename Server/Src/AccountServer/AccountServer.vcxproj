@@ -124,7 +124,7 @@
     <ClCompile Include="AccountManager.cpp" />
     <ClCompile Include="AccountMsgHandler.cpp" />
     <ClCompile Include="GameLogManager.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -140,7 +140,7 @@
     <ClInclude Include="AccountManager.h" />
     <ClInclude Include="AccountMsgHandler.h" />
     <ClInclude Include="GameLogManager.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

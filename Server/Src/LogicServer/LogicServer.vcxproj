@@ -162,7 +162,7 @@
     <ClCompile Include="DataPool.cpp" />
     <ClCompile Include="EquipModule.cpp" />
     <ClCompile Include="FriendModule.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="GameSvrMgr.cpp" />
     <ClCompile Include="GemModule.cpp" />
     <ClCompile Include="GlobalDataMgr.cpp" />
@@ -239,7 +239,7 @@
     <ClInclude Include="DataPool.h" />
     <ClInclude Include="EquipModule.h" />
     <ClInclude Include="FriendModule.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="GameSvrMgr.h" />
     <ClInclude Include="GemModule.h" />
     <ClInclude Include="GlobalDataMgr.h" />

@@ -1,6 +1,6 @@
 ﻿
 #include "SceneObject.h"
-#include "../GameService.h"
+#include "../LogService.h"
 #include "../Message/Msg_Copy.pb.h"
 #include "BuffObject.h"
 #include "../Message/Msg_Move.pb.h"

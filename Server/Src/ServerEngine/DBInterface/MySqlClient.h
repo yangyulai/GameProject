@@ -8,16 +8,22 @@
 class MySqlClient
 {
 public:
-    MySqlClient(boost::asio::io_context& io_context);
+	MySqlClient(const MySqlClient& other) = delete;
+	MySqlClient(MySqlClient&& other) noexcept = delete;
+	MySqlClient& operator=(const MySqlClient& other) = delete;
+	MySqlClient& operator=(MySqlClient&& other) noexcept = delete;
+
+    MySqlClient() = default;
     ~MySqlClient();
-    bool connect_sync(const std::string& host, const std::string& port,
-        const std::string& user, const std::string& password,
-        const std::string& database);
-
-    boost::asio::awaitable<bool> connect_async(const std::string& host, const std::string& port,
-        const std::string& user, const std::string& password,
-        const std::string& database);
-
+    static void init_pool(
+        boost::asio::io_context& io_context,
+        const std::string& database,
+        const std::string& username,
+        const std::string& password,
+        const std::string& host,
+		std::size_t pool_size = 1,
+		unsigned short port = boost::mysql::default_port
+    );
     bool query_sync(const std::string& sql, boost::mysql::results& results, int timeout_ms = 3000);
     boost::asio::awaitable<boost::mysql::results> query_async(const std::string& sql, int timeout_ms = 3000);
 
@@ -26,11 +32,7 @@ public:
     bool rollback_transaction_sync();
     void close();
     bool is_connected() const;
-
 private:
-    bool reconnect_sync();
-    boost::asio::awaitable<bool> reconnect_async();
-    boost::asio::io_context& ctx_;
     boost::mysql::tcp_connection conn_;
     bool m_connected = false;
     std::string m_host;

@@ -1,5 +1,5 @@
 ﻿
-#include "GameService.h"
+#include "LogService.h"
 #include "Scene.h"
 #include "PacketHeader.h"
 #include "../Message/Msg_ID.pb.h"
@@ -465,7 +465,7 @@ BOOL CScene::BroadMessage(INT32 nMsgID, const google::protobuf::Message& pdata)
         Nty.add_connid(pObj->m_dwClientConnID);
     }
 
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetProxyConnID(), MSG_BROAD_MESSAGE_NOTIFY, 0, 0, Nty);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetProxyConnID(), MSG_BROAD_MESSAGE_NOTIFY, 0, 0, Nty);
 
     return TRUE;
 }
@@ -639,7 +639,7 @@ BOOL CScene::OnMsgTransRoleDataReq(NetPacket* pNetPacket)
     ERROR_RETURN_FALSE(m_dwCopyGuid != 0);
     ERROR_RETURN_FALSE(m_dwCopyID != 0);
     ERROR_RETURN_FALSE(m_dwCopyType != 0);
-    ERROR_RETURN_FALSE(CGameService::GetInstancePtr()->GetServerID() != 0);
+    ERROR_RETURN_FALSE(LogService::GetInstancePtr()->GetServerID() != 0);
 
     TransferDataReq Req;
     Req.ParsePartialFromArray(pNetPacket->m_pDataBuffer->GetData(), pNetPacket->m_pDataBuffer->GetBodyLenth());
@@ -671,9 +671,9 @@ BOOL CScene::OnMsgTransRoleDataReq(NetPacket* pNetPacket)
     Ack.set_copyguid(m_dwCopyGuid);
     Ack.set_copyid(m_dwCopyID);
     Ack.set_roleid(pHeader->u64TargetID);
-    Ack.set_serverid(CGameService::GetInstancePtr()->GetServerID());
+    Ack.set_serverid(LogService::GetInstancePtr()->GetServerID());
     Ack.set_retcode(MRC_SUCCESSED);
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetLogicConnID(), MSG_TRANSFER_DATA_ACK, pHeader->u64TargetID, 0, Ack);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetLogicConnID(), MSG_TRANSFER_DATA_ACK, pHeader->u64TargetID, 0, Ack);
     return TRUE;
 }
 
@@ -873,7 +873,7 @@ BOOL CScene::BackToMainCity(UINT64 uRoleID)
     Nty.set_copyid(m_dwCopyID);
     Nty.set_copytype(m_dwCopyType);
     Nty.set_param(0);
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetLogicConnID(), MSG_ABORT_SCENE_NTF, 0, 0, Nty);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetLogicConnID(), MSG_ABORT_SCENE_NTF, 0, 0, Nty);
 
     return TRUE;
 }
@@ -1458,7 +1458,7 @@ BOOL CScene::SyncObjectStatus()
         Nty.add_connid(pObj->m_dwClientConnID);
     }
 
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetProxyConnID(), MSG_BROAD_MESSAGE_NOTIFY, 0, 0, Nty);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetProxyConnID(), MSG_BROAD_MESSAGE_NOTIFY, 0, 0, Nty);
 
     return TRUE;
 }
@@ -1752,7 +1752,7 @@ BOOL CScene::SendBattleResult()
     Nty.set_copyid(m_dwCopyID);
     Nty.set_copytype(m_dwCopyType);
     Nty.set_lasttime(CommonFunc::GetCurrTime() - m_uStartTime);
-    Nty.set_serverid(CGameService::GetInstancePtr()->GetServerID());
+    Nty.set_serverid(LogService::GetInstancePtr()->GetServerID());
 
     for(std::map<UINT64, CSceneObject*>::iterator itor = m_mapPlayer.begin(); itor != m_mapPlayer.end(); itor++)
     {
@@ -1762,7 +1762,7 @@ BOOL CScene::SendBattleResult()
         pObj->SaveBattleRecord(pResultItem);
     }
 
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetLogicConnID(), MSG_BATTLE_RESULT_NTY, 0, 0, Nty);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetLogicConnID(), MSG_BATTLE_RESULT_NTY, 0, 0, Nty);
 
     return TRUE;
 }

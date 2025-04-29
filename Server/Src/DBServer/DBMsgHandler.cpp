@@ -1,7 +1,7 @@
 ﻿
 #include "DBMsgHandler.h"
 #include "PacketHeader.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "DataBuffer.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_RetCode.pb.h"

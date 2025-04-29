@@ -1,7 +1,7 @@
 ﻿
 #include "SceneManager.h"
 #include "PacketHeader.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_RetCode.pb.h"
 #include "../Message/Msg_Game.pb.h"
@@ -30,7 +30,7 @@ CSceneManager::~CSceneManager()
 
 BOOL CSceneManager::Init(BOOL bMainLand)
 {
-    m_MaxCopyBaseID = CGameService::GetInstancePtr()->GetServerID() << 24;
+    m_MaxCopyBaseID = LogService::GetInstancePtr()->GetServerID() << 24;
 
     if(bMainLand)
     {
@@ -141,7 +141,7 @@ BOOL CSceneManager::SendCityReport()
 {
     CopyReportReq Req;
 
-    Req.set_serverid(CGameService::GetInstancePtr()->GetServerID());
+    Req.set_serverid(LogService::GetInstancePtr()->GetServerID());
 
     for(SceneMap::iterator itor = m_mapSceneList.begin(); itor != m_mapSceneList.end(); itor++)
     {
@@ -157,7 +157,7 @@ BOOL CSceneManager::SendCityReport()
         }
     }
 
-    return ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetLogicConnID(), MSG_COPYINFO_REPORT_REQ, 0, 0, Req);
+    return ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetLogicConnID(), MSG_COPYINFO_REPORT_REQ, 0, 0, Req);
 }
 
 BOOL CSceneManager::OnMsgCreateSceneReq(NetPacket* pNetPacket)
@@ -174,7 +174,7 @@ BOOL CSceneManager::OnMsgCreateSceneReq(NetPacket* pNetPacket)
 	CreateNewSceneAck Ack;
 	Ack.set_createparam(Req.createparam());
 	Ack.set_copyguid(dwNewCopyGuid);
-	Ack.set_serverid(CGameService::GetInstancePtr()->GetServerID());
+	Ack.set_serverid(LogService::GetInstancePtr()->GetServerID());
 	Ack.set_copyid(Req.copyid());
 	Ack.set_playernum(Req.playernum());
 	Ack.set_copytype(Req.copytype());

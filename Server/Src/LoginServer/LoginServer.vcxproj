@@ -123,7 +123,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\WatcherClient\WatcherClient.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="GiftCodeManager.cpp" />
     <ClCompile Include="LoginClientMgr.cpp" />
     <ClCompile Include="LoginMsgHandler.cpp" />
@@ -143,7 +143,7 @@
     <ClInclude Include="..\Message\Msg_Game.pb.h" />
     <ClInclude Include="..\Message\Msg_ID.pb.h" />
     <ClInclude Include="..\WatcherClient\WatcherClient.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="GiftCodeManager.h" />
     <ClInclude Include="LoginClientMgr.h" />
     <ClInclude Include="LoginMsgHandler.h" />

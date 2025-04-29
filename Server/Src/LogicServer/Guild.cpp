@@ -1,7 +1,7 @@
 ﻿
 #include "DBInterface/CppMysql.h"
 #include "Guild.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "DataPool.h"
 #include "../Message/Game_Define.pb.h"
 

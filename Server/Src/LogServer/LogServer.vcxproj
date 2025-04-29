@@ -60,7 +60,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\ServerEngine;..\PublicData;..\..\Common;..\..\Common\protobuf\src;../../Common/MySql;..\WatcherClient;$(BOOST_ROOT);$(OPENSSL_ROOT_DIR)/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ServerEngine;..\PublicData;..\..\Common;..\..\Common\protobuf\src;../../Common/MySql;..\WatcherClient;$(BOOST_ROOT);$(OPENSSL_ROOT_DIR)/include/;K:\LuaDemo\Lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0A01;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -70,15 +70,15 @@
       <DisableSpecificWarnings>4996;4800;4244;</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\Bin\Debug64;..\..\Common\Lib;$(BOOST_LIB);C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Bin\Debug64;..\..\Common\Lib;$(BOOST_LIB);C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd;K:\LuaDemo\x64\$(Configuration)\</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>libprotobufd.lib;libmysql.lib;ServerEngine_d.lib;libboost_charconv-vc143-mt-sgd-x64-1_88.lib;libcrypto_static.lib;libssl_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libprotobufd.lib;libmysql.lib;ServerEngine_d.lib;libboost_charconv-vc143-mt-sgd-x64-1_88.lib;libcrypto_static.lib;libssl_static.lib;Lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -114,17 +114,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\WatcherClient\WatcherClient.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="LogMsgHandler.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Message\Msg_Base.pb.h" />
-    <ClInclude Include="..\WatcherClient\WatcherClient.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="LogMsgHandler.h" />
-    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

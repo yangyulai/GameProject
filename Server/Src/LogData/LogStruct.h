@@ -63,6 +63,10 @@ struct Log_BaseData
     int32_t       m_nLevel     = 0;//角色等级
     int32_t       m_nVipLevel  = 0;//角色VIP等级
     int32_t       m_nAddWay    = 0;//
+        virtual ~Log_BaseData() = default;
+    // 返回 SQL 模板和对应参数包
+    virtual std::pair<std::string, std::vector<boost::mysql::field>> 
+    make_sql_and_params() const = 0;
 };
 
 struct Log_AccountCreate : public Log_BaseData

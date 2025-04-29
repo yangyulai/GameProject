@@ -2,7 +2,7 @@
 #define __GAME_LOG_MANAGER_H__
 
 #include "../Message/Msg_ID.pb.h"
-#include "GameService.h"
+#include "LogService.h"
 class CPlayerObject;
 struct Log_BaseData;
 class CGameLogManager
@@ -17,9 +17,9 @@ public:
     template<typename T>
     BOOL WriteGameLog(T& Data)
     {
-        ERROR_RETURN_FALSE(CGameService::GetInstancePtr()->GetLogSvrConnID() > 0);
+        ERROR_RETURN_FALSE(LogService::GetInstancePtr()->GetLogSvrConnID() > 0);
 
-        ServiceBase::GetInstancePtr()->SendMsgRawData(CGameService::GetInstancePtr()->GetLogSvrConnID(), MSG_LOG_DATA_NTF, 0, 0, (const char*)&Data, sizeof(T));
+        ServiceBase::GetInstancePtr()->SendMsgRawData(LogService::GetInstancePtr()->GetLogSvrConnID(), MSG_LOG_DATA_NTF, 0, 0, (const char*)&Data, sizeof(T));
 
         return TRUE;
     }

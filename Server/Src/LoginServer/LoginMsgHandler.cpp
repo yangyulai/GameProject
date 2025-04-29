@@ -1,6 +1,6 @@
 ﻿
 #include "LoginMsgHandler.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "PacketHeader.h"
 #include "HttpParameter.h"
 #include "LoginClientMgr.h"
@@ -103,7 +103,7 @@ BOOL CLoginMsgHandler::OnMsgAccountRegReq(NetPacket* pPacket )
 
     Req.mutable_reglog()->set_ipaddr(pConnection->GetIpAddr());
 
-    CGameService::GetInstancePtr()->SendCmdToAccountConnection(MSG_ACCOUNT_REG_REQ, 0, nConnID, Req);
+    LogService::GetInstancePtr()->SendCmdToAccountConnection(MSG_ACCOUNT_REG_REQ, 0, nConnID, Req);
 
     return TRUE;
 }
@@ -122,7 +122,7 @@ BOOL CLoginMsgHandler::OnMsgAccountLoginReq(NetPacket* pPacket)
 
     Req.mutable_loginlog()->set_ipaddr(pConnection->GetIpAddr());
 
-    CGameService::GetInstancePtr()->SendCmdToAccountConnection(MSG_ACCOUNT_LOGIN_REQ, 0, nConnID, Req);
+    LogService::GetInstancePtr()->SendCmdToAccountConnection(MSG_ACCOUNT_LOGIN_REQ, 0, nConnID, Req);
 
     return TRUE;
 }
@@ -377,7 +377,7 @@ BOOL CLoginMsgHandler::OnMsgSelectServerAck(NetPacket* pPacket)
     SetLastServerNty Nty;
     Nty.set_accountid(Ack.accountid());
     Nty.set_serverid(Ack.serverid());
-    CGameService::GetInstancePtr()->SendCmdToAccountConnection(MSG_SET_LAST_SERVER_NTY, 0, 1, Nty);
+    LogService::GetInstancePtr()->SendCmdToAccountConnection(MSG_SET_LAST_SERVER_NTY, 0, 1, Nty);
 
     return TRUE;
 }

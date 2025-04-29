@@ -1,6 +1,6 @@
 ﻿
 #include "WebCommandMgr.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Game_Define.pb.h"
 #include "PacketHeader.h"
@@ -96,14 +96,14 @@ void CWebCommandMgr::OnGmSealAccount(HttpParameter& hParams, INT32 nConnID)
     Req.set_channel(hParams.GetIntValue("channel"));
     Req.set_seal(hParams.GetIntValue("seal"));
     Req.set_sealtime(hParams.GetIntValue("sealtime"));
-    CGameService::GetInstancePtr()->SendCmdToAccountConnection(MSG_SEAL_ACCOUNT_REQ, 0, nConnID, Req);
+    LogService::GetInstancePtr()->SendCmdToAccountConnection(MSG_SEAL_ACCOUNT_REQ, 0, nConnID, Req);
     return;
 }
 
 void CWebCommandMgr::OnGmServerChange(HttpParameter& hParams, INT32 nConnID)
 {
     INT32 nSvrID = hParams.GetIntValue("serverid");
-    CGameService::GetInstancePtr()->m_LoginMsgHandler.m_LogicSvrMgr.ReloadServerList(nSvrID);
+    LogService::GetInstancePtr()->m_LoginMsgHandler.m_LogicSvrMgr.ReloadServerList(nSvrID);
     SendWebResult(nConnID, EWR_SUCCESSED);
     return;
 }

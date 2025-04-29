@@ -1,6 +1,6 @@
 ﻿
 #include "PayManager.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "StaticData.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_RetCode.pb.h"

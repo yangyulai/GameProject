@@ -2,7 +2,7 @@
 //
 
 
-#include "GameService.h"
+#include "LogService.h"
 #include "CrashReport.h"
 #include "CommandLine.h"
 #include "WatcherClient.h"
@@ -23,14 +23,14 @@ int main(int argc, char* argv[])
 
     SetCrashReport("GameServer");
 
-    if (!CGameService::GetInstancePtr()->Init(nSvrID, nPort))
+    if (!LogService::GetInstancePtr()->Init(nSvrID, nPort))
     {
         return 0;
     }
 
-    CGameService::GetInstancePtr()->Run();
+    LogService::GetInstancePtr()->Run();
 
-    CGameService::GetInstancePtr()->UnInit();
+    LogService::GetInstancePtr()->UnInit();
 
     UnSetCrashReport();
 

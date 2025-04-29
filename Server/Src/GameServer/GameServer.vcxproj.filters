@@ -27,7 +27,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameService.cpp">
+    <ClCompile Include="LogService.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -116,7 +116,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameService.h">
+    <ClInclude Include="LogService.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">

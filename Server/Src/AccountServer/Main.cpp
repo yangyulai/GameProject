@@ -2,7 +2,7 @@
 //
 
 
-#include "GameService.h"
+#include "LogService.h"
 #include "CrashReport.h"
 #include "WatcherClient.h"
 
@@ -10,12 +10,12 @@ int main(int argc, char* argv[])
 {
     SetCrashReport("AccountServer");
 
-    if (CGameService::GetInstancePtr()->Init())
+    if (LogService::GetInstancePtr()->Init())
     {
-        CGameService::GetInstancePtr()->Run();
+        LogService::GetInstancePtr()->Run();
     }
 
-    CGameService::GetInstancePtr()->UnInit();
+    LogService::GetInstancePtr()->UnInit();
 
     UnSetCrashReport();
 

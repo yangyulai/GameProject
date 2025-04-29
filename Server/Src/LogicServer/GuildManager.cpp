@@ -1,6 +1,6 @@
 ﻿
 #include "GuildManager.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "DataPool.h"
 #include "GlobalDataMgr.h"
 #include "../Message/Game_Define.pb.h"

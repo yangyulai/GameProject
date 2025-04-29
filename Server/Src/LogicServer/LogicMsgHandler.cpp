@@ -1,6 +1,6 @@
 ﻿
 #include "LogicMsgHandler.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "PacketHeader.h"
 #include "PlayerObject.h"
 #include "../Message/Msg_ID.pb.h"
@@ -88,7 +88,7 @@ BOOL CLogicMsgHandler::OnMsgSelectServerReq(NetPacket* pNetPacket)
     SelectServerAck Ack;
     Ack.set_retcode(MRC_SUCCESSED);
     Ack.set_accountid(Req.accountid());
-    Ack.set_serverid(CGameService::GetInstancePtr()->GetServerID());
+    Ack.set_serverid(LogService::GetInstancePtr()->GetServerID());
     Ack.set_logincode(CLoginCodeManager::GetInstancePtr()->CreateLoginCode(Req.accountid()));
 
     return ServiceBase::GetInstancePtr()->SendMsgProtoBuf(pNetPacket->m_nConnID, MSG_SELECT_SERVER_ACK, 0, pHeader->dwUserData, Ack);
@@ -111,7 +111,7 @@ BOOL CLogicMsgHandler::OnMsgRoleListReq(NetPacket* pNetPacket)
         //还需要通知网关断开这个连结
     }
 
-    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(CGameService::GetInstancePtr()->GetDBConnID(),  MSG_ROLE_LIST_REQ, pNetPacket->m_nConnID, pHeader->dwUserData, Req);
+    ServiceBase::GetInstancePtr()->SendMsgProtoBuf(LogService::GetInstancePtr()->GetDBConnID(),  MSG_ROLE_LIST_REQ, pNetPacket->m_nConnID, pHeader->dwUserData, Req);
 
     return TRUE;
 }
@@ -249,7 +249,7 @@ BOOL CLogicMsgHandler::OnMsgRoleDeleteReq(NetPacket* pNetPacket)
     }
     else
     {
-        CGameService::GetInstancePtr()->SendCmdToDBConnection(MSG_ROLE_DELETE_REQ, 0, 0, Req);
+        LogService::GetInstancePtr()->SendCmdToDBConnection(MSG_ROLE_DELETE_REQ, 0, 0, Req);
     }
 
     RoleDeleteAck Ack;
@@ -282,7 +282,7 @@ BOOL CLogicMsgHandler::OnMsgRoleLoginReq(NetPacket* pNetPacket)
     CPlayerObject* pPlayer = CPlayerManager::GetInstancePtr()->GetPlayer(Req.roleid());
     if(pPlayer == NULL)
     {
-        CGameService::GetInstancePtr()->SendCmdToDBConnection(MSG_ROLE_LOGIN_REQ, pNetPacket->m_nConnID, pHeader->dwUserData, Req);
+        LogService::GetInstancePtr()->SendCmdToDBConnection(MSG_ROLE_LOGIN_REQ, pNetPacket->m_nConnID, pHeader->dwUserData, Req);
         return TRUE;
     }
 

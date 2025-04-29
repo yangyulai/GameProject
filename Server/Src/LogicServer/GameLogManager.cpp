@@ -26,7 +26,7 @@ VOID CGameLogManager::SetLogBase(CPlayerObject* pPlayer, Log_BaseData* pLogBase)
 {
     pLogBase->m_uRoleID = pPlayer->GetRoleID();
     pLogBase->m_uAccountID = pPlayer->GetAccountID();
-    pLogBase->m_nAreaID = CGameService::GetInstancePtr()->GetServerID();
+    pLogBase->m_nAreaID = LogService::GetInstancePtr()->GetServerID();
     pLogBase->m_uOpTime = CommonFunc::GetCurrTime();
     pLogBase->m_nChannel = (INT32)(pPlayer->GetProperty(ERP_CHANNEL));
     pLogBase->m_nLevel = (INT32)(pPlayer->GetProperty(ERP_LEVEL));

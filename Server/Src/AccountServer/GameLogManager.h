@@ -3,7 +3,7 @@
 
 #include "../Message/Msg_Account.pb.h"
 #include "../Message/Msg_ID.pb.h"
-#include "GameService.h"
+#include "LogService.h"
 class CGameLogManager
 {
 public:
@@ -16,9 +16,9 @@ public:
 	template<typename T>
 	BOOL WriteGameLog(T& Data)
 	{
-		ERROR_RETURN_FALSE(CGameService::GetInstancePtr()->GetLogSvrConnID() > 0);
+		ERROR_RETURN_FALSE(LogService::GetInstancePtr()->GetLogSvrConnID() > 0);
 
-		ServiceBase::GetInstancePtr()->SendMsgRawData(CGameService::GetInstancePtr()->GetLogSvrConnID(), MSG_LOG_DATA_NTF, 0, 0, (const char*)&Data, sizeof(T));
+		ServiceBase::GetInstancePtr()->SendMsgRawData(LogService::GetInstancePtr()->GetLogSvrConnID(), MSG_LOG_DATA_NTF, 0, 0, (const char*)&Data, sizeof(T));
 
 		return TRUE;
 	}

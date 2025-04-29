@@ -48,12 +48,9 @@ struct NetPacket
     NetPacket(int32_t nConnID = 0, IDataBuffer* pBuffer = NULL, int32_t nMsgID = 0 )
     {
         m_nConnID = nConnID;
-
         m_pDataBuffer = pBuffer;
-
         m_nMsgID = nMsgID;
     }
-
     int32_t        m_nMsgID;
     int32_t        m_nConnID;
     IDataBuffer* m_pDataBuffer;

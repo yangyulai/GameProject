@@ -1,6 +1,6 @@
 ﻿
 #include "GameSvrMgr.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "PacketHeader.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Game_Define.pb.h"

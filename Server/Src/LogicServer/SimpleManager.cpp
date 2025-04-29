@@ -1,6 +1,6 @@
 ﻿
 #include "SimpleManager.h"
-#include "GameService.h"
+#include "LogService.h"
 
 CSimpleManager::CSimpleManager()
 {

@@ -1,6 +1,6 @@
 ﻿
 #include "DataPool.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "RoleModule.h"
 
 CDataPool::CDataPool()

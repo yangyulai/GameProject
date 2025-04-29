@@ -122,7 +122,7 @@
     <ClCompile Include="DBMsgHandler.cpp" />
     <ClCompile Include="DBManager.cpp" />
     <ClCompile Include="DBWriterManager.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -138,7 +138,7 @@
     <ClInclude Include="DBMsgHandler.h" />
     <ClInclude Include="DBManager.h" />
     <ClInclude Include="DBWriterManager.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

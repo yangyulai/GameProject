@@ -128,7 +128,7 @@
     <ClCompile Include="GameObject\BulletObject.cpp" />
     <ClCompile Include="GameObject\MapObject.cpp" />
     <ClCompile Include="GameObject\SkillObject.cpp" />
-    <ClCompile Include="GameService.cpp" />
+    <ClCompile Include="LogService.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GridManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -166,7 +166,7 @@
     <ClInclude Include="GameObject\BulletObject.h" />
     <ClInclude Include="GameObject\MapObject.h" />
     <ClInclude Include="GameObject\SkillObject.h" />
-    <ClInclude Include="GameService.h" />
+    <ClInclude Include="LogService.h" />
     <ClInclude Include="GameStruct.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridManager.h" />

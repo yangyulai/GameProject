@@ -1,6 +1,6 @@
 ﻿
 #include "CenterMsgHandler.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "PacketHeader.h"
 #include "../Message/Msg_ID.pb.h"
 #include "../Message/Msg_Game.pb.h"

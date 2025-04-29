@@ -1,6 +1,6 @@
 ﻿
 #include "ActivityManager.h"
-#include "GameService.h"
+#include "LogService.h"
 #include "DataPool.h"
 #include "GlobalDataMgr.h"
 #include "TimerManager.h"
